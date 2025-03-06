@@ -1,53 +1,59 @@
 import React, { useState } from "react";
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendars";
+import { colors } from "../../utils/colors";
 
-const CustomDatePicker = ({ visible, onClose, onSelectDate }) => {
+const CustomDatePicker = ({ onSelectDate, isLabel = false, label = '' }) => {
     const [selectedDate, setSelectedDate] = useState(null);
+    const [datePickerVisible, setDatePickerVisible] = useState(false);
 
     return (
-        <Modal transparent visible={visible} animationType="slide">
-            <View style={styles.overlay}>
-                <View style={styles.container}>
-                    <Text style={styles.title}>Select date</Text>
-
-                    <Calendar
-                        onDayPress={(day) => setSelectedDate(day.dateString)}
-                        markedDates={{
-                            [selectedDate]: { selected: true, selectedColor: "#8B5E3C" },
-                        }}
-                        theme={{
-                            backgroundColor: "#F6E5DA",
-                            calendarBackground: "#F6E5DA",
-                            selectedDayBackgroundColor: "#8B5E3C",
-                            selectedDayTextColor: "#FFFFFF",
-                            todayTextColor: "#8B5E3C",
-                            arrowColor: "#8B5E3C",
-                            monthTextColor: "#8B5E3C",
-                            textMonthFontSize: 18,
-                            textMonthFontWeight: "bold",
-                        }}
-                    />
-
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity onPress={onClose} style={styles.cancelButton}>
-                            <Text style={styles.cancelText}>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => {
-                                if (selectedDate) {
-                                    onSelectDate(selectedDate);
-                                    onClose();
-                                }
+        <View>
+            {isLabel && <Text style={styles.label}>{label}</Text>}
+            <TouchableOpacity onPress={() => setDatePickerVisible(true)}  style={styles.textBox}>
+                <Text style={styles.dateText}>{selectedDate}</Text>
+            </TouchableOpacity>
+            <Modal transparent visible={datePickerVisible} animationType="fade">
+                <View style={styles.overlay}>
+                    <View style={styles.container}>
+                        <Calendar
+                            onDayPress={(day) => setSelectedDate(day.dateString)}
+                            markedDates={{
+                                [selectedDate]: { selected: true, selectedColor: colors.red },
                             }}
-                            style={styles.okButton}
-                        >
-                            <Text style={styles.okText}>OK</Text>
-                        </TouchableOpacity>
+                            theme={{
+                                calendarBackground: colors.white,
+                                selectedDayBackgroundColor: "rgba(189, 44, 60, 0.2)",
+                                selectedDayTextColor: "#FFFFFF",
+                                todayTextColor: colors.red,
+                                arrowColor: colors.red,
+                                monthTextColor: colors.red,
+                                textMonthFontSize: 18,
+                                textMonthFontWeight: "bold",
+                            }}
+                        />
+
+                        {/* Buttons */}
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity onPress={() => setDatePickerVisible(false)} style={styles.cancelButton}>
+                                <Text style={styles.cancelText}>Cancel</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    if (selectedDate) {
+                                        onSelectDate(selectedDate);
+                                        setDatePickerVisible(false);
+                                    }
+                                }}
+                                style={styles.okButton}
+                            >
+                                <Text style={styles.okText}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </Modal>
+            </Modal>
+        </View>
     );
 };
 
@@ -59,17 +65,36 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
     container: {
-        width: "90%",
-        backgroundColor: "#F6E5DA",
+        width: "85%",
+        backgroundColor: colors.white,
         borderRadius: 10,
-        padding: 20,
+        padding: 15,
         alignItems: "center",
     },
-    title: {
-        fontSize: 18,
-        fontWeight: "bold",
-        color: "#8B5E3C",
-        marginBottom: 10,
+    inputField: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: colors.black1,
+        borderRadius: 5,
+    },
+    textBox: {
+        borderRadius: 5,
+        padding: 10,
+        fontSize: 16,
+        color: 'black',
+        width: '100%',
+        backgroundColor:colors.lightgrey
+        // marginBottom: 10,
+      },
+    dateText: {
+        fontSize: 16,
+        color: colors.black1,
+    },
+    label: {
+        fontSize: 14,
+        fontWeight: '500',
+        marginBottom: 5,
+        color: colors.black1,
     },
     buttonContainer: {
         flexDirection: "row",
@@ -84,12 +109,12 @@ const styles = StyleSheet.create({
     },
     cancelText: {
         fontSize: 16,
-        color: "#8B5E3C",
+        color: colors.red,
     },
     okButton: {
         flex: 1,
         alignItems: "center",
-        backgroundColor: "#8B5E3C",
+        backgroundColor: colors.red,
         padding: 10,
         borderRadius: 5,
     },

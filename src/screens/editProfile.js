@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { commonstyles } from '../commonComponents/commonStyles';
 import { CommonHeader } from '../commonComponents/components';
 import { colors } from '../utils/colors';
@@ -9,7 +9,6 @@ import CustomDatePicker, { CommonDatePicker } from '../commonComponents/commonDa
 
 
 const EditProfile = () => {
-    const [datePickerVisible, setDatePickerVisible] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     return (
         <View style={commonstyles.screencontainer}>
@@ -28,17 +27,23 @@ const EditProfile = () => {
                             <View>
                                 <InputField isLabel={true} label="Full Name" borderColor="#00b1f3" />
                             </View>
-                            <View>
+                            <View style={{ marginTop: 10 }}>
                                 <InputField isLabel={true} label="Phone number" borderColor="#00b1f3" />
                             </View>
-                            <CustomDatePicker
-                                visible={datePickerVisible}
-                                onClose={() => setDatePickerVisible(false)}
-                                onSelectDate={(date) => setSelectedDate(date)}
-                            />
+                            <View style={{ marginTop: 10 }}>
 
+                                <CustomDatePicker
+                                    onSelectDate={(date) => setSelectedDate(date)}
+                                    isLabel={true}
+                                    label="Date of Birth"
+                                />
+                            </View>
+
+                            <View style={{ marginTop: 10 }}>
+
+                                <InputField isLabel={true} label="Phone number" borderColor="#00b1f3" />
+                            </View>
                         </View>
-
                     </View>
                 </View>
             </View>
