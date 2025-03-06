@@ -1,0 +1,15 @@
+export const ScreenName={
+    login:"login",
+    signUp:"signUp",
+    UserName:"userName",
+    genderScreen:"genderScreen",
+    birthScreen:"birthScreen",
+    homeScreen:"homeScreen",
+    bookPooja:"bookPooja",
+    orderHistory:"orderHistory",
+    payment:"payment",
+    profile:"profilescreen",
+    editProfile:"editProfile"
+
+
+}
