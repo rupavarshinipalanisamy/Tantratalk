@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, StyleSheet } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { commonstyles } from '../commonComponents/commonStyles'
 import { Images } from '../utils/images'
 import { InputField } from '../commonComponents/inputField'
@@ -8,10 +8,7 @@ import AnimatedImage from '../commonComponents/AnimatedImage'
 import Navigation from '../navigation/navigation'
 import { ScreenName } from '../utils/screenName'
 import { useFormik } from 'formik'
-import CustomDatePicker from '../commonComponents/DatePicker'
 import BirthDatePicker from '../commonComponents/DatePicker'
-import DatePickers from '../commonComponents/DatePicker'
-import { Picker, DatePicker } from 'react-native-wheel-pick';
 
 const BirthDate = ({ navigation }) => {
     const [isModalVisible, setModalVisible] = useState(true);

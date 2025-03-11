@@ -5,14 +5,19 @@ import { CommonHeader } from '../commonComponents/components';
 import { colors } from '../utils/colors';
 import { Images } from '../utils/images';
 import { InputField } from '../commonComponents/inputField';
-import CustomDatePicker, { CommonDatePicker } from '../commonComponents/commonDatePicker';
-
+import CustomDatePicker from '../commonComponents/commonDatePicker';
 
 const EditProfile = () => {
     const [selectedDate, setSelectedDate] = useState(null);
+    const handleSubmit = () => {
+        // Handle submit logic here
+        console.log("Profile updated!");
+        // You can add your API call or state update here
+    };
+
     return (
         <View style={commonstyles.screencontainer}>
-            <CommonHeader name=" Edit Profile" />
+            <CommonHeader name="Edit Profile" />
             <View style={styles.backgroundContainer}>
                 <View style={styles.centeredContent}>
                     <View style={styles.card}>
@@ -31,26 +36,32 @@ const EditProfile = () => {
                                 <InputField isLabel={true} label="Phone number" borderColor="#00b1f3" />
                             </View>
                             <View style={{ marginTop: 10 }}>
-
                                 <CustomDatePicker
                                     onSelectDate={(date) => setSelectedDate(date)}
                                     isLabel={true}
                                     label="Date of Birth"
                                 />
                             </View>
-
                             <View style={{ marginTop: 10 }}>
-
                                 <InputField isLabel={true} label="Phone number" borderColor="#00b1f3" />
                             </View>
                         </View>
+                        <View style={{justifyContent:"flex-end",flex:1}}>
+
+                        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+                            <Text style={styles.submitButtonText}>SUBMIT</Text>
+                        </TouchableOpacity>
+                        </View>
+
                     </View>
                 </View>
             </View>
         </View>
     );
 };
+
 export default EditProfile;
+
 const styles = StyleSheet.create({
     backgroundContainer: {
         backgroundColor: "rgba(189, 44, 60, 0.2)",
@@ -125,5 +136,17 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "500",
         color: colors.black1,
+    },
+    submitButton: {
+        backgroundColor:colors.red,
+        padding: 15,
+        borderRadius:6,
+        alignItems: "center",
+        marginBottom: 20,
+    },
+    submitButtonText: {
+        color: colors.white,
+        fontWeight: "600",
+        fontSize: 16,
     },
 });

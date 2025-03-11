@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
   },
   profileText: {
     fontSize: 12,
+    color:colors.black0
   },
   navList: {
     marginTop: 20,
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
   },
   navText: {
     margin: 8,
+    color:colors.black
   },
   separator: {
     borderBottomColor: colors.grey1,

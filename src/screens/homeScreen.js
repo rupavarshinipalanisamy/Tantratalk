@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import AppIcon from "../commonComponents/Icons/Icons";
 import { navbarOpenState } from "../redux/slices/sideNavBar";
 import { commonstyles } from "../commonComponents/commonStyles";
+import { BottomNavigator } from "../commonComponents/components";
+import BottomNavigationBar from "../commonComponents/bottomNavigator";
 const Header = () => {
     const isOpen = useSelector((state) => state.sidenavbar.isOpen);
     const dispatch = useDispatch();
@@ -17,9 +19,7 @@ const Header = () => {
         console.log(isOpen, "before");
         dispatch(navbarOpenState(true))
         console.log(isOpen, "after");
-
     }
-
     return (
         <View style={styles.header}>
             <View style={{
@@ -147,9 +147,14 @@ const BookSlot = () => {
 };
 
 const HomeScreen = () => {
+    const [currentTab, setCurrentTab] = useState('list'); // Initialize with 'list' or your default tab
+
+    const handleTabChange = (tab) => {
+        setCurrentTab(tab);
+    };
+
     return (
         <View style={commonstyles.screencontainer}>
-
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <Header />
                 <View style={{ marginTop: 10 }}>
@@ -168,6 +173,7 @@ const HomeScreen = () => {
                     <Remedies />
                 </View>
             </ScrollView>
+          <BottomNavigationBar/>
         </View>
 
     );

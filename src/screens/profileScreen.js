@@ -7,7 +7,7 @@ import { Images } from '../utils/images';
 import AppIcon from '../commonComponents/Icons/Icons';
 import { ScreenName } from '../utils/screenName';
 
-const ProfileScreen = ({navigation}) => {
+const ProfileScreen = ({ navigation }) => {
     return (
         <View style={commonstyles.screencontainer}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -28,8 +28,8 @@ const ProfileScreen = ({navigation}) => {
 
                                 }}>
                                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 12 }}>
-                                        <Text style={{ fontSize: 16, fontWeight: "500" }}>Personal Info</Text>
-                                        <TouchableOpacity onPress={()=>navigation.navigate(ScreenName.editProfile)}>
+                                        <Text style={{ fontSize: 16, fontWeight: "500", color: colors.black }}>Personal Info</Text>
+                                        <TouchableOpacity onPress={() => navigation.navigate(ScreenName.editProfile)}>
 
                                             <AppIcon name="edit" size={25} color={colors.red} library="MaterialIcons" />
                                         </TouchableOpacity>
@@ -76,7 +76,7 @@ const ProfileScreen = ({navigation}) => {
                                 <View style={[{ flexDirection: "row", alignItems: "center" }]}>
 
                                     <AppIcon name="id-card-outline" size={25} color={colors.red} library="Ionicons" />
-                                    <Text style={{ marginLeft: 10 }}>Languages</Text>
+                                    <Text style={styles.cardheadertxt}>Languages</Text>
 
                                 </View>
 
@@ -84,7 +84,7 @@ const ProfileScreen = ({navigation}) => {
                             <View style={styles.smallCard}>
                                 <View style={[{ flexDirection: "row", alignItems: "center" }]}>
                                     <AppIcon name="shield-check-outline" size={25} color={colors.red} library="MaterialCommunityIcons" />
-                                    <Text style={{ marginLeft: 10 }}>Privacy and Policy</Text>
+                                    <Text style={styles.cardheadertxt}>Privacy and Policy</Text>
 
                                 </View>
 
@@ -92,7 +92,7 @@ const ProfileScreen = ({navigation}) => {
                             <View style={styles.smallCard}>
                                 <View style={[{ flexDirection: "row", alignItems: "center" }]}>
                                     <AppIcon name="logout" size={25} color={colors.red} library="MaterialIcons" />
-                                    <Text style={{ marginLeft: 10 }}>Log out</Text>
+                                    <Text style={styles.cardheadertxt}>Log out</Text>
                                 </View>
                             </View>
                         </View>
@@ -178,6 +178,10 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         color: colors.black1,
     },
+    cardheadertxt: {
+        marginLeft: 10, 
+        color: colors.black
+    }
 });
 
 export default ProfileScreen;
