@@ -16,4 +16,6 @@ export const Images = {
     payment:require("../../assets/Images/onlinepayment.png"),
     home:require("../../assets/Images/home.png"),
     sidemenubg:require("../../assets/Images/sidemenubg.png"),
+    astroconul:require("../../assets/Images/astrologyconsul.jpg"),
+
 };

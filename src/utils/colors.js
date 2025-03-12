@@ -11,7 +11,7 @@ export const colors={
     grey3:"#F2F1F0",
     grey4:"#EEEDE7",
     grey5:"#c0c0c0",
-    grey6:"#ebeaea"
+    grey6:"#AAAAAA"
   
 
 

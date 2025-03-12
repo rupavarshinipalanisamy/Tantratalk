@@ -8,7 +8,7 @@ import AnimatedImage from '../commonComponents/AnimatedImage'
 import Navigation from '../navigation/navigation'
 import { ScreenName } from '../utils/screenName'
 import { useFormik } from 'formik'
-import BirthDatePicker from '../commonComponents/DatePicker'
+import CommonDatePicker from '../commonComponents/DatePicker'
 
 const BirthDate = ({ navigation }) => {
     const [isModalVisible, setModalVisible] = useState(true);
@@ -34,9 +34,15 @@ const BirthDate = ({ navigation }) => {
                 <View style={commonstyles.backCard} />
                 <View style={commonstyles.frontCard}>
                     <Text style={commonstyles.h1text}>Register</Text>
-                    {/* <BirthDatePicker onSelect={(value) => alert(`Selected: ${value}`)}/> */}
-                    {/* <DatePickers onSelect={handleDateSelect} /> */}
-                    <BirthDatePicker />
+                    {/* <CommonDatePicker
+                        initialDate={{ month: 'Feb', day: '14', year: '2000' }}
+                        onDateChange={(date) => console.log('Selected Date:', date)}
+                        buttonLabel="Confirm"
+                        containerStyle={{ backgroundColor: '#E0F7FA' }}
+                        buttonStyle={{ backgroundColor: '#0288D1' }}
+                        buttonTextStyle={{ color: '#FFF' }}
+                    /> */}
+                    <CommonDatePicker />
                 </View>
             </ImageBackground>
         </View>

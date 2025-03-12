@@ -12,6 +12,7 @@ import { navbarOpenState } from "../redux/slices/sideNavBar";
 import { commonstyles } from "../commonComponents/commonStyles";
 import { BottomNavigator } from "../commonComponents/components";
 import BottomNavigationBar from "../commonComponents/bottomNavigator";
+import { ScreenName } from "../utils/screenName";
 const Header = () => {
     const isOpen = useSelector((state) => state.sidenavbar.isOpen);
     const dispatch = useDispatch();
@@ -110,7 +111,7 @@ const Remedies = () => {
                 {AstrologersData.map((item, index) => (
                     <View key={index} style={styles.remediesItem}>
                         <View style={styles.RemediesCard}>
-                            <Image source={item?.img} style={styles.image} />
+                            <Image source={item?.img} style={{height:80,width:80,border}} />
                             <View style={{ marginTop: 5 }}>
                                 <Text style={styles.astrologerName}>{item.name}</Text>
                                 <Text style={styles.chattxt}>Chat</Text>
@@ -122,9 +123,9 @@ const Remedies = () => {
         </ScrollView>
     );
 };
-const BookSlot = () => {
+const BookSlot = ({navigation}) => {
     return (
-        <View style={{ borderRadius: 8, overflow: "hidden", marginHorizontal: 20 }}>
+        <View style={{ borderRadius: 8, overflow: "hidden", marginHorizontal: 15,marginTop:10,marginBottom:10 }}>
             <ImageBackground
                 source={Images.slotbg}
                 style={{ height: 200, width: "100%" }}
@@ -138,7 +139,7 @@ const BookSlot = () => {
                     </Text>
                 </View>
                 <View style={{ width: "30%", paddingLeft: 8, marginTop: 10 }}>
-                    <SmallBtn title="Book slot" backgroundColor={colors.red} />
+                    <SmallBtn title="Book slot" backgroundColor={colors.red} onPress={()=>navigation.navigate(ScreenName.consultation)}/>
 
                 </View>
             </ImageBackground>
@@ -146,7 +147,7 @@ const BookSlot = () => {
     );
 };
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
     const [currentTab, setCurrentTab] = useState('list'); // Initialize with 'list' or your default tab
 
     const handleTabChange = (tab) => {
@@ -158,22 +159,22 @@ const HomeScreen = () => {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <Header />
                 <View style={{ marginTop: 10 }}>
-                    <Text style={{ fontSize: 14, fontWeight: "700", marginLeft: 20 }}>Features</Text>
+                    <Text style={styles.headertxt}>Features</Text>
                     <Features />
                 </View>
-                <View style={{ marginTop: 10, flex: 1 }}>
-                    <BookSlot />
+                <View style={{ marginTop: 10}}>
+                    <BookSlot navigation={navigation} />
                 </View>
                 <View style={{ marginTop: 10 }}>
-                    <Text style={{ fontSize: 14, fontWeight: "700", marginLeft: 20 }}>Astrologers</Text>
+                    <Text style={styles.headertxt}>Astrologers</Text>
                     <Astrologers />
                 </View>
                 <View style={{ marginTop: 10 }}>
-                    <Text style={{ fontSize: 14, fontWeight: "700", marginLeft: 20 }}>Remedies</Text>
+                    <Text style={styles.headertxt}>Remedies</Text>
                     <Remedies />
                 </View>
             </ScrollView>
-          <BottomNavigationBar/>
+            <BottomNavigationBar />
         </View>
 
     );
@@ -182,6 +183,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.lightgrey,
+    },
+    headertxt: {
+        fontSize: 14,
+        fontWeight: "700",
+        marginLeft: 20,
+        color: colors.black
     },
     header: {
         backgroundColor: colors.red,
@@ -267,7 +274,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 10,
-        padding: 32,
+        padding:20,
         elevation: 3, // Shadow for Android
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -285,7 +292,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 12,
         fontWeight: "400",
-        marginLeft: 5
+        marginLeft: 5,
+        color:colors.grey2
     },
     chattxt: {
         color: colors?.black1,

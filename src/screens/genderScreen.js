@@ -73,6 +73,12 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         color: "#333",
     },
+    inputlabel: {
+        fontSize: 14,
+        fontWeight: '500',
+        marginBottom: 5,
+        color:colors.black1,
+    },
     genderContainer: {
         flexDirection: "row",
         justifyContent: "space-around",

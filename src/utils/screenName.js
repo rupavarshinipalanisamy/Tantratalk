@@ -9,7 +9,9 @@ export const ScreenName={
     orderHistory:"orderHistory",
     payment:"payment",
     profile:"profilescreen",
-    editProfile:"editProfile"
-
+    editProfile:"editProfile",
+    consultation:"consultation",
+    consultationForm:"consultationForm",
+    Astrologers:"Astrologers"
 
 }
