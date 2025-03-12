@@ -13,6 +13,9 @@ import Payment from '../screens/payment';
 import ProfileScreen from '../screens/profileScreen';
 import DrawerComponent from '../commonComponents/navBar';
 import EditProfile from '../screens/editProfile';
+import Consultation from '../screens/consultationScreen';
+import ConsultationForm from '../screens/consultationForm';
+import Astrologers from '../screens/astrologers';
 
 const Stack = createStackNavigator();
 
@@ -31,7 +34,9 @@ const Navigation = () => {
                     <Stack.Screen name={ScreenName?.profile} component={ProfileScreen} />
                     <Stack.Screen name={ScreenName?.homeScreen} component={HomeScreen} />
                     <Stack.Screen name={ScreenName?.editProfile} component={EditProfile} />
-
+                    <Stack.Screen name={ScreenName?.consultation} component={Consultation} />
+                    <Stack.Screen name={ScreenName?.consultationForm} component={ConsultationForm} />
+                    <Stack.Screen name={ScreenName?.Astrologers} component={Astrologers} />
                 </Stack.Navigator>
             </DrawerComponent>
         </NavigationContainer>

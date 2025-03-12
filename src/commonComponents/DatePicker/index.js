@@ -1,115 +1,173 @@
-import React, { useState, useRef } from 'react';
-import { View, ScrollView, Text, StyleSheet, Dimensions } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
+import { colors } from '../../utils/colors';
+import { commonstyles } from '../commonStyles';
+import { Button } from '../Button';
 
 const { width } = Dimensions.get('window');
+const ITEM_HEIGHT = 50;
 
-const CustomWheelPicker = ({ data, selectedValue, onValueChange }) => {
-  const [selectedIndex, setSelectedIndex] = useState(data.indexOf(selectedValue));
-  const scrollViewRef = useRef(null);
-  const itemHeight = 40;
-  const visibleItems = 5;
+const months = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+];
+const days = Array.from({ length: 31 }, (_, i) =>
+  (i + 1).toString().padStart(2, '0')
+);
+const years = Array.from({ length: 50 }, (_, i) => (1990 + i).toString());
 
-  const handleScroll = (event) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const newIndex = Math.round(offsetY / itemHeight);
-    if (newIndex >= 0 && newIndex < data.length && newIndex !== selectedIndex) {
-      setSelectedIndex(newIndex);
-      onValueChange(data[newIndex]);
+const CommonDatePicker = ({
+  initialDate = { month: 'Jan', day: '01', year: '1990' },
+  onDateChange,
+  buttonLabel = 'Next',
+  containerStyle,
+  buttonStyle,
+  buttonTextStyle,
+}) => {
+  const [selectedMonth, setSelectedMonth] = useState(initialDate.month);
+  const [selectedDay, setSelectedDay] = useState(initialDate.day);
+  const [selectedYear, setSelectedYear] = useState(initialDate.year);
+
+  const monthRef = useRef(null);
+  const dayRef = useRef(null);
+  const yearRef = useRef(null);
+
+  useEffect(() => {
+    scrollToIndex(months, selectedMonth, monthRef);
+    scrollToIndex(days, selectedDay, dayRef);
+    scrollToIndex(years, selectedYear, yearRef);
+  }, []);
+
+  useEffect(() => {
+    if (onDateChange) {
+      onDateChange({ month: selectedMonth, day: selectedDay, year: selectedYear });
+    }
+  }, [selectedMonth, selectedDay, selectedYear]);
+
+  const scrollToIndex = (data, selected, ref) => {
+    const index = data.indexOf(selected);
+    if (ref.current) {
+      ref.current.scrollTo({ y: index * ITEM_HEIGHT, animated: true });
     }
   };
 
-  const scrollToSelectedIndex = () => {
-    if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({
-        y: selectedIndex * itemHeight,
-        animated: true,
-      });
-    }
+  const handleScrollEnd = (event, data, setSelected) => {
+    const index = Math.round(event.nativeEvent.contentOffset.y / ITEM_HEIGHT);
+    setSelected(data[index]);
   };
 
-  React.useEffect(() => {
-    scrollToSelectedIndex();
-  }, [selectedIndex]);
-
-  const renderItem = (item, index) => (
-    <View
-      key={index}
-      style={[
-        styles.item,
-        index === selectedIndex && styles.selectedItem,
-      ]}
-    >
-      <Text style={styles.itemText}>{item}</Text>
-    </View>
-  );
-
-  return (
-    <View style={styles.container}>
+  const renderPicker = (data, selected, setSelected, scrollRef) => (
+    <View style={styles.picker}>
+      <View style={styles.selectedOverlay} />
       <ScrollView
-        ref={scrollViewRef}
+        ref={scrollRef}
         showsVerticalScrollIndicator={false}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        contentContainerStyle={{
-          paddingVertical: (visibleItems - 1) / 2 * itemHeight,
-        }}
+        snapToInterval={ITEM_HEIGHT}
+        decelerationRate="fast"
+        onMomentumScrollEnd={(event) => handleScrollEnd(event, data, setSelected)}
       >
-        {data.map(renderItem)}
+        <View style={{ height: ITEM_HEIGHT }} />
+        {data.map((item, index) => (
+          <View key={index} style={styles.item}>
+            <Text style={[styles.itemText, item === selected && styles.selectedText]}>
+              {item}
+            </Text>
+          </View>
+        ))}
+        <View style={{ height: ITEM_HEIGHT }} />
       </ScrollView>
     </View>
   );
-};
-
-const BirthDatePicker = () => {
-  const [selectedDay, setSelectedDay] = useState('8');
-  const [selectedMonth, setSelectedMonth] = useState('Jan');
-  const [selectedYear, setSelectedYear] = useState('2025');
-
-  const days = Array.from({ length: 31 }, (_, i) => `${i + 1}`);
-  const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-  ];
-  const years = Array.from({ length: 100 }, (_, i) => `${1925 + i}`);
 
   return (
-    <View style={{ flexDirection: 'row' }}>
-      <CustomWheelPicker
-        data={days}
-        selectedValue={selectedDay}
-        onValueChange={setSelectedDay}
-      />
-      <CustomWheelPicker
-        data={months}
-        selectedValue={selectedMonth}
-        onValueChange={setSelectedMonth}
-      />
-      <CustomWheelPicker
-        data={years}
-        selectedValue={selectedYear}
-        onValueChange={setSelectedYear}
-      />
+    <View style={[styles.container, containerStyle]}>
+      <View style={{ alignSelf: "flex-start", marginLeft: 10, top: 20 }}>
+        <Text style={commonstyles.inputlabel}>Please Select your BirthDate</Text>
+      </View>
+      <View style={styles.pickerContainer}>
+
+        {renderPicker(months, selectedMonth, setSelectedMonth, monthRef)}
+        {renderPicker(days, selectedDay, setSelectedDay, dayRef)}
+        {renderPicker(years, selectedYear, setSelectedYear, yearRef)}
+      </View>
+        <Button title="NEXT" onPress={() => navigation.navigate(ScreenName.birthScreen)} fullWidth={true} style={{marginTop:50}} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: width / 3 - 30,
-    height: 200,
+    // backgroundColor: '#FFFBE8',
+    alignItems: 'center',
+    paddingTop: 20,
+    width:"100%"
+  },
+  header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  pickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop:30,
+    // borderColor: '#FDD835',
+    gap: 12,
+    height: ITEM_HEIGHT * 3,
+    
+  },
+  picker: {
+    width: width / 4,
+    height: ITEM_HEIGHT * 3,
     overflow: 'hidden',
+    position: 'relative',
+    alignItems: 'center',
+  },
+  selectedOverlay: {
+    position: 'absolute',
+    top: ITEM_HEIGHT,
+    left: "10%",
+    right: "10%",
+    height: ITEM_HEIGHT,
+    borderColor: colors.red,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
   },
   item: {
-    height: 40,
+    height: ITEM_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  selectedItem: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-  },
   itemText: {
-    fontSize: 20,
+    fontSize: 14,
+    color: '#999',
+  },
+  selectedText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: '#FDD835',
+    paddingVertical: 12,
+    paddingHorizontal: 60,
+    borderRadius: 25,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black',
   },
 });
 
-export default BirthDatePicker;
+export default CommonDatePicker;

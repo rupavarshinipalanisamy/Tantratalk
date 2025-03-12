@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Svg, { Path } from 'react-native-svg';
+import { colors } from '../utils/colors';
+import { Images } from '../utils/images';
 
 const { width } = Dimensions.get('window');
 const HEIGHT = 70; // Height of the Bottom Navbar
@@ -36,13 +38,13 @@ const BottomNavigationBar = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Screen2')}>
-          <Icon name="leaf-outline" size={24} color="#4CAF50" />
+          <Icon name="notebook-outline" size={24} color="#8E8E8E" />
         </TouchableOpacity>
 
         {/* Floating Button */}
         <View style={styles.floatingButtonContainer}>
           <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('MainScreen')}>
-            <Icon name="leaf" size={28} color="#FFFFFF" />
+            <Image source={Images.home} style={{ height: 20, width: 20, color: colors.red }} />
           </TouchableOpacity>
         </View>
 
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: HEIGHT,
     backgroundColor: 'transparent',
-    borderRadius:10
+    borderRadius: 10
   },
   iconRow: {
     flexDirection: 'row',
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   iconButton: {
-    padding: 10,
+    padding:10,
   },
   floatingButtonContainer: {
     position: 'absolute',
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
   floatingButton: {
     width: 60,
     height: 60,
-    backgroundColor: '#4CAF50',
+    backgroundColor: colors.red,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',

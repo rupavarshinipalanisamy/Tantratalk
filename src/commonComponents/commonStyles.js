@@ -44,10 +44,10 @@ export const commonstyles = StyleSheet.create({
         fontWeight: "600",
     },
     inputlabel: {
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: '500',
         marginBottom: 5,
-        color:colors.black1,
+        color:colors.red,
     },
     screencontainer: {
         flex: 1,
