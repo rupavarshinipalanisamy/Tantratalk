@@ -12,6 +12,6 @@ export const ScreenName={
     editProfile:"editProfile",
     consultation:"consultation",
     consultationForm:"consultationForm",
-    Astrologers:"Astrologers"
-
+    Astrologers:"Astrologers",
+    Products:"Products"
 }

@@ -16,6 +16,7 @@ import EditProfile from '../screens/editProfile';
 import Consultation from '../screens/consultationScreen';
 import ConsultationForm from '../screens/consultationForm';
 import Astrologers from '../screens/astrologers';
+import Products from '../screens/products';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,7 @@ const Navigation = () => {
                     <Stack.Screen name={ScreenName?.consultation} component={Consultation} />
                     <Stack.Screen name={ScreenName?.consultationForm} component={ConsultationForm} />
                     <Stack.Screen name={ScreenName?.Astrologers} component={Astrologers} />
+                    <Stack.Screen name={ScreenName?.Products} component={Products} />
                 </Stack.Navigator>
             </DrawerComponent>
         </NavigationContainer>

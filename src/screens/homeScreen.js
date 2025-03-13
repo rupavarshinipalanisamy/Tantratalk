@@ -111,7 +111,7 @@ const Remedies = () => {
                 {AstrologersData.map((item, index) => (
                     <View key={index} style={styles.remediesItem}>
                         <View style={styles.RemediesCard}>
-                            <Image source={item?.img} style={{height:80,width:80,border}} />
+                            <Image source={item?.img} style={{height:80,width:80}} />
                             <View style={{ marginTop: 5 }}>
                                 <Text style={styles.astrologerName}>{item.name}</Text>
                                 <Text style={styles.chattxt}>Chat</Text>
