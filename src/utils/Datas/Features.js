@@ -6,8 +6,8 @@ export const FeaturesData=[
         id:1,
         title1:"Daily",
         title2:"Horoscope",
-        img:Images.dailyhoro
-        // navigation:ScreenName.
+        img:Images.dailyhoro,
+        navigation:ScreenName.DailyHoro
     },
     {
         id:2,

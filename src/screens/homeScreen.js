@@ -60,12 +60,12 @@ const SearchBar = () => {
     );
 };
 const { width, height } = Dimensions.get("window");
-const Features = () => {
+const Features = ({navigation}) => {
     return (
         <ScrollView style={styles.featuresContainer} horizontal={true}>
             {FeaturesData.map((item, index) => {
                 return (
-                    <View key={index} style={styles.featureItem}>
+                    <TouchableOpacity key={index} style={styles.featureItem} onPress={()=>navigation.navigate(item.navigation)}>
                         <View style={styles.featuresCard}>
                             <Image source={item?.img} style={{ height: 30, width: 30 }} />
                         </View>
@@ -73,7 +73,7 @@ const Features = () => {
                             <Text style={styles.featureText}>{item.title1}</Text>
                             <Text style={styles.featureText}>{item.title2}</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 )
             })}
 
@@ -160,7 +160,7 @@ const HomeScreen = ({navigation}) => {
                 <Header />
                 <View style={{ marginTop: 10 }}>
                     <Text style={styles.headertxt}>Features</Text>
-                    <Features />
+                    <Features navigation={navigation}/>
                 </View>
                 <View style={{ marginTop: 10}}>
                     <BookSlot navigation={navigation} />

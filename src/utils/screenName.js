@@ -13,5 +13,7 @@ export const ScreenName={
     consultation:"consultation",
     consultationForm:"consultationForm",
     Astrologers:"Astrologers",
-    Products:"Products"
+    Products:"Products",
+    DailyHoro:"DailyHoro"
+
 }
