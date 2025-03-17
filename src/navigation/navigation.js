@@ -18,6 +18,9 @@ import ConsultationForm from '../screens/consultationForm';
 import Astrologers from '../screens/astrologers';
 import Products from '../screens/products';
 import DailyHoroscope from '../screens/dailyHoroscope';
+import BirthTimeScreen from '../screens/birthTimeScreen';
+import BirthPlaceScreen from '../screens/birthPlace';
+import HoroScope from '../screens/horoscope';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +44,11 @@ const Navigation = () => {
                     <Stack.Screen name={ScreenName?.Astrologers} component={Astrologers} />
                     <Stack.Screen name={ScreenName?.Products} component={Products} />
                     <Stack.Screen name={ScreenName?.DailyHoro} component={DailyHoroscope} />
+                    <Stack.Screen name={ScreenName?.birthtime} component={BirthTimeScreen} />
+                    <Stack.Screen name={ScreenName?.birthPlace} component={BirthPlaceScreen} />
+                    <Stack.Screen name={ScreenName?.horoScope} component={HoroScope} />
+
+
                 </Stack.Navigator>
             </DrawerComponent>
         </NavigationContainer>

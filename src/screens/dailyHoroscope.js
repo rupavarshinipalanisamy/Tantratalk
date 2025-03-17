@@ -4,6 +4,7 @@ import { CommonHeader } from '../commonComponents/components';
 import { colors } from '../utils/colors';
 import { Images } from '../utils/images';
 import { ScreenName } from '../utils/screenName';
+import { DailyHoroData } from '../utils/Datas/DailyHoroscope';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -21,22 +22,21 @@ const DailyHoroscope = ({navigation}) => {
     const renderItem = ({ item }) => {
         return (
             <View style={styles.itemContainer}>
-                <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate(ScreenName.consultationForm)} >
+                <TouchableOpacity style={styles.card}onPress={() => navigation.navigate(ScreenName.horoScope, {item})} >
                     <ImageBackground source={item.img} style={[styles.image, { height: itemHeight }]}>
                         <View style={styles.textContainer}>
-                            <Text style={styles.text}>{item.name}</Text>
+                            <Text style={styles.text}>{item.title1}</Text>
                         </View>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
         );
     };
-
-    return (
+ return (
         <View style={styles.screenContainer}>
-            <CommonHeader name="Consultation" />
+            <CommonHeader name="Daily Horoscope" />
             <FlatList
-                data={services}
+                data={DailyHoroData}
                 numColumns={2}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     text: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: "400",
         color: colors.white,
     }

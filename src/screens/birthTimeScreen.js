@@ -8,9 +8,9 @@ import AnimatedImage from '../commonComponents/AnimatedImage'
 import Navigation from '../navigation/navigation'
 import { ScreenName } from '../utils/screenName'
 import { useFormik } from 'formik'
-import CommonDatePicker from '../commonComponents/DatePicker'
+import CommonTimePicker from '../commonComponents/TimePicker'
 
-const BirthDate = ({ navigation }) => {
+const BirthTimeScreen = ({ navigation }) => {
     const [isModalVisible, setModalVisible] = useState(true);
     const [selectedDate, setSelectedDate] = useState("1 Jan 2000");
 
@@ -34,8 +34,8 @@ const BirthDate = ({ navigation }) => {
                 <View style={commonstyles.backCard} />
                 <View style={commonstyles.frontCard}>
                     <Text style={commonstyles.h1text}>Register</Text>
-                    <CommonDatePicker />
-                    <Button title="NEXT" onPress={() => navigation.navigate(ScreenName.birthtime)} fullWidth={true} style={{ marginTop: 50 }} />
+                    <CommonTimePicker />
+                    <Button title="NEXT" onPress={() => navigation.navigate(ScreenName.birthPlace)} fullWidth={true} style={{ marginTop: 50 }} />
                 </View>
             </ImageBackground>
         </View>
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
         color: "#333",
     },
 });
-export default BirthDate
+export default BirthTimeScreen

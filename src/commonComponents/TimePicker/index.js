@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import { colors } from '../../utils/colors';
@@ -14,42 +13,37 @@ import { Button } from '../Button';
 const { width } = Dimensions.get('window');
 const ITEM_HEIGHT = 50;
 
-const months = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-];
-const days = Array.from({ length: 31 }, (_, i) =>
-  (i + 1).toString().padStart(2, '0')
-);
-const years = Array.from({ length: 50 }, (_, i) => (1990 + i).toString());
+const hours = Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0'));
+const minutes = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
+const meridians = ['AM', 'PM'];
 
-const CommonDatePicker = ({
-  initialDate = { month: 'Jan', day: '01', year: '1990' },
-  onDateChange,
+const CommonTimePicker = ({
+  initialTime = { hour: '12', minute: '00', meridian: 'AM' },
+  onTimeChange,
   buttonLabel = 'Next',
   containerStyle,
   buttonStyle,
   buttonTextStyle,
 }) => {
-  const [selectedMonth, setSelectedMonth] = useState(initialDate.month);
-  const [selectedDay, setSelectedDay] = useState(initialDate.day);
-  const [selectedYear, setSelectedYear] = useState(initialDate.year);
+  const [selectedHour, setSelectedHour] = useState(initialTime.hour);
+  const [selectedMinute, setSelectedMinute] = useState(initialTime.minute);
+  const [selectedMeridian, setSelectedMeridian] = useState(initialTime.meridian);
 
-  const monthRef = useRef(null);
-  const dayRef = useRef(null);
-  const yearRef = useRef(null);
+  const hourRef = useRef(null);
+  const minuteRef = useRef(null);
+  const meridianRef = useRef(null);
 
   useEffect(() => {
-    scrollToIndex(months, selectedMonth, monthRef);
-    scrollToIndex(days, selectedDay, dayRef);
-    scrollToIndex(years, selectedYear, yearRef);
+    scrollToIndex(hours, selectedHour, hourRef);
+    scrollToIndex(minutes, selectedMinute, minuteRef);
+    scrollToIndex(meridians, selectedMeridian, meridianRef);
   }, []);
 
   useEffect(() => {
-    if (onDateChange) {
-      onDateChange({ month: selectedMonth, day: selectedDay, year: selectedYear });
+    if (onTimeChange) {
+      onTimeChange({ hour: selectedHour, minute: selectedMinute, meridian: selectedMeridian });
     }
-  }, [selectedMonth, selectedDay, selectedYear]);
+  }, [selectedHour, selectedMinute, selectedMeridian]);
 
   const scrollToIndex = (data, selected, ref) => {
     const index = data.indexOf(selected);
@@ -88,14 +82,13 @@ const CommonDatePicker = ({
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <View style={{ alignSelf: "flex-start", marginLeft: 10, top: 20 }}>
-        <Text style={commonstyles.inputlabel}>Please Select your BirthDate</Text>
+      <View style={{ alignSelf: 'flex-start', marginLeft: 10, top: 20 }}>
+        <Text style={commonstyles.inputlabel}>Please Select your BirthTime</Text>
       </View>
       <View style={styles.pickerContainer}>
-
-        {renderPicker(months, selectedMonth, setSelectedMonth, monthRef)}
-        {renderPicker(days, selectedDay, setSelectedDay, dayRef)}
-        {renderPicker(years, selectedYear, setSelectedYear, yearRef)}
+        {renderPicker(hours, selectedHour, setSelectedHour, hourRef)}
+        {renderPicker(minutes, selectedMinute, setSelectedMinute, minuteRef)}
+        {renderPicker(meridians, selectedMeridian, setSelectedMeridian, meridianRef)}
       </View>
     </View>
   );
@@ -103,26 +96,18 @@ const CommonDatePicker = ({
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: '#FFFBE8',
     alignItems: 'center',
     paddingTop: 20,
-    width:"100%"
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    width: '100%',
   },
   pickerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    marginTop:30,
-    // borderColor: '#FDD835',
+    marginTop: 30,
     gap: 12,
     height: ITEM_HEIGHT * 3,
-    
   },
   picker: {
     width: width / 4,
@@ -134,8 +119,8 @@ const styles = StyleSheet.create({
   selectedOverlay: {
     position: 'absolute',
     top: ITEM_HEIGHT,
-    left: "10%",
-    right: "10%",
+    left: '10%',
+    right: '10%',
     height: ITEM_HEIGHT,
     borderColor: colors.red,
     borderTopWidth: 2,
@@ -155,18 +140,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
-  button: {
-    marginTop: 20,
-    backgroundColor: '#FDD835',
-    paddingVertical: 12,
-    paddingHorizontal: 60,
-    borderRadius: 25,
-  },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'black',
-  },
 });
 
-export default CommonDatePicker;
+export default CommonTimePicker;

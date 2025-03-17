@@ -93,12 +93,10 @@ const Astrologers = () => {
                                     <Text style={styles.astrologerName}>{item.name}</Text>
                                     <Text style={styles.chattxt}>Chat</Text>
                                 </View>
-
                             </View>
                         </View>
                     )
                 })}
-
             </ScrollView>
         </View>
 

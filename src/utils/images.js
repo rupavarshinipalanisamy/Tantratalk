@@ -17,5 +17,29 @@ export const Images = {
     home:require("../../assets/Images/home.png"),
     sidemenubg:require("../../assets/Images/sidemenubg.png"),
     astroconul:require("../../assets/Images/astrologyconsul.jpg"),
+    AppRegistry:require("../../assets/Images/astrologyconsul.jpg"),
+    aquarius:require("../../assets/Images/zodiac/aqarius.webp"),
+    aries:require("../../assets/Images/zodiac/aries.webp"),
+    cancer:require("../../assets/Images/zodiac/cancer.webp"),
+    capricorn:require("../../assets/Images/zodiac/capricorn.webp"),
+    gemini:require("../../assets/Images/zodiac/gemini.webp"),
+    leo:require("../../assets/Images/zodiac/leo.webp"),
+    libra:require("../../assets/Images/zodiac/libra.webp"),
+    pisces:require("../../assets/Images/zodiac/pisces.webp"),
+    saggitaurus:require("../../assets/Images/zodiac/saggitaurus.webp"),
+    taurus:require("../../assets/Images/zodiac/taurus.webp"),
+    virgo:require("../../assets/Images/zodiac/virgo.webp"),
+
+
+
+
+
+
+
+
+
+
+
+
 
 };

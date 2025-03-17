@@ -14,6 +14,9 @@ export const ScreenName={
     consultationForm:"consultationForm",
     Astrologers:"Astrologers",
     Products:"Products",
-    DailyHoro:"DailyHoro"
+    DailyHoro:"DailyHoro",
+    birthtime:"birthtime",
+    birthPlace:"birthPlace",
+    horoScope:"horoScope"
 
 }
