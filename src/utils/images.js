@@ -29,17 +29,6 @@ export const Images = {
     saggitaurus:require("../../assets/Images/zodiac/saggitaurus.webp"),
     taurus:require("../../assets/Images/zodiac/taurus.webp"),
     virgo:require("../../assets/Images/zodiac/virgo.webp"),
-
-
-
-
-
-
-
-
-
-
-
-
+    couple:require("../../assets/Images/Couple.png"),
 
 };

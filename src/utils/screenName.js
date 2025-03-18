@@ -17,6 +17,15 @@ export const ScreenName={
     DailyHoro:"DailyHoro",
     birthtime:"birthtime",
     birthPlace:"birthPlace",
-    horoScope:"horoScope"
+    horoScope:"horoScope",
+    freeKundli:"freeKundli",
+    freeKudliDetails:"freeKudliDetails",
+    matchingKundliForm:"matchingKundliForm",
+    matchingKundliForm2:"matchingKundliForm2",
+    CompatabilityScore:"CompatabilityScore",
+    wallet:"wallet"
+
+
+
 
 }

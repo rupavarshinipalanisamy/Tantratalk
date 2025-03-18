@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignSelf: "center",
         width: "95%", // Makes it wider but not full screen
-        marginBottom:120
+        marginBottom:"20%"
     },
     submitButtonText: {
         color: colors.white,

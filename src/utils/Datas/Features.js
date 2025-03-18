@@ -13,15 +13,15 @@ export const FeaturesData=[
         id:2,
         title1:"Free",
         title2:"Kundli",
-        img:Images.freeKundli
-        // navigation:ScreenName.
+        img:Images.freeKundli,
+        navigation:ScreenName.freeKundli
     },
     {
         id:3,
         title1:"Matching",
         title2:"Kundli",
         // img:
-        // navigation:ScreenName.
+        navigation:ScreenName.matchingKundliForm
     },
     {
         id:4,

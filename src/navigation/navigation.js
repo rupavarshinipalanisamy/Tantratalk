@@ -21,6 +21,12 @@ import DailyHoroscope from '../screens/dailyHoroscope';
 import BirthTimeScreen from '../screens/birthTimeScreen';
 import BirthPlaceScreen from '../screens/birthPlace';
 import HoroScope from '../screens/horoscope';
+import FreeKundli from '../screens/freeKundli';
+import FreeKudliDetails from '../screens/freeKundliDetails';
+import MatchingKundliForm from '../screens/matchingKundliForm';
+import MatchingKundliForm2 from '../screens/MatchingKundliForm2';
+import CompatabilityScore from '../screens/compatabilityScore';
+import Wallet from '../screens/wallet';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +53,12 @@ const Navigation = () => {
                     <Stack.Screen name={ScreenName?.birthtime} component={BirthTimeScreen} />
                     <Stack.Screen name={ScreenName?.birthPlace} component={BirthPlaceScreen} />
                     <Stack.Screen name={ScreenName?.horoScope} component={HoroScope} />
+                    <Stack.Screen name={ScreenName?.freeKundli} component={FreeKundli} />
+                    <Stack.Screen name={ScreenName?.freeKudliDetails} component={FreeKudliDetails} />
+                    <Stack.Screen name={ScreenName?.matchingKundliForm} component={MatchingKundliForm} />
+                    <Stack.Screen name={ScreenName?.matchingKundliForm2} component={MatchingKundliForm2} />
+                    <Stack.Screen name={ScreenName?.CompatabilityScore} component={CompatabilityScore} />
+                    <Stack.Screen name={ScreenName?.wallet} component={Wallet} />
 
 
                 </Stack.Navigator>

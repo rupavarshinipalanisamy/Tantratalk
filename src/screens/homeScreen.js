@@ -62,7 +62,7 @@ const SearchBar = () => {
 const { width, height } = Dimensions.get("window");
 const Features = ({navigation}) => {
     return (
-        <ScrollView style={styles.featuresContainer} horizontal={true}>
+        <ScrollView style={styles.featuresContainer} horizontal={true} showsHorizontalScrollIndicator={false}>
             {FeaturesData.map((item, index) => {
                 return (
                     <TouchableOpacity key={index} style={styles.featureItem} onPress={()=>navigation.navigate(item.navigation)}>
@@ -83,7 +83,7 @@ const Features = ({navigation}) => {
 const Astrologers = () => {
     return (
         <View >
-            <ScrollView style={[styles.featuresContainer, { backgroundColor: "transparent" }]} horizontal={true}>
+            <ScrollView style={[styles.featuresContainer, { backgroundColor: "transparent" }]} horizontal={true} showsHorizontalScrollIndicator={false}>
                 {AstrologersData.map((item, index) => {
                     return (
                         <View key={index} style={styles.featureItem}>
@@ -235,7 +235,8 @@ const styles = StyleSheet.create({
         color: "#333",
     },
     featuresContainer: {
-        flexDirection: "row"
+        flexDirection: "row",
+        marginBottom:5
     },
     featureItem: {
         alignItems: "center",

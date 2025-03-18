@@ -43,13 +43,13 @@ const DrawerComponent = ({ children }) => {
           {/* Navigation List */}
           <View style={styles.navList}>
             {NavBarData.map((item, index) => (
-              <View key={index} style={styles.navItemContainer}>
+              <TouchableOpacity key={index} style={styles.navItemContainer} onPress={()=>navigation.navigate(item.navigation)}>
                 <View style={styles.navItem}>
                   <Image source={item.img} style={styles.navIcon} />
                   <Text style={styles.navText}>{item.name}</Text>
                 </View>
                 <View style={styles.separator} />
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
 

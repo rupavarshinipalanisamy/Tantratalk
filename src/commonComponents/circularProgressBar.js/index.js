@@ -2,7 +2,13 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
-const CircularProgressBar = ({ progress = 50, size = 60, strokeWidth = 6, color = "#4CAF50", backgroundColor = "#E0E0E0" }) => {
+const CircularProgressBar = ({
+    progress = 50,
+    size = 30,  // Reduced size
+    strokeWidth = 3,  // Adjusted stroke width
+    color = "#4CAF50",
+    backgroundColor = "#E0E0E0"
+}) => {
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
     const strokeDashoffset = circumference - (progress / 100) * circumference;
@@ -33,7 +39,7 @@ const CircularProgressBar = ({ progress = 50, size = 60, strokeWidth = 6, color 
                 />
             </Svg>
             {/* Progress Text */}
-            <Text style={styles.text}>{progress}%</Text>
+            <Text style={[styles.text, { fontSize: size / 5 }]}>{progress}%</Text>
         </View>
     );
 };
@@ -41,7 +47,6 @@ const CircularProgressBar = ({ progress = 50, size = 60, strokeWidth = 6, color 
 const styles = StyleSheet.create({
     text: {
         position: "absolute",
-        fontSize: 12,  // Reduced font size
         fontWeight: "bold",
         color: "#333",
     },

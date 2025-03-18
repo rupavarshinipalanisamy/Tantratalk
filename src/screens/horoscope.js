@@ -12,26 +12,16 @@ const dayarr = [
     { id: 3, day: "Tomorrow" }
 ];
 const types = [
-    { id: 1, type: "Love", color: "pink" },
-    { id: 2, type: "Career", color: "pink" },
+    { id: 1, type: "Love", color: "red" },
+    { id: 2, type: "Career", color: "blue" },
     { id: 3, type: "Health", color: "green" }
 ];
 
 const HoroScope = ({ route }) => {
     const { item } = route.params || {};
-    const [progress, setProgress] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setProgress((prev) => (prev >= 100 ? 0 : prev + 10));
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
-
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} >
             <View style={styles.screenContainer}>
                 {/* Image Wrapper */}
                 <View style={styles.imageWrapper}>
@@ -63,7 +53,7 @@ const HoroScope = ({ route }) => {
                             height: 70,
                             width: 120
                         }]}>
-                            <Text style={styles.daystxt}>{item.day}</Text>
+                            <Text style={styles.todaytxt}>{item.day}</Text>
                             <Text style={styles.datetxt}>2 october</Text>
                         </View>
                     ))}
@@ -77,12 +67,30 @@ const HoroScope = ({ route }) => {
                             alignItems: "center",
                             justifyContent: "center"
                         }]}>
-                            <Text style={styles.daystxt}>{item.type}</Text>
-                            <CircularProgressBar progress={progress} size={120} color="blue" />
+                            <CircularProgressBar progress={"70"} size={45} color={item.color} />
+                            <Text style={[styles.daystxt, { color: item.color }]}>{item.type}</Text>
                             {/* <Text style={styles.datetxt}>2 october</Text> */}
                         </View>
                     ))}
                 </ScrollView>
+                <View style={styles.whitecard}>
+                <Text style={[styles.daystxt, { color:"red",marginBottom:5 }]}>Love</Text>
+                    <Text> We’ve trained a model called ChatGPT which interacts in a conversational way.
+                        The dialogue format makes it possible for ChatGPT to answer follow-up questions,
+                        admit its mistakes, challenge incorrect premises, and reject inappropriate requests.</Text>
+                </View>
+                <View style={[styles.whitecard,{marginTop:10}]}>
+                <Text style={[styles.daystxt, { color:"blue",marginBottom:5 }]}>Career</Text>
+                    <Text> We’ve trained a model called ChatGPT which interacts in a conversational way.
+                        The dialogue format makes it possible for ChatGPT to answer follow-up questions,
+                        admit its mistakes, challenge incorrect premises, and reject inappropriate requests.</Text>
+                </View>
+                <View style={[styles.whitecard,{marginTop:10}]}>
+                <Text style={[styles.daystxt, { color:"green",marginBottom:5 }]}>Career</Text>
+                    <Text> We’ve trained a model called ChatGPT which interacts in a conversational way.
+                        The dialogue format makes it possible for ChatGPT to answer follow-up questions,
+                        admit its mistakes, challenge incorrect premises, and reject inappropriate requests.</Text>
+                </View>
             </View>
         </ScrollView>
     );
@@ -93,6 +101,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.lightgrey,
         alignItems: "center",
+        marginBottom:10
     },
     imageWrapper: {
         width: "100%",
@@ -113,9 +122,20 @@ const styles = StyleSheet.create({
         width: "95%",
         backgroundColor: "rgba(189, 44, 60, 0.9)", // 50% opacity
         borderRadius: 8,
-        zIndex: 1,
+        // zIndex: 1,
         marginTop: -50,
         padding: 15,
+    },
+    whitecard: {
+        width: "95%",
+        backgroundColor: colors.white,
+        borderRadius: 8,
+        padding: 15,
+        elevation: 1,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
     },
     predictiontxt: {
         fontSize: 14,
@@ -148,10 +168,17 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 4,
     },
-    daystxt: {
+    todaytxt: {
         fontSize: 16,
         fontWeight: "bold",
         color: colors.red,
+        marginTop: 5
+    },
+    daystxt: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginTop: 5
+
     },
     datetxt: {
         fontSize: 15,

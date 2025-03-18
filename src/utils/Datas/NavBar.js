@@ -23,8 +23,8 @@ export const NavBarData=[
     },
     {
         id:4,
-        name:"payment",
-        navigation:ScreenName.homeScreen,
+        name:"wallet",
+        navigation:ScreenName.wallet,
         img:Images.payment
 
     }
