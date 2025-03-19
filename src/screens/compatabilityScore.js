@@ -68,7 +68,7 @@ const CompatabilityScore = () => {
                 </ScrollView>
                 <View style={styles.whitecard}>
                     <Text style={[styles.carddaystxt, { color: "red", marginBottom: 5 }]}>Love --Bhakoot Koot</Text>
-                    <Text> It represents emotional bonding, harmony, and overall compatibility between partners. Bhakoot is considered a significant factor as it governs the couple’s prosperity, financial stability, and mutual well-being.</Text>
+                    <Text style={{color:colors.black}}> It represents emotional bonding, harmony, and overall compatibility between partners. Bhakoot is considered a significant factor as it governs the couple’s prosperity, financial stability, and mutual well-being.</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
                     <Text style={[styles.carddaystxt, { color: "purple", marginBottom: 5 }]}>Compatibility --Varna Koot</Text>
@@ -83,12 +83,12 @@ const CompatabilityScore = () => {
                     <Text>Naadi Koot in matchmaking assesses genetic compatibility and health factors between partners. It helps prevent potential conflicts related to health and offspring. A match in the same Naadi is generally avoided for better marital harmony.</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
-                    <Text style={[styles.carddaystxt, { color: "brown", marginBottom: 5 }]}>Dominance --Vasya Koot	</Text>
+                    <Text style={[styles.carddaystxt, { color: "brown", marginBottom: 5 }]}>Dominance --Vasya Koot</Text>
                     <Text>Vasya Koot determines mutual attraction and control between partners. It ensures harmony and balance in a relationship. Higher compatibility leads to a stronger bond..</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
                     <Text style={[styles.carddaystxt, { color: "teal", marginBottom: 5 }]}>Physical compatibility --Yoni Koot</Text>
-                    <Text> Yoni Koot represents physical and emotional compatibility between partners. It is based on animal symbolism, influencing intimacy and understanding. A higher score ensures better harmony in marriage.</Text>
+                    <Text>Yoni Koot represents physical and emotional compatibility between partners. It is based on animal symbolism, influencing intimacy and understanding. A higher score ensures better harmony in marriage.</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
                     <Text style={[styles.carddaystxt, { color: "#E4C16F", marginBottom: 5 }]}>Temperament --Gana Koot</Text>
