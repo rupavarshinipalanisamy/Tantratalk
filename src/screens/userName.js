@@ -7,8 +7,24 @@ import { Button } from '../commonComponents/Button'
 import AnimatedImage from '../commonComponents/AnimatedImage'
 import Navigation from '../navigation/navigation'
 import { ScreenName } from '../utils/screenName'
+import { useFormik } from 'formik';
+import {  FullNameSchema } from '../utils/validationSchema'
 
-const UserName = ({navigation}) => {
+const UserName = ({ navigation }) => {
+    const formik = useFormik({
+        initialValues: {
+            fullname: '',
+        },
+        onSubmit: (values) => handleNavigation(values),
+        validationSchema: FullNameSchema
+    });
+
+    const handleNavigation = (values) => {
+        navigation.navigate(ScreenName.genderScreen, { name:formik.values.fullname});
+    };
+    const handleNext = () => {
+        formik.handleSubmit(); // Ensures validation happens first
+    };
     return (
         <View style={commonstyles.container}>
             <ImageBackground source={Images.loginbg} style={commonstyles.imgbackground} resizeMode="cover">
@@ -18,9 +34,31 @@ const UserName = ({navigation}) => {
                 <View style={commonstyles.frontCard}>
                     <Text style={commonstyles.h1text}>Register</Text>
                     <View style={commonstyles.inputContainer}>
-                        <InputField isLabel={true} label="Full Name" borderColor="#00b1f3" />
+                        <View>
+                            <InputField
+                                isLabel={true}
+                                label="Full Name"
+                                fullWidth={true}
+                                borderColor="#00b1f3"
+                                onBlur={formik.handleBlur('fullname')}
+                                value={formik.values.fullname}
+                                onChange={(value) => formik.setFieldValue('fullname', value)}
+                            />
+                            {formik.touched.fullname &&
+                                formik.errors.fullname && (
+                                    <Text style={commonstyles.errortxt}>
+                                        {formik.errors.fullname}
+                                    </Text>
+                                )}
+                        </View>
+
                         <View style={{ marginTop: 50 }}>
-                            <Button title="NEXT" onPress={() => navigation.navigate(ScreenName.genderScreen)} fullWidth={true} />
+                            <Button
+                                title="NEXT"
+                                onPress={handleNext}
+                                fullWidth={true}
+                            />
+
                         </View>
                     </View>
                 </View>

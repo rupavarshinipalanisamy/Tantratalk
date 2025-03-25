@@ -23,7 +23,10 @@ export const ScreenName={
     matchingKundliForm:"matchingKundliForm",
     matchingKundliForm2:"matchingKundliForm2",
     CompatabilityScore:"CompatabilityScore",
-    wallet:"wallet"
+    wallet:"wallet",
+    chat:"chat",
+    productDescription:"ProductDescription",
+    password:"password"
 
 
 

@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { commonstyles } from '../commonComponents/commonStyles'
 import { Images } from '../utils/images'
 import { InputField } from '../commonComponents/inputField'
@@ -10,21 +10,23 @@ import { ScreenName } from '../utils/screenName'
 import { useFormik } from 'formik'
 import CommonTimePicker from '../commonComponents/TimePicker'
 
-const BirthTimeScreen = ({ navigation }) => {
+const BirthTimeScreen = ({ navigation, route }) => {
     const [isModalVisible, setModalVisible] = useState(true);
     const [selectedDate, setSelectedDate] = useState("1 Jan 2000");
+
+    const { name, gender, birthdate } = route.params || {};
 
     const toggleModal = () => setModalVisible(!isModalVisible);
     const formik = useFormik({
         initialValues: {
-            startDate: '',
-            endDate: '',
+            birthtime: ""
         },
         // validationSchema: validationSchema,
-        // onSubmit: () => handleSubmitLeave(),
+        onSubmit: (values) => handleNavigation(values),
     });
-    const handleDateSelect = (date) => {
-        console.log("Selected Date:", date);
+    const handleNavigation = (values) => {
+        console.log("navigate");
+        navigation.navigate(ScreenName.birthPlace, { name, gender, birthdate,birthtime:formik.values.birthtime });
     };
     return (
         <View style={commonstyles.container}>
@@ -34,8 +36,11 @@ const BirthTimeScreen = ({ navigation }) => {
                 <View style={commonstyles.backCard} />
                 <View style={commonstyles.frontCard}>
                     <Text style={commonstyles.h1text}>Register</Text>
-                    <CommonTimePicker />
-                    <Button title="NEXT" onPress={() => navigation.navigate(ScreenName.birthPlace)} fullWidth={true} style={{ marginTop: 50 }} />
+                    <CommonTimePicker onDateChange={(time) => {
+                        console.log("Selected time:", time);
+                        formik.setFieldValue("birthtime", time);
+                    }} />
+                    <Button title="NEXT" onPress={() => formik.handleSubmit()} fullWidth={true} style={{ marginTop: 50 }} />
                 </View>
             </ImageBackground>
         </View>

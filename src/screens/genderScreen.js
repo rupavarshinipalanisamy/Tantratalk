@@ -7,10 +7,28 @@ import { Images } from "../utils/images";
 import { Button } from "../commonComponents/Button";
 import AnimatedImage from "../commonComponents/AnimatedImage";
 import { ScreenName } from "../utils/screenName";
+import { useFormik } from 'formik';
+import { GenderSchema } from "../utils/validationSchema";
 
-const Gender = ({ navigation }) => {
-    const [selectedGender, setSelectedGender] = useState(null);
+const Gender = ({ navigation, route }) => {
 
+    const { name } = route.params || {};
+    const formik = useFormik({
+        initialValues: {
+            gender: "",
+        },
+        validationSchema: GenderSchema,
+        onSubmit: (values) => handleNavigation(values),
+    });
+
+    const handleNavigation = (values) => {
+        console.log("navigate");
+
+        navigation.navigate(ScreenName.birthScreen, { name, gender: formik.values.gender });
+    };
+    const handleNext = () => {
+        formik.handleSubmit(); // Ensures validation happens first
+    };
     return (
         <View style={commonstyles.container}>
             <ImageBackground source={Images.loginbg} style={commonstyles.imgbackground} resizeMode="cover">
@@ -19,7 +37,7 @@ const Gender = ({ navigation }) => {
                 <View style={commonstyles.backCard} />
                 <View style={commonstyles.frontCard}>
                     <Text style={commonstyles.h1text}>Register</Text>
-                    <View style={{ alignSelf: "flex-start",marginLeft:10,top:20}}>
+                    <View style={{ alignSelf: "flex-start", marginLeft: 10, top: 20 }}>
                         <Text style={commonstyles.inputlabel}>Please Select your Gender</Text>
                     </View>
 
@@ -30,8 +48,8 @@ const Gender = ({ navigation }) => {
                         alignItems: "center",
                     }}>
                         <TouchableOpacity
-                            style={[styles.genderBox, selectedGender === "male" && styles.selected]}
-                            onPress={() => setSelectedGender("male")}
+                            style={[styles.genderBox, formik.values.gender === "male" && styles.selected]}
+                            onPress={() => formik.setFieldValue("gender", "male")}
                         >
                             <AppIcon
                                 name="male"
@@ -40,11 +58,11 @@ const Gender = ({ navigation }) => {
                                 library="Fontisto"
 
                             />
-                            <Text style={[styles.genderText, selectedGender === "male" && styles.selectedText]}>Male</Text>
+                            <Text style={[styles.genderText, formik.values.gender === "male" && styles.selectedText]}>Male</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[styles.genderBox, selectedGender === "female" && styles.selected]}
-                            onPress={() => setSelectedGender("female")}
+                            style={[styles.genderBox, formik.values.gender === "female" && styles.selected]}
+                            onPress={() => formik.setFieldValue("gender", "female")}
                         >
                             <AppIcon
                                 name="female"
@@ -53,11 +71,17 @@ const Gender = ({ navigation }) => {
                                 library="Fontisto"
 
                             />
-                            <Text style={[styles.genderText, selectedGender === "female" && styles.selectedText]}>Female</Text>
+                            <Text style={[styles.genderText, formik.values.gender === "female" && styles.selectedText]}>Female</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={{ alignSelf: "flex-start" }}>
+                        {formik.errors.gender && formik.touched.gender && (
+                            <Text style={commonstyles.errortxt}>{formik.errors.gender}</Text>
+                        )}
+                    </View>
+
                     <View style={{ width: "100%", marginTop: 50 }}>
-                        <Button title="NEXT" onPress={() => navigation.navigate(ScreenName.birthScreen)} fullWidth={true} />
+                        <Button title="NEXT" onPress={handleNext} fullWidth={true} />
 
                     </View>
                 </View>
@@ -77,7 +101,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '500',
         marginBottom: 5,
-        color:colors.black1,
+        color: colors.black1,
     },
     genderContainer: {
         flexDirection: "row",
@@ -87,7 +111,7 @@ const styles = StyleSheet.create({
     genderBox: {
         width: "35%",
         height: "65%",
-        borderRadius:10,
+        borderRadius: 10,
         backgroundColor: "#fff",
         justifyContent: "center",
         alignItems: "center",

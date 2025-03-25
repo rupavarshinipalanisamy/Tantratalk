@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { commonstyles } from '../commonComponents/commonStyles'
 import { Images } from '../utils/images'
 import { InputField } from '../commonComponents/inputField'
@@ -7,8 +7,30 @@ import { Button } from '../commonComponents/Button'
 import AnimatedImage from '../commonComponents/AnimatedImage'
 import Navigation from '../navigation/navigation'
 import { ScreenName } from '../utils/screenName'
+import { useFormik } from 'formik';
+import { birthplace } from '../utils/validationSchema'
 
-const UserName = ({navigation}) => {
+
+const BirthPlaceScreen = ({ navigation, route }) => {
+    const { name, gender, birthdate, birthtime } = route.params || {};
+
+    const formik = useFormik({
+        initialValues: {
+            birthplace: '',
+        },
+        onSubmit: (values) => handleNavigation(values),
+        validationSchema: birthplace
+    });
+    const handleNavigation = (values) => {
+        navigation.navigate(ScreenName.password, { name, gender, birthdate, birthtime, birthplace: formik.values.birthplace });
+    };
+    const handleNext = () => {
+        formik.handleSubmit(); // Ensures validation happens first
+    };
+    useEffect(() => {
+        console.log(name, gender, birthdate, birthtime,"detailsss");
+
+    }, []);
     return (
         <View style={commonstyles.container}>
             <ImageBackground source={Images.loginbg} style={commonstyles.imgbackground} resizeMode="cover">
@@ -18,9 +40,26 @@ const UserName = ({navigation}) => {
                 <View style={commonstyles.frontCard}>
                     <Text style={commonstyles.h1text}>Register</Text>
                     <View style={commonstyles.inputContainer}>
-                        <InputField isLabel={true} label="City" borderColor="#00b1f3" />
+                        <View>
+                            <InputField
+                                isLabel={true}
+                                label="City"
+                                fullWidth={true}
+                                borderColor="#00b1f3"
+                                onBlur={formik.handleBlur('birthplace')}
+                                value={formik.values.birthplace}
+                                onChange={(value) => formik.setFieldValue('birthplace', value)}
+                            />
+                            {formik.touched.birthplace &&
+                                formik.errors.birthplace && (
+                                    <Text style={commonstyles.errortxt}>
+                                        {formik.errors.birthplace}
+                                    </Text>
+                                )}
+                        </View>
+                        {/* <InputField isLabel={true} label="City" borderColor="#00b1f3" /> */}
                         <View style={{ marginTop: 50 }}>
-                            <Button title="SUBMIT" onPress={() => navigation.navigate(ScreenName.homeScreen)} fullWidth={true} />
+                            <Button title="SUBMIT" onPress={handleNext} fullWidth={true} />
                         </View>
                     </View>
                 </View>
@@ -30,4 +69,4 @@ const UserName = ({navigation}) => {
     )
 }
 
-export default UserName
+export default BirthPlaceScreen

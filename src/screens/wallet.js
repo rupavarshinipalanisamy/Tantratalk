@@ -14,21 +14,21 @@ const walletAmounts = [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000];
 const WalletScreen = () => {
     const [walletBalance, setWalletBalance] = useState(0);
 
-    useEffect(() => {
-        fetchWalletBalance();
-    }, []);
+    // useEffect(() => {
+    //     fetchWalletBalance();
+    // }, []);
 
-    const fetchWalletBalance = async () => {
-        try {
-            const response = await fetch(`${config.BACKEND_BASE_URL}/razorpay/wallet-balance`);
-            const data = await response.json();
-            if (data.success) {
-                setWalletBalance(data.balance);
-            }
-        } catch (error) {
-            console.error('Error fetching wallet balance:', error);
-        }
-    };
+    // const fetchWalletBalance = async () => {
+    //     try {
+    //         const response = await fetch(`${config.BACKEND_BASE_URL}/razorpay/wallet-balance`);
+    //         const data = await response.json();
+    //         if (data.success) {
+    //             setWalletBalance(data.balance);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching wallet balance:', error);
+    //     }
+    // };
 
     const formik = useFormik({
         initialValues: {

@@ -10,21 +10,25 @@ import { ScreenName } from '../utils/screenName'
 import { useFormik } from 'formik'
 import CommonDatePicker from '../commonComponents/DatePicker'
 
-const BirthDate = ({ navigation }) => {
+const BirthDate = ({ navigation,route }) => {
+    const { name, gender} = route.params || {};
     const [isModalVisible, setModalVisible] = useState(true);
     const [selectedDate, setSelectedDate] = useState("1 Jan 2000");
 
     const toggleModal = () => setModalVisible(!isModalVisible);
     const formik = useFormik({
         initialValues: {
-            startDate: '',
-            endDate: '',
+            birthDate: ""
         },
-        // validationSchema: validationSchema,
-        // onSubmit: () => handleSubmitLeave(),
+        onSubmit: (values) => handleNavigation(values),
     });
-    const handleDateSelect = (date) => {
-        console.log("Selected Date:", date);
+
+    const handleNavigation = (values) => {
+        console.log("navigate");
+       navigation.navigate(ScreenName.birthtime, {name,gender, birthdate: values.birthDate });
+    };
+    const handleNext = () => {
+        formik.handleSubmit();
     };
     return (
         <View style={commonstyles.container}>
@@ -34,8 +38,14 @@ const BirthDate = ({ navigation }) => {
                 <View style={commonstyles.backCard} />
                 <View style={commonstyles.frontCard}>
                     <Text style={commonstyles.h1text}>Register</Text>
-                    <CommonDatePicker />
-                    <Button title="NEXT" onPress={() => navigation.navigate(ScreenName.birthtime)} fullWidth={true} style={{ marginTop: 50 }} />
+                    <CommonDatePicker
+                        onDateChange={(date) => {
+                            console.log("Selected Date:", `${date.day} ${date.month} ${date.year}`);
+                            formik.setFieldValue("birthDate", `${date.day} ${date.month} ${date.year}`);
+                        }}
+                    />
+
+                    <Button title="NEXT" onPress={handleNext} fullWidth={true} style={{ marginTop: 50 }} />
                 </View>
             </ImageBackground>
         </View>

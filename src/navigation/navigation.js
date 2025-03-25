@@ -6,7 +6,7 @@ import LoginScreen from '../screens/loginScreen';
 import UserName from '../screens/userName';
 import Gender from '../screens/genderScreen';
 import BirthDate from '../screens/birthScreen';
-import HomeScreen from '../screens/homeScreen';
+import HomeScreen from '../screens/HomeScreen/homeScreen';
 import BookPooja from '../screens/bookPooja';
 import OrderHistory from '../screens/orderHistory';
 import Payment from '../screens/payment';
@@ -27,6 +27,9 @@ import MatchingKundliForm from '../screens/matchingKundliForm';
 import MatchingKundliForm2 from '../screens/MatchingKundliForm2';
 import CompatabilityScore from '../screens/compatabilityScore';
 import Wallet from '../screens/wallet';
+import ChatScreen from '../screens/chatScreen';
+import ProductDescription from '../screens/productsDescription';
+import Password from '../screens/password';
 
 const Stack = createStackNavigator();
 
@@ -34,7 +37,7 @@ const Navigation = () => {
     return (
         <NavigationContainer>
             <DrawerComponent>
-                <Stack.Navigator initialRouteName={ScreenName?.login} screenOptions={{ headerShown: false }}>
+                <Stack.Navigator initialRouteName={ScreenName?.login} screenOptions={{ headerShown: false, animation: 'none', }}>
                     <Stack.Screen name={ScreenName?.login} component={LoginScreen} />
                     <Stack.Screen name={ScreenName?.UserName} component={UserName} />
                     <Stack.Screen name={ScreenName?.genderScreen} component={Gender} />
@@ -59,8 +62,9 @@ const Navigation = () => {
                     <Stack.Screen name={ScreenName?.matchingKundliForm2} component={MatchingKundliForm2} />
                     <Stack.Screen name={ScreenName?.CompatabilityScore} component={CompatabilityScore} />
                     <Stack.Screen name={ScreenName?.wallet} component={Wallet} />
-
-
+                    <Stack.Screen name={ScreenName?.chat} component={ChatScreen} />
+                    <Stack.Screen name={ScreenName?.productDescription} component={ProductDescription} />
+                    <Stack.Screen name={ScreenName?.password} component={Password} />
                 </Stack.Navigator>
             </DrawerComponent>
         </NavigationContainer>

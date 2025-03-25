@@ -5,6 +5,7 @@ import { CommonHeader } from '../commonComponents/components';
 import { colors } from '../utils/colors';
 import { AstrologersData } from '../utils/Datas/Astrologers';
 import AppIcon from '../commonComponents/Icons/Icons';
+import { ScreenName } from '../utils/screenName';
 
 const astrologers = [
     { id: '1', name: 'Samrikasha', location: 'India', experience: '5 Years', image: 'https://via.placeholder.com/50' },
@@ -12,17 +13,17 @@ const astrologers = [
     { id: '3', name: 'Nidhi Chopra', location: 'India', experience: '6 Years', image: 'https://via.placeholder.com/50' },
 ];
 
-const Astrologers = () => {
+const Astrologers = ({navigation}) => {
     return (
         <View style={styles.container}>
             {/* Header */}
             <CommonHeader name="Astrologers" />
             {/* Astrologer List */}
             <View style={{ paddingHorizontal: 12, flex: 1 }}>
-
                 <FlatList
                     data={AstrologersData}
-                    keyExtractor={(item, index) => item.id.toString()}
+                    keyExtractor={(item) => item.id.toString()} // Ensure each key is unique
+                    showsVerticalScrollIndicator={false}
                     renderItem={({ item }) => (
                         <View style={styles.card}>
                             <View style={{ alignItems: "center" }}>
@@ -56,7 +57,7 @@ const Astrologers = () => {
 
                                 <Text style={styles.experience}>Exp.{item.experience}</Text>
                             </View>
-                            <TouchableOpacity style={{ borderWidth: 1, borderColor: "#FFC107", paddingHorizontal: 25, paddingVertical: 5, borderRadius: 8 }}>
+                            <TouchableOpacity onPress={()=>navigation.navigate(ScreenName.chat)} style={{ borderWidth: 1, borderColor: "#FFC107", paddingHorizontal: 25, paddingVertical: 5, borderRadius: 8 }} >
                                 <Text style={styles.chat}>Chat</Text>
                             </TouchableOpacity>
                         </View>
