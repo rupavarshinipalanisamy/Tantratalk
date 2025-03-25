@@ -47,10 +47,15 @@ export const commonstyles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '500',
         marginBottom: 5,
-        color:colors.red,
+        color: colors.red,
     },
     screencontainer: {
         flex: 1,
         backgroundColor: colors.lightgrey,
     },
+    errortxt: {
+        color: 'red',
+        fontSize: 12,
+  
+    }
 });

@@ -24,7 +24,11 @@ const days = Array.from({ length: 31 }, (_, i) =>
 const years = Array.from({ length: 50 }, (_, i) => (1990 + i).toString());
 
 const CommonDatePicker = ({
-  initialDate = { month: 'Jan', day: '01', year: '1990' },
+  initialDate = {
+    month: months[new Date().getMonth()],
+    day: new Date().getDate().toString().padStart(2, '0'),
+    year: new Date().getFullYear().toString(),
+  },
   onDateChange,
   buttonLabel = 'Next',
   containerStyle,
@@ -43,7 +47,7 @@ const CommonDatePicker = ({
     scrollToIndex(months, selectedMonth, monthRef);
     scrollToIndex(days, selectedDay, dayRef);
     scrollToIndex(years, selectedYear, yearRef);
-  }, []);
+  }, [selectedMonth, selectedDay, selectedYear]); 
 
   useEffect(() => {
     if (onDateChange) {
@@ -54,24 +58,33 @@ const CommonDatePicker = ({
   const scrollToIndex = (data, selected, ref) => {
     const index = data.indexOf(selected);
     if (ref.current) {
-      ref.current.scrollTo({ y: index * ITEM_HEIGHT, animated: true });
+      ref.current.scrollTo({ y: index * ITEM_HEIGHT, animated: false });
     }
   };
-
-  const handleScrollEnd = (event, data, setSelected) => {
-    const index = Math.round(event.nativeEvent.contentOffset.y / ITEM_HEIGHT);
-    setSelected(data[index]);
+  const handleScrollEnd = (event, data, setSelected, scrollRef) => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    const index = Math.round(offsetY / ITEM_HEIGHT); // ✅ Ensures proper snapping
+    const selectedValue = data[index];
+  
+    setSelected(selectedValue);
+  
+    // ✅ Force precise scroll alignment to prevent floating-point issues
+    setTimeout(() => {
+      if (scrollRef?.current) {
+        scrollRef.current.scrollTo({ y: index * ITEM_HEIGHT, animated: false });
+      }
+    }, 50);
   };
-
+  
   const renderPicker = (data, selected, setSelected, scrollRef) => (
     <View style={styles.picker}>
       <View style={styles.selectedOverlay} />
       <ScrollView
-        ref={scrollRef}
+        ref={scrollRef} // ✅ Attach ref correctly
         showsVerticalScrollIndicator={false}
         snapToInterval={ITEM_HEIGHT}
         decelerationRate="fast"
-        onMomentumScrollEnd={(event) => handleScrollEnd(event, data, setSelected)}
+        onMomentumScrollEnd={(event) => handleScrollEnd(event, data, setSelected, scrollRef)} // ✅ Pass ref
       >
         <View style={{ height: ITEM_HEIGHT }} />
         {data.map((item, index) => (
@@ -85,6 +98,7 @@ const CommonDatePicker = ({
       </ScrollView>
     </View>
   );
+  
 
   return (
     <View style={[styles.container, containerStyle]}>

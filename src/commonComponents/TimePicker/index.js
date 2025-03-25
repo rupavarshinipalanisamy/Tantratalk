@@ -34,16 +34,28 @@ const CommonTimePicker = ({
   const meridianRef = useRef(null);
 
   useEffect(() => {
-    scrollToIndex(hours, selectedHour, hourRef);
-    scrollToIndex(minutes, selectedMinute, minuteRef);
-    scrollToIndex(meridians, selectedMeridian, meridianRef);
-  }, []);
-
-  useEffect(() => {
     if (onTimeChange) {
       onTimeChange({ hour: selectedHour, minute: selectedMinute, meridian: selectedMeridian });
     }
+    if (hourRef.current) {
+      scrollToIndex(hours, selectedHour, hourRef);
+    }
+    if (minuteRef.current) {
+      scrollToIndex(minutes, selectedMinute, minuteRef);
+    }
+    if (meridianRef.current) {
+      scrollToIndex(meridians, selectedMeridian, meridianRef);
+    }
   }, [selectedHour, selectedMinute, selectedMeridian]);
+  
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToIndex(hours, selectedHour, hourRef);
+      scrollToIndex(minutes, selectedMinute, minuteRef);
+      scrollToIndex(meridians, selectedMeridian, meridianRef);
+    }, 100); // ✅ Add slight delay to prevent flicker
+  }, []);
+  
 
   const scrollToIndex = (data, selected, ref) => {
     const index = data.indexOf(selected);
@@ -52,10 +64,21 @@ const CommonTimePicker = ({
     }
   };
 
-  const handleScrollEnd = (event, data, setSelected) => {
-    const index = Math.round(event.nativeEvent.contentOffset.y / ITEM_HEIGHT);
-    setSelected(data[index]);
+  const handleScrollEnd = (event, data, setSelected, scrollRef) => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    const index = Math.round(offsetY / ITEM_HEIGHT);
+    const selectedValue = data[index];
+  
+    setSelected(selectedValue);
+  
+    // ✅ Force precise alignment after scroll stops
+    setTimeout(() => {
+      if (scrollRef?.current) {
+        scrollRef.current.scrollTo({ y: index * ITEM_HEIGHT, animated: false });
+      }
+    }, 50);
   };
+  
 
   const renderPicker = (data, selected, setSelected, scrollRef) => (
     <View style={styles.picker}>
@@ -65,7 +88,7 @@ const CommonTimePicker = ({
         showsVerticalScrollIndicator={false}
         snapToInterval={ITEM_HEIGHT}
         decelerationRate="fast"
-        onMomentumScrollEnd={(event) => handleScrollEnd(event, data, setSelected)}
+        onMomentumScrollEnd={(event) => handleScrollEnd(event, data, setSelected, scrollRef)}
       >
         <View style={{ height: ITEM_HEIGHT }} />
         {data.map((item, index) => (
@@ -79,6 +102,7 @@ const CommonTimePicker = ({
       </ScrollView>
     </View>
   );
+  
 
   return (
     <View style={[styles.container, containerStyle]}>

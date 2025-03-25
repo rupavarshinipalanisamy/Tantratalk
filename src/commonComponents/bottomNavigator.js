@@ -4,12 +4,16 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Svg, { Path } from 'react-native-svg';
 import { colors } from '../utils/colors';
 import { Images } from '../utils/images';
+import AppIcon from './Icons/Icons';
+import { ScreenName } from '../utils/screenName';
+import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 const HEIGHT = 70; // Height of the Bottom Navbar
 const CURVE_RADIUS = 25; // Controls how round the curve is
 
-const BottomNavigationBar = ({ navigation }) => {
+const BottomNavigationBar = () => {
+  const navigation =useNavigation()
   return (
     <View style={styles.container}>
       {/* SVG Background with a Smooth Center Curve */}
@@ -33,27 +37,59 @@ const BottomNavigationBar = ({ navigation }) => {
 
       {/* Bottom Navigation Icons */}
       <View style={styles.iconRow}>
-        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Screen1')}>
-          <Icon name="notebook-outline" size={24} color="#8E8E8E" />
+        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate(ScreenName.chat)}>
+          <AppIcon
+            name="chatbubbles-outline"
+            size={25}
+            color={colors.grey6}
+            library="Ionicons"
+
+          />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Screen2')}>
-          <Icon name="notebook-outline" size={24} color="#8E8E8E" />
+        <TouchableOpacity style={[styles.iconButton,{marginRight:50}]} onPress={() => navigation.navigate('Screen2')}>
+
+          <AppIcon
+            name="calendar-outline"
+            size={25}
+            color={colors.grey6}
+            library="Ionicons"
+
+          />
         </TouchableOpacity>
 
         {/* Floating Button */}
         <View style={styles.floatingButtonContainer}>
-          <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('MainScreen')}>
-            <Image source={Images.home} style={{ height: 20, width: 20, color: colors.red }} />
+          <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate(ScreenName.Products)}>
+            <AppIcon
+              name="cart-outline"
+              size={25}
+              color={colors.white}
+              library="Ionicons"
+
+            />
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Screen3')}>
-          <Icon name="bookmark-outline" size={24} color="#8E8E8E" />
+        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate(ScreenName.homeScreen)}>
+          <AppIcon
+            name="home-outline"
+            size={25}
+            color={colors.grey6}
+            library="Ionicons"
+
+          />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Screen4')}>
-          <Icon name="phone-outline" size={24} color="#8E8E8E" />
+        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate(ScreenName.wallet)}>
+          {/* <Icon name="phone-outline" size={24} color="#8E8E8E" /> */}
+          <AppIcon
+            name="wallet-outline"
+            size={25}
+            color={colors.grey6}
+            library="Ionicons"
+
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -88,7 +124,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   iconButton: {
-    padding:10,
+    padding: 10,
   },
   floatingButtonContainer: {
     position: 'absolute',

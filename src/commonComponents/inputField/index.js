@@ -27,6 +27,7 @@ export const InputField = ({
   textColor = 'black',
   placeholderTextColor = '#afafaf',
   borderWidth = 1,
+  secureTextEntry=false
 }) => {
   return (
     <View style={{ width: '100%' }}>
@@ -62,6 +63,7 @@ export const InputField = ({
             // height: multiline,
           }}
           multiline={multiline}
+          secureTextEntry={secureTextEntry}
           editable={!disabled}
           onKeyPress={KeyClick}
           autoFocus={autofocus}

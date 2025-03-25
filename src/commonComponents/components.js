@@ -6,8 +6,10 @@ import { useDispatch } from 'react-redux';
 import { navbarOpenState } from '../redux/slices/sideNavBar';
 import { Images } from '../utils/images';
 import Svg, { Path } from "react-native-svg";
-export const CommonHeader = ({ name }) => {
+import { useNavigation } from '@react-navigation/native';
+export const CommonHeader = ({ name,showBackButton=false }) => {
     const dispatch = useDispatch()
+    const navigation = useNavigation();
     return (
         <View style={{
             flexDirection: "row",
@@ -19,9 +21,15 @@ export const CommonHeader = ({ name }) => {
         }}>
             {/* Left Drawer Icon & App Name */}
             <View style={styles.leftSection}>
-                <TouchableOpacity onPress={() => dispatch(navbarOpenState(true))}>
-                    <Icon name="menu" size={24} color="white" />
-                </TouchableOpacity>
+            {showBackButton ? (
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Icon name="arrow-left" size={24} color="white" />
+                    </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity onPress={() => dispatch(navbarOpenState(true))}>
+                        <Icon name="menu" size={24} color="white" />
+                    </TouchableOpacity>
+                )}
                 <Text style={styles.title}>{name}</Text>
             </View>
             {/* Right Icons: Cart & Notifications */}
