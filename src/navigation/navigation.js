@@ -33,40 +33,49 @@ import Password from '../screens/password';
 
 const Stack = createStackNavigator();
 
-const Navigation = () => {
+const Navigation = ({ isLoggedIn }) => {
     return (
         <NavigationContainer>
-            <DrawerComponent>
-                <Stack.Navigator initialRouteName={ScreenName?.login} screenOptions={{ headerShown: false, animation: 'none', }}>
-                    <Stack.Screen name={ScreenName?.login} component={LoginScreen} />
-                    <Stack.Screen name={ScreenName?.UserName} component={UserName} />
-                    <Stack.Screen name={ScreenName?.genderScreen} component={Gender} />
-                    <Stack.Screen name={ScreenName?.birthScreen} component={BirthDate} />
-                    <Stack.Screen name={ScreenName?.bookPooja} component={BookPooja} />
-                    <Stack.Screen name={ScreenName?.orderHistory} component={OrderHistory} />
-                    <Stack.Screen name={ScreenName?.payment} component={Payment} />
-                    <Stack.Screen name={ScreenName?.profile} component={ProfileScreen} />
-                    <Stack.Screen name={ScreenName?.homeScreen} component={HomeScreen} />
-                    <Stack.Screen name={ScreenName?.editProfile} component={EditProfile} />
-                    <Stack.Screen name={ScreenName?.consultation} component={Consultation} />
-                    <Stack.Screen name={ScreenName?.consultationForm} component={ConsultationForm} />
-                    <Stack.Screen name={ScreenName?.Astrologers} component={Astrologers} />
-                    <Stack.Screen name={ScreenName?.Products} component={Products} />
-                    <Stack.Screen name={ScreenName?.DailyHoro} component={DailyHoroscope} />
-                    <Stack.Screen name={ScreenName?.birthtime} component={BirthTimeScreen} />
-                    <Stack.Screen name={ScreenName?.birthPlace} component={BirthPlaceScreen} />
-                    <Stack.Screen name={ScreenName?.horoScope} component={HoroScope} />
-                    <Stack.Screen name={ScreenName?.freeKundli} component={FreeKundli} />
-                    <Stack.Screen name={ScreenName?.freeKudliDetails} component={FreeKudliDetails} />
-                    <Stack.Screen name={ScreenName?.matchingKundliForm} component={MatchingKundliForm} />
-                    <Stack.Screen name={ScreenName?.matchingKundliForm2} component={MatchingKundliForm2} />
-                    <Stack.Screen name={ScreenName?.CompatabilityScore} component={CompatabilityScore} />
-                    <Stack.Screen name={ScreenName?.wallet} component={Wallet} />
-                    <Stack.Screen name={ScreenName?.chat} component={ChatScreen} />
-                    <Stack.Screen name={ScreenName?.productDescription} component={ProductDescription} />
-                    <Stack.Screen name={ScreenName?.password} component={Password} />
-                </Stack.Navigator>
-            </DrawerComponent>
+            <Stack.Navigator initialRouteName={isLoggedIn ? ScreenName.homeScreen : ScreenName.login} screenOptions={{ headerShown: false, animation: 'none', }}>
+                {!isLoggedIn && (
+                    <>
+                        <Stack.Screen name={ScreenName?.login} component={LoginScreen} />
+                        <Stack.Screen name={ScreenName?.UserName} component={UserName} />
+                        <Stack.Screen name={ScreenName?.genderScreen} component={Gender} />
+                        <Stack.Screen name={ScreenName?.birthScreen} component={BirthDate} />
+                        <Stack.Screen name={ScreenName?.birthtime} component={BirthTimeScreen} />
+                        <Stack.Screen name={ScreenName?.birthPlace} component={BirthPlaceScreen} />
+                        <Stack.Screen name={ScreenName?.password} component={Password} />
+                    </>
+                )}
+                {isLoggedIn && (
+                    <>
+                        <DrawerComponent>
+
+                            <Stack.Screen name={ScreenName?.bookPooja} component={BookPooja} />
+                            <Stack.Screen name={ScreenName?.orderHistory} component={OrderHistory} />
+                            <Stack.Screen name={ScreenName?.payment} component={Payment} />
+                            <Stack.Screen name={ScreenName?.profile} component={ProfileScreen} />
+                            <Stack.Screen name={ScreenName?.homeScreen} component={HomeScreen} />
+                            <Stack.Screen name={ScreenName?.editProfile} component={EditProfile} />
+                            <Stack.Screen name={ScreenName?.consultation} component={Consultation} />
+                            <Stack.Screen name={ScreenName?.consultationForm} component={ConsultationForm} />
+                            <Stack.Screen name={ScreenName?.Astrologers} component={Astrologers} />
+                            <Stack.Screen name={ScreenName?.Products} component={Products} />
+                            <Stack.Screen name={ScreenName?.DailyHoro} component={DailyHoroscope} />
+                            <Stack.Screen name={ScreenName?.horoScope} component={HoroScope} />
+                            <Stack.Screen name={ScreenName?.freeKundli} component={FreeKundli} />
+                            <Stack.Screen name={ScreenName?.freeKudliDetails} component={FreeKudliDetails} />
+                            <Stack.Screen name={ScreenName?.matchingKundliForm} component={MatchingKundliForm} />
+                            <Stack.Screen name={ScreenName?.matchingKundliForm2} component={MatchingKundliForm2} />
+                            <Stack.Screen name={ScreenName?.CompatabilityScore} component={CompatabilityScore} />
+                            <Stack.Screen name={ScreenName?.wallet} component={Wallet} />
+                            <Stack.Screen name={ScreenName?.chat} component={ChatScreen} />
+                            <Stack.Screen name={ScreenName?.productDescription} component={ProductDescription} />
+                        </DrawerComponent>
+                    </>
+                )}
+            </Stack.Navigator>
         </NavigationContainer>
     );
 };

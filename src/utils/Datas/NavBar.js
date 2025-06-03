@@ -27,5 +27,12 @@ export const NavBarData=[
         navigation:ScreenName.wallet,
         img:Images.payment
 
+    },
+    {
+        id:5,
+        name:"Log out",
+        // navigation:ScreenName.wallet,
+        img:Images.payment
+
     }
 ]

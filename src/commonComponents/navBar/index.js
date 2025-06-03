@@ -8,11 +8,19 @@ import { Images } from "../../utils/images";
 import { NavBarData } from "../../utils/Datas/NavBar";
 import { ScreenName } from "../../utils/screenName";
 import { useNavigation } from "@react-navigation/native";
+import AppIcon from "../Icons/Icons";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { logout } from "../../redux/slices/authStateSice";
 
 const DrawerComponent = ({ children }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const isDrawerOpen = useSelector((state) => state.sidenavbar.isOpen);
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('userToken');
+    dispatch(logout());
+  };
 
   return (
     <Drawer
@@ -43,9 +51,29 @@ const DrawerComponent = ({ children }) => {
           {/* Navigation List */}
           <View style={styles.navList}>
             {NavBarData.map((item, index) => (
-              <TouchableOpacity key={index} style={styles.navItemContainer} onPress={()=>navigation.navigate(item.navigation)}>
+              <TouchableOpacity key={index} style={styles.navItemContainer}
+                // onPress={() => navigation.navigate(item.navigation)}>
+                onPress={() => {
+                  if (item.id === 5) {
+                    handleLogout()
+                  } else {
+                    // Navigate to the corresponding screen as usual
+                    navigation.navigate(item.navigation);
+                  }
+                }}>
+
                 <View style={styles.navItem}>
-                  <Image source={item.img} style={styles.navIcon} />
+                  {item.id === 5 ? (
+                    <AppIcon
+                      name="logout"
+                      size={24}
+                      color={colors.red}
+                      library="AntDesign "
+
+                    />
+                  ) : (
+                    <Image source={item.img} style={styles.navIcon} />
+                  )}
                   <Text style={styles.navText}>{item.name}</Text>
                 </View>
                 <View style={styles.separator} />
@@ -97,7 +125,7 @@ const styles = StyleSheet.create({
   },
   profileText: {
     fontSize: 12,
-    color:colors.black0
+    color: colors.black0
   },
   navList: {
     marginTop: 20,
@@ -115,7 +143,7 @@ const styles = StyleSheet.create({
   },
   navText: {
     margin: 8,
-    color:colors.black
+    color: colors.black
   },
   separator: {
     borderBottomColor: colors.grey1,

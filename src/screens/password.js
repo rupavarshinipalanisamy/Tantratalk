@@ -9,9 +9,10 @@ import { ScreenName } from '../utils/screenName';
 import { useFormik } from 'formik';
 import { FullNameSchema, password } from '../utils/validationSchema';
 import { useLoginMutation, useRegisterMutation } from '../redux/services/auth/authSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const Password = ({ navigation }) => {
+const Password = ({ navigation,route}) => {
+    const { name, gender, birthdate, birthtime ,birthplace} = route.params || {};
     const [register, { isLoading }] = useRegisterMutation();
 
     const formik = useFormik({
@@ -21,15 +22,22 @@ const Password = ({ navigation }) => {
             await handleSubmit(values);
         },
     });
-
     const handleSubmit = async (values) => {
-        console.log("fghjjk")
         const payload = {
-            password:values.password
+            name:name,
+            contact:"17887234894",
+            dateOfBirth:birthdate,
+            birthTime:birthtime,
+            location:birthplace,
+            gender:gender,
+            password:values.password,
         }
         try {
             const response = await register(JSON.stringify(payload)).unwrap();
             console.log('Login Success:', response);
+            const userToken = response.token; 
+            console.log(userToken,response,"responsess");
+            await AsyncStorage.setItem('userToken', userToken);
             navigation.navigate(ScreenName.homeScreen);
         } catch (error) {
             console.error('Login Failed:', error);

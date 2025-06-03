@@ -1,33 +1,36 @@
-import { View, Text, ImageBackground, StyleSheet } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { commonstyles } from '../commonComponents/commonStyles'
-import { Images } from '../utils/images'
-import { InputField } from '../commonComponents/inputField'
-import { Button } from '../commonComponents/Button'
-import AnimatedImage from '../commonComponents/AnimatedImage'
-import Navigation from '../navigation/navigation'
-import { ScreenName } from '../utils/screenName'
-import { useFormik } from 'formik'
-import CommonTimePicker from '../commonComponents/TimePicker'
+import { View, Text, ImageBackground, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { commonstyles } from '../commonComponents/commonStyles';
+import { Images } from '../utils/images';
+import { Button } from '../commonComponents/Button';
+import AnimatedImage from '../commonComponents/AnimatedImage';
+import { ScreenName } from '../utils/screenName';
+import { useFormik } from 'formik';
+import CommonTimePicker from '../commonComponents/TimePicker';
 
 const BirthTimeScreen = ({ navigation, route }) => {
     const [isModalVisible, setModalVisible] = useState(true);
-    const [selectedDate, setSelectedDate] = useState("1 Jan 2000");
-
     const { name, gender, birthdate } = route.params || {};
 
     const toggleModal = () => setModalVisible(!isModalVisible);
+
     const formik = useFormik({
         initialValues: {
-            birthtime: ""
+            birthtime: "",
         },
-        // validationSchema: validationSchema,
         onSubmit: (values) => handleNavigation(values),
     });
+
     const handleNavigation = (values) => {
-        console.log("navigate");
-        navigation.navigate(ScreenName.birthPlace, { name, gender, birthdate,birthtime:formik.values.birthtime });
+        console.log("Selected Birth Time:", values.birthtime);  // Log birthtime when submitting the form
+        navigation.navigate(ScreenName.birthPlace, { 
+            name, 
+            gender, 
+            birthdate, 
+            birthtime: values.birthtime 
+        });
     };
+
     return (
         <View style={commonstyles.container}>
             <ImageBackground source={Images.loginbg} style={commonstyles.imgbackground} resizeMode="cover">
@@ -36,16 +39,25 @@ const BirthTimeScreen = ({ navigation, route }) => {
                 <View style={commonstyles.backCard} />
                 <View style={commonstyles.frontCard}>
                     <Text style={commonstyles.h1text}>Register</Text>
-                    <CommonTimePicker onDateChange={(time) => {
-                        console.log("Selected time:", time);
-                        formik.setFieldValue("birthtime", time);
-                    }} />
+
+                    {/* Birth Time Picker */}
+                    <CommonTimePicker 
+                        onTimeChange={(time) => {
+                            // Format the birthtime as a string like '03:13 AM'
+                            const formattedTime = `${time.hour}:${time.minute} ${time.meridian}`;
+                            console.log("Updated Birth Time:", formattedTime);  // Log formatted time
+                            formik.setFieldValue("birthtime", formattedTime);   // Update the form state with formatted time
+                        }} 
+                    />
+
+                    {/* Next Button */}
                     <Button title="NEXT" onPress={() => formik.handleSubmit()} fullWidth={true} style={{ marginTop: 50 }} />
                 </View>
             </ImageBackground>
         </View>
-    )
-}
+    );
+};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -64,4 +76,5 @@ const styles = StyleSheet.create({
         color: "#333",
     },
 });
-export default BirthTimeScreen
+
+export default BirthTimeScreen;
