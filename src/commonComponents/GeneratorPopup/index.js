@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,13 @@ import {
   Dimensions,
   Image,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Images } from '../../utils/images';
 
 const { height } = Dimensions.get('window');
 
-// Map 0–9 and a–z images
 const numberImages = {
   0: Images.num0, 1: Images.num1, 2: Images.num2, 3: Images.num3, 4: Images.num4,
   5: Images.num5, 6: Images.num6, 7: Images.num7, 8: Images.num8, 9: Images.num9,
@@ -26,24 +27,72 @@ const numberImages = {
   y: Images.yaplha, z: Images.zaplha,
 };
 
-const characters = [
-  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-];
-
+const characters = Object.keys(numberImages);
 const itemHeight = 50;
 const scrollHeight = characters.length * itemHeight;
 
 const PopupModal = ({ visible, onClose }) => {
   const animatedValues = useRef(
-    Array.from({ length: 5}, () => new Animated.Value(0))
+    Array.from({ length: 5 }, () => new Animated.Value(0))
   ).current;
+
+  const [winnerCode, setWinnerCode] = useState('');
+  const [loadingWinner, setLoadingWinner] = useState(false);
+
+  const now = new Date();
+  const date = now.getDate();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  const is4th = date === 4;
+  const is5thAfter6PM = date === 5 && (hours > 18 || (hours === 18 && minutes >= 0));
+  const isBetween5th6PMandNext4th = (date > 5 || is5thAfter6PM || date < 4);
+
+  const showAnimation = is4th;
+  const showWinner = !is4th && isBetween5th6PMandNext4th;
+  const showMessage = !showAnimation && !showWinner;
+
+  const winnerKey = `winner_${now.getMonth()}_${now.getFullYear()}`;
+
+  const fetchWinnerFromAPI = async () => {
+    try {
+      setLoadingWinner(true);
+      // Replace this URL with your actual winner API endpoint
+      const response = await fetch('https://yourapi.com/get-winner');
+      const data = await response.json();
+      const winner = data?.winner || 'abc12'; // fallback dummy
+      await AsyncStorage.setItem(winnerKey, winner);
+      setWinnerCode(winner);
+    } catch (error) {
+      console.error('Error fetching winner:', error);
+    } finally {
+      setLoadingWinner(false);
+    }
+  };
+
+  const loadWinner = async () => {
+    try {
+      const storedWinner = await AsyncStorage.getItem(winnerKey);
+      if (storedWinner) {
+        setWinnerCode(storedWinner);
+      } else {
+        await fetchWinnerFromAPI();
+      }
+    } catch (err) {
+      console.error('Error loading winner from AsyncStorage:', err);
+    }
+  };
+
+  useEffect(() => {
+    if (visible && showWinner) {
+      loadWinner();
+    }
+  }, [visible, showWinner]);
 
   useEffect(() => {
     let animations = [];
 
-    if (visible) {
+    if (visible && showAnimation) {
       animations = animatedValues.map((anim, index) => {
         const animation = Animated.loop(
           Animated.timing(anim, {
@@ -57,16 +106,14 @@ const PopupModal = ({ visible, onClose }) => {
       });
     } else {
       animatedValues.forEach(anim => {
-        anim.stopAnimation(() => {
-          anim.setValue(0); // Reset position
-        });
+        anim.stopAnimation(() => anim.setValue(0));
       });
     }
 
     return () => {
       animations.forEach(anim => anim?.stop?.());
     };
-  }, [visible]);
+  }, [visible, showAnimation]);
 
   const renderReel = (animatedValue, key) => (
     <View style={styles.reelFrame} key={key}>
@@ -98,9 +145,43 @@ const PopupModal = ({ visible, onClose }) => {
         <View style={styles.overlay}>
           <View style={styles.popup}>
             <Image source={Images.boxImg} style={styles.boxImg} />
-            <View style={styles.reelRow}>
-              {animatedValues.map((val, idx) => renderReel(val, idx))}
-            </View>
+
+            {showAnimation && (
+              <View style={styles.reelRow}>
+                {animatedValues.map((val, idx) => renderReel(val, idx))}
+              </View>
+            )}
+
+            {showWinner && (
+              <View style={styles.reelRow}>
+                {loadingWinner ? (
+                  <ActivityIndicator size="large" color="#fff" />
+                ) : (
+                  winnerCode
+                    .toLowerCase()
+                    .split('')
+                    .map((char, idx) => {
+                      const img = numberImages[char];
+                      if (!img) return null; // Skip if no image for this char
+                      return (
+                        <View style={styles.reelFrame} key={idx}>
+                          <Image
+                            source={img}
+                            style={styles.reelImage}
+                            resizeMode="contain"
+                          />
+                        </View>
+                      );
+                    })
+                )}
+              </View>
+            )}
+
+            {showMessage && (
+              <Text style={{ color: '#fff', fontSize: 16, marginTop: 30 }}>
+                Winner will be announced on 5th at 6 PM.
+              </Text>
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -118,8 +199,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   popup: {
-    height: "45%",
-    width: "80%",
+    height: '45%',
+    width: '80%',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
