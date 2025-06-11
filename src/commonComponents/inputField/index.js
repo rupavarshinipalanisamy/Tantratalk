@@ -32,7 +32,7 @@ export const InputField = ({
   return (
     <View style={{ width: '100%' }}>
       <>
-        {isLabel && (
+        {isLabel && (       
           <Text style={{ ...styles.label}}>
             {label}
           </Text>

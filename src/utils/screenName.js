@@ -26,8 +26,11 @@ export const ScreenName={
     wallet:"wallet",
     chat:"chat",
     productDescription:"ProductDescription",
-    password:"password"
-
+    password:"password",
+    phonenum:"phonenum",
+    matchmaking:"matchmaking",
+    cartScreen:"cartScreen",
+    addressScreen:"addressScreen"
 
 
 

@@ -11,7 +11,7 @@ import { useFormik } from 'formik'
 import CommonDatePicker from '../commonComponents/DatePicker'
 
 const BirthDate = ({ navigation,route }) => {
-    const { name, gender} = route.params || {};
+    const { name,phonenum, gender} = route.params || {};
     const [isModalVisible, setModalVisible] = useState(true);
     const [selectedDate, setSelectedDate] = useState("1 Jan 2000");
 
@@ -24,11 +24,8 @@ const BirthDate = ({ navigation,route }) => {
     });
 
     const handleNavigation = (values) => {
-        console.log("navigate");
-       navigation.navigate(ScreenName.birthtime, {name,gender, birthdate: values.birthDate });
-    };
-    const handleNext = () => {
-        formik.handleSubmit();
+        console.log(values.birthDate,"navigate");
+       navigation.navigate(ScreenName.birthtime, {name, phonenum,gender, birthdate: values.birthDate });
     };
     return (
         <View style={commonstyles.container}>
@@ -45,7 +42,7 @@ const BirthDate = ({ navigation,route }) => {
                         }}
                     />
 
-                    <Button title="NEXT" onPress={handleNext} fullWidth={true} style={{ marginTop: 50 }} />
+                    <Button title="NEXT" onPress={formik.handleSubmit} fullWidth={true} style={{ marginTop: 50 }} />
                 </View>
             </ImageBackground>
         </View>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -10,49 +10,58 @@ import {
 import { CommonHeader } from "../commonComponents/components";
 import { Images } from "../utils/images";
 import { ScreenName } from "../utils/screenName";
+import axios from "axios";
+import { config } from "../utils/config";
 
-const divineProducts = [
-    { id: 1, name: "Bracelet", image: Images.bracelet1, price: 499, oldPrice: 599 },
-    { id: 2, name: "Crystal Shree Yantra", image: Images.bracelet2, price: 899, oldPrice: 999 },
-    { id: 3, name: "Tulsi Kanthi Mala", image: Images.capsules, price: 199, oldPrice: 299 },
-    { id: 4, name: "Parad Shivling", image: Images.oil, price: 1299, oldPrice: 1499 },
-    { id: 5, name: "Parad Shivling", image: Images.oil, price: 1299, oldPrice: 1499 },
-    { id: 6, name: "Parad Shivling", image: Images.pendant, price: 1299, oldPrice: 1499 }, // Last item
-];
 
 const ProductCard = ({ item, isLastItem, navigation }) => (
     <View style={[styles.productContainer, isLastItem && styles.lastItem]}>
-        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(ScreenName.productDescription)}>
-            <Image source={item.image} style={styles.image} />
+        <TouchableOpacity style={styles.card}   onPress={() => navigation.navigate(ScreenName.productDescription, { productId: item._id })}>
+            <Image source={{ uri: item.imageUrl }} style={styles.image} />
         </TouchableOpacity>
         <Text style={styles.name}>{item.name}</Text>
         <View style={styles.priceContainer}>
             <Text style={styles.price}>₹{item.price}</Text>
-            <Text style={styles.oldPrice}>₹{item.oldPrice}</Text>
+             {item.oldPrice && (
+                <Text style={styles.oldPrice}>₹{item.oldPrice}</Text>
+            )}
         </View>
     </View>
 );
 
 const ProductScreen = ({ navigation }) => {
-    const isLastOdd = divineProducts.length % 2 !== 0;
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get(`${config.BACKEND_BASE_URL}/products`);
+                console.log(response.data, "responsess");
+                setProducts(response.data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProducts();
+    }, []);
 
     return (
         <View style={styles.container}>
             <CommonHeader name={"products"} />
             <View style={{ padding: 10 }}>
                 <FlatList
-                    data={divineProducts}
+                    data={products}
                     numColumns={2}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => item._id.toString()}
                     renderItem={({ item, index }) => {
-                        const isLastItem = divineProducts.length % 2 !== 0 && index === divineProducts.length - 1;
+                        const isLastItem = products.length % 2 !== 0 && index === products.length - 1;
                         return <ProductCard item={item} isLastItem={isLastItem} navigation={navigation} />;
                     }}
                 />
             </View>
-
-
-
         </View>
     );
 };

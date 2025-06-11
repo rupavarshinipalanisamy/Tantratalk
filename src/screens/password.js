@@ -5,15 +5,22 @@ import { Images } from '../utils/images';
 import { InputField } from '../commonComponents/inputField';
 import { Button } from '../commonComponents/Button';
 import AnimatedImage from '../commonComponents/AnimatedImage';
-import { ScreenName } from '../utils/screenName';
+import { ScreenName } from '../utils/screenName';   
 import { useFormik } from 'formik';
 import { FullNameSchema, password } from '../utils/validationSchema';
 import { useLoginMutation, useRegisterMutation } from '../redux/services/auth/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Phonenum from './phonenumber';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/slices/authStateSice';
 
-const Password = ({ navigation,route}) => {
-    const { name, gender, birthdate, birthtime ,birthplace} = route.params || {};
+const Password = ({ navigation, route }) => {
+    const { name, phonenum, gender, birthdate, birthtime, birthplace } = route.params || {};
+    console.log({ name, phonenum, gender, birthdate, birthtime, birthplace }, "yessss");
+
     const [register, { isLoading }] = useRegisterMutation();
+    const dispatch = useDispatch();
+
 
     const formik = useFormik({
         initialValues: { password: '' },
@@ -24,20 +31,21 @@ const Password = ({ navigation,route}) => {
     });
     const handleSubmit = async (values) => {
         const payload = {
-            name:name,
-            contact:"17887234894",
-            dateOfBirth:birthdate,
-            birthTime:birthtime,
-            location:birthplace,
-            gender:gender,
-            password:values.password,
+            name: name,
+            contact: phonenum,
+            dateOfBirth: birthdate,
+            birthTime: birthtime,
+            location: birthplace,
+            gender: gender,
+            password: values.password,
         }
         try {
             const response = await register(JSON.stringify(payload)).unwrap();
             console.log('Login Success:', response);
-            const userToken = response.token; 
-            console.log(userToken,response,"responsess");
+            const userToken = response.token;
+            console.log(userToken, response, "responsess");
             await AsyncStorage.setItem('userToken', userToken);
+            dispatch(login({ token: userToken }));
             navigation.navigate(ScreenName.homeScreen);
         } catch (error) {
             console.error('Login Failed:', error);

@@ -10,7 +10,7 @@ import CommonTimePicker from '../commonComponents/TimePicker';
 
 const BirthTimeScreen = ({ navigation, route }) => {
     const [isModalVisible, setModalVisible] = useState(true);
-    const { name, gender, birthdate } = route.params || {};
+    const { name, gender,phonenum ,birthdate } = route.params || {};
 
     const toggleModal = () => setModalVisible(!isModalVisible);
 
@@ -27,6 +27,7 @@ const BirthTimeScreen = ({ navigation, route }) => {
             name, 
             gender, 
             birthdate, 
+            phonenum,
             birthtime: values.birthtime 
         });
     };
@@ -51,7 +52,7 @@ const BirthTimeScreen = ({ navigation, route }) => {
                     />
 
                     {/* Next Button */}
-                    <Button title="NEXT" onPress={() => formik.handleSubmit()} fullWidth={true} style={{ marginTop: 50 }} />
+                    <Button title="NEXT" onPress={formik.handleSubmit} fullWidth={true} style={{ marginTop: 50 }} />
                 </View>
             </ImageBackground>
         </View>

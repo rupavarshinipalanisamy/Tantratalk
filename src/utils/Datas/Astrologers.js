@@ -66,3 +66,4 @@ export const AstrologersData = [
         // navigation:ScreenName.
     }
 ]
+

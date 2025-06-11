@@ -47,7 +47,7 @@ const BottomNavigationBar = () => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.iconButton,{marginRight:50}]} onPress={() => navigation.navigate('Screen2')}>
+        <TouchableOpacity style={[styles.iconButton,{marginRight:50}]} onPress={() => navigation.navigate(ScreenName.bookPooja)}>
 
           <AppIcon
             name="calendar-outline"

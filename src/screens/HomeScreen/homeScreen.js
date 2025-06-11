@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Animated } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"; // Icons
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { colors } from "../../utils/colors";
 import { FeaturesData } from "../../utils/Datas/Features";
 import { AstrologersData } from "../../utils/Datas/Astrologers";
@@ -16,14 +16,13 @@ import { ScreenName } from "../../utils/screenName";
 import { RemediesData } from "../../utils/Datas/Remedies";
 import { PoojasData } from "../../utils/Datas/poojasData";
 import { styles } from "../HomeScreen/style"
+import PopupModal from "../../commonComponents/GeneratorPopup";
+import { DrawerActions, useNavigation } from '@react-navigation/native';
+
 const Header = () => {
+    const navigation = useNavigation();
     const isOpen = useSelector((state) => state.sidenavbar.isOpen);
     const dispatch = useDispatch();
-    const openModal = () => {
-        console.log(isOpen, "before");
-        dispatch(navbarOpenState(true))
-        console.log(isOpen, "after");
-    }
     return (
         <View style={styles.header}>
             <View style={{
@@ -33,14 +32,14 @@ const Header = () => {
             }}>
                 {/* Left Drawer Icon & App Name */}
                 <View style={styles.leftSection}>
-                    <TouchableOpacity onPress={() => dispatch(navbarOpenState(true))}>
+                <TouchableOpacity onPress={() => dispatch(navbarOpenState(true))}>
                         <Icon name="menu" size={26} color="white" />
                     </TouchableOpacity>
                     <Text style={styles.title}>Tantra Talk</Text>
                 </View>
                 {/* Right Icons: Cart & Notifications */}
                 <View style={styles.rightSection}>
-                    <TouchableOpacity style={styles.iconContainer}>
+                    <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate(ScreenName.cartScreen)}>
                         <Icon name="cart-outline" size={18} color="white" />
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.iconContainer, { marginLeft: 15 }]}>
@@ -124,28 +123,54 @@ const Remedies = () => {
         </ScrollView>
     );
 };
+//old design
+// const Poojas = () => {
+//     return (
+//         <ScrollView contentContainerStyle={styles.poojasContainer}>
+//             {PoojasData.map((item, index) => (
+//                 <View
+//                     key={index}
+//                     style={[
+//                         styles.rowContainer,
+//                         index % 2 === 0 ? styles.rowLeft : styles.rowRight, // Alternating layout
+//                     ]}
+//                 >
+//                     {/* "See All" Text */}
+//                     <Text style={styles.seeAllText}>See All</Text>
+
+//                     {/* Pooja Card */}
+//                     <View style={styles.poojasCard}>
+//                         <Image source={item?.img} style={styles.poojaImage} resizeMode="cover" />
+//                         <Text style={styles.poojaTitle}>{item.name}</Text>
+//                     </View>
+//                 </View>
+//             ))}
+//         </ScrollView>
+//     );
+// };
+
+
 const Poojas = () => {
     return (
-        <ScrollView contentContainerStyle={styles.poojasContainer}>
-            {PoojasData.map((item, index) => (
-                <View
-                    key={index}
-                    style={[
-                        styles.rowContainer,
-                        index % 2 === 0 ? styles.rowLeft : styles.rowRight, // Alternating layout
-                    ]}
-                >
-                    {/* "See All" Text */}
-                    <Text style={styles.seeAllText}>See All</Text>
-
-                    {/* Pooja Card */}
-                    <View style={styles.poojasCard}>
-                        <Image source={item?.img} style={styles.poojaImage} resizeMode="cover" />
-                        <Text style={styles.poojaTitle}>{item.name}</Text>
-                    </View>
-                </View>
-            ))}
-        </ScrollView>
+        // <ScrollView contentContainerStyle={styles.poojasContainer}>
+             <View >
+            <ScrollView style={[styles.featuresContainer, { backgroundColor: "transparent" }]} horizontal={true} showsHorizontalScrollIndicator={false}>
+                {PoojasData.map((item, index) => {
+                    return (
+                        <View key={index} style={styles.featureItem}>
+                            <View style={styles.AstrologerCard}>
+                                <Image source={item?.img} style={{ height: 50, width: 50, borderRadius: 50, marginTop: 15 }} />
+                                <View style={{ marginTop: 5 }}>
+                                    <Text style={styles.astrologerName}>{item.name}</Text>
+                                    {/* <Text style={styles.chattxt}>Chat</Text> */}
+                                </View>
+                            </View>
+                        </View>
+                    )
+                })}
+            </ScrollView>
+        </View>
+        // </ScrollView>
     );
 };
 const BookSlot = ({ navigation }) => {
@@ -212,16 +237,28 @@ const TipsandArticles = () => {
     );
 };
 const HomeScreen = ({ navigation }) => {
-    const [currentTab, setCurrentTab] = useState('list'); // Initialize with 'list' or your default tab
+    const [currentTab, setCurrentTab] = useState('list');
 
     const handleTabChange = (tab) => {
         setCurrentTab(tab);
     };
+    const [modalVisible, setModalVisible] = useState(false);
 
     return (
         <View style={commonstyles.screencontainer}>
             <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 90 }}>
                 <Header />
+                <TouchableOpacity
+                    style={styles.roundButton}
+                    onPress={() => setModalVisible(true)}
+                >
+                    <AppIcon
+                        name="timer-outline"
+                        size={25}
+                        color={colors.black}
+                        library="Ionicons"
+                    />
+                </TouchableOpacity>
                 <View style={{ marginTop: 10 }}>
                     <View>
                         <Text style={styles.headertxt}>Features</Text>
@@ -232,7 +269,7 @@ const HomeScreen = ({ navigation }) => {
                 <View style={{ marginTop: 10 }}>
                     <BookSlot navigation={navigation} />
                 </View>
-                <View style={{ marginTop: 10 }}>
+                {/* <View style={{ marginTop: 10 }}>
                     <View style={styles.headerConatiner}>
                         <Text style={styles.headertxt}>Astrologers</Text>
                         <TouchableOpacity style={{ marginRight: 15 }} onPress={() => navigation.navigate(ScreenName.Astrologers)}>
@@ -241,7 +278,7 @@ const HomeScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     <Astrologers />
-                </View>
+                </View> */}
                 <View style={{ marginTop: 10 }}>
                     <Text style={styles.headertxt}>Poojas</Text>
                     <Poojas />
@@ -263,13 +300,14 @@ const HomeScreen = ({ navigation }) => {
                 </View>
                 <View style={{ marginTop: 10 }}>
                     <View style={styles.headerConatiner}>
-                        <View style={[styles.line,{marginLeft:5}]} />
+                        <View style={[styles.line, { marginLeft: 5 }]} />
                         <Text style={[styles.headertxt, { textAlign: "center" }]}>Tips and Articles</Text>
-                        <View style={[styles.line,{marginRight:5                                                          }]} />
+                        <View style={[styles.line, { marginRight: 5 }]} />
                     </View>
                     <TipsandArticles />
                 </View>
             </ScrollView>
+            <PopupModal visible={modalVisible} onClose={() => setModalVisible(false)} />
             <BottomNavigationBar />
         </View>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, ImageBackground, Text, Animated, TouchableOpacity } from 'react-native';
 import { Images } from '../utils/images';
 import { InputField } from '../commonComponents/inputField';
@@ -9,31 +9,48 @@ import { ScreenName } from '../utils/screenName';
 import AnimatedImage from '../commonComponents/AnimatedImage';
 import { useFormik } from 'formik';
 import { useLoginMutation } from '../redux/services/auth/authSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../commonComponents/loader';
+import { login } from "../redux/slices/authStateSice/index";
+
 
 const LoginScreen = ({ navigation }) => {
+    const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch();
     const formik = useFormik({
-        initialValues: {
-            phonenum: '',
+        initialValues: {   
+            contact: '',
             password: ''
-
         },
         // validationSchema: password,
         onSubmit: async (values) => {
             await handleSubmit(values);
         },
     });
-    const [login, { isLoading }] = useLoginMutation();
+
+    const [loginApi] = useLoginMutation();
+    const { isLoggedIn } = useSelector((state) => state.auth);
+
+
+    useEffect(() => {
+        console.log(isLoggedIn, "useEffectstate");
+
+    }, [isLoggedIn]);
+
     const handleLogin = async () => {
         const payload = {
-            contact: "+3453455345",
-            password: values.password,
+            contact: formik.values.contact,
+            password: formik.values.password,
         }
-        try {
-            const response = await login(JSON.stringify(payload)).unwrap();
+        console.log(payload, "payloadss");
+         try {
+            const response = await loginApi(JSON.stringify(payload)).unwrap();
             console.log('Login Success:', response);
             const userToken = response.token;
             console.log(userToken, response, "responsess");
             await AsyncStorage.setItem('userToken', userToken);
+            dispatch(login({ token: userToken }));
             navigation.navigate(ScreenName.homeScreen);
         } catch (error) {
             console.error('Login Failed:', error);
@@ -41,6 +58,7 @@ const LoginScreen = ({ navigation }) => {
     };
     return (
         <View style={commonstyles.container}>
+            {loading && <Loader />}
             <ImageBackground source={Images.loginbg} style={commonstyles.imgbackground} resizeMode="cover">
                 <AnimatedImage source={Images.animatedLeft} startX={-300} endX={200} />
                 <AnimatedImage source={Images.animatedRight} startX={250} endX={-180} />
@@ -55,13 +73,12 @@ const LoginScreen = ({ navigation }) => {
                                 label="Phone No."
                                 fullWidth={true}
                                 borderColor="#00b1f3"
-                                onBlur={formik.handleBlur('phonenum')}
-                                value={formik.values.phonenum}
-                                onChange={(value) => formik.setFieldValue('phonenum', value)}
-                                secureTextEntry={true}
+                                onBlur={formik.handleBlur('contact')}
+                                value={formik.values.contact}
+                                onChange={(value) => formik.setFieldValue('contact', value)}
                             />
-                            {formik.touched.phonenum && formik.errors.phonenum && (
-                                <Text style={commonstyles.errortxt}>{formik.errors.phonenum}</Text>
+                            {formik.touched.contact && formik.errors.contact && (
+                                <Text style={commonstyles.errortxt}>{formik.errors.contact}</Text>
                             )}
                         </View>
                         <View style={{ marginTop: 15 }}>

@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { Drawer } from "react-native-drawer-layout";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { navbarOpenState } from "../../redux/slices/sideNavBar";
 import { colors } from "../../utils/colors";
 import { Images } from "../../utils/images";
@@ -9,87 +8,84 @@ import { NavBarData } from "../../utils/Datas/NavBar";
 import { ScreenName } from "../../utils/screenName";
 import { useNavigation } from "@react-navigation/native";
 import AppIcon from "../Icons/Icons";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { logout } from "../../redux/slices/authStateSice";
 
-const DrawerComponent = ({ children }) => {
+const CustomDrawerContent = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const isDrawerOpen = useSelector((state) => state.sidenavbar.isOpen);
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('userToken');
+    await AsyncStorage.removeItem("userToken");
     dispatch(logout());
+    dispatch(navbarOpenState(false)); 
+    // Optionally navigate to login screen after logout
+    navigation.navigate(ScreenName.login);
   };
 
   return (
-    <Drawer
-      open={isDrawerOpen}
-      onOpen={() => dispatch(navbarOpenState(true))}
-      onClose={() => dispatch(navbarOpenState(false))}
-      drawerPosition="left"
-      drawerStyle={{ width: "72%" }}
-      renderDrawerContent={() => (
-        <View style={styles.drawerContainer}>
-          {/* Title */}
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>Tantra Talk</Text>
-          </View>
+    <View style={styles.drawerContainer}>
+      {/* Title */}
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Tantra Talk</Text>
+      </View>
 
-          {/* Profile Section */}
-          <TouchableOpacity style={styles.profileSection} onPress={() => {
-            navigation.navigate(ScreenName.profile);
-            dispatch(navbarOpenState(false));
-          }}>
-            <Image source={Images.userimg} style={styles.profileImage} />
-            <View style={styles.profileTextContainer}>
-              <Text style={styles.profileText}>User Name</Text>
-              <Text style={styles.profileText}>varsh12@gmail.com</Text>
-            </View>
-          </TouchableOpacity>
-
-          {/* Navigation List */}
-          <View style={styles.navList}>
-            {NavBarData.map((item, index) => (
-              <TouchableOpacity key={index} style={styles.navItemContainer}
-                // onPress={() => navigation.navigate(item.navigation)}>
-                onPress={() => {
-                  if (item.id === 5) {
-                    handleLogout()
-                  } else {
-                    // Navigate to the corresponding screen as usual
-                    navigation.navigate(item.navigation);
-                  }
-                }}>
-
-                <View style={styles.navItem}>
-                  {item.id === 5 ? (
-                    <AppIcon
-                      name="logout"
-                      size={24}
-                      color={colors.red}
-                      library="AntDesign "
-
-                    />
-                  ) : (
-                    <Image source={item.img} style={styles.navIcon} />
-                  )}
-                  <Text style={styles.navText}>{item.name}</Text>
-                </View>
-                <View style={styles.separator} />
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          {/* Background Image */}
-          <View style={styles.imageContainer}>
-            <Image source={Images.sidemenubg} style={styles.backgroundImage} />
-          </View>
+      {/* Profile Section */}
+      <TouchableOpacity
+        style={styles.profileSection}
+        onPress={() => {
+          navigation.navigate(ScreenName.profile);
+          // Close drawer after navigation
+          dispatch(navbarOpenState(false)); 
+        }}
+      >
+        <Image source={Images.userimg} style={styles.profileImage} />
+        <View style={styles.profileTextContainer}>
+          <Text style={styles.profileText}>User Name</Text>
+          <Text style={styles.profileText}>varsh12@gmail.com</Text>
         </View>
-      )}
-    >
-      {children}
-    </Drawer>
+      </TouchableOpacity>
+
+      {/* Navigation List */}
+      <View style={styles.navList}>
+        {NavBarData.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.navItemContainer}
+            onPress={() => {
+              if (item.id === 5) {
+                handleLogout();
+              
+              } else {
+                navigation.navigate(item.navigation);
+                // Close the drawer after navigation
+                dispatch(navbarOpenState(false)); 
+              }
+            }}
+          >
+            <View style={styles.navItem}>
+              {item.id === 5 ? (
+                <AppIcon
+                  name="logout"
+                  size={24}
+                  color={colors.red}
+                  library="AntDesign"
+                />
+              ) : (
+                <Image source={item.img} style={styles.navIcon} />
+              )}
+              <Text style={styles.navText}>{item.name}</Text>
+            </View>
+            <View style={styles.separator} />
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* Background Image */}
+      <View style={styles.imageContainer}>
+        <Image source={Images.sidemenubg} style={styles.backgroundImage} />
+      </View>
+    </View>
   );
 };
 
@@ -125,7 +121,7 @@ const styles = StyleSheet.create({
   },
   profileText: {
     fontSize: 12,
-    color: colors.black0
+    color: colors.black0,
   },
   navList: {
     marginTop: 20,
@@ -143,7 +139,7 @@ const styles = StyleSheet.create({
   },
   navText: {
     margin: 8,
-    color: colors.black
+    color: colors.black,
   },
   separator: {
     borderBottomColor: colors.grey1,
@@ -158,8 +154,8 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: "100%",
-    height: "80%", // Ensures it covers the full container height
+    height: "80%",
   },
 });
 
-export default DrawerComponent;
+export default CustomDrawerContent;

@@ -22,7 +22,7 @@ const Astrologers = ({navigation}) => {
             <View style={{ paddingHorizontal: 12, flex: 1 }}>
                 <FlatList
                     data={AstrologersData}
-                    keyExtractor={(item) => item.id.toString()} // Ensure each key is unique
+                    keyExtractor={(item) => item.id.toString()} 
                     showsVerticalScrollIndicator={false}
                     renderItem={({ item }) => (
                         <View style={styles.card}>

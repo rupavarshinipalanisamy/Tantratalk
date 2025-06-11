@@ -38,70 +38,73 @@ const WalletScreen = () => {
     });
 
     const handlePayment = async () => {
-        const amountInPaise = Number(formik.values.amount) * 100; // Convert ₹ to paise
+        console.log('====================================');
+        console.log();
+        console.log('====================================');
+        // const amountInPaise = Number(formik.values.amount) * 100; // Convert ₹ to paise
 
-        if (!amountInPaise || amountInPaise < 10000) {
-            alert('Minimum wallet recharge is ₹100');
-            return;
-        }
+        // if (!amountInPaise || amountInPaise < 10000) {
+        //     alert('Minimum wallet recharge is ₹100');
+        //     return;
+        // }
 
-        try {
-            formik.setFieldValue('amount', '');
-            const orderResponse = await fetch(`${config.BACKEND_BASE_URL}/create-order`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: amountInPaise }),
-            });
+        // try {
+        //     formik.setFieldValue('amount', '');
+        //     const orderResponse = await fetch(`${config.BACKEND_BASE_URL}/create-order`, {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify({ amount: amountInPaise }),
+        //     });
 
-            const orderData = await orderResponse.json();
+        //     const orderData = await orderResponse.json();
 
-            if (!orderData || !orderData.id) {
-                alert('Failed to create order. Please try again.');
-                return;
-            }
+        //     if (!orderData || !orderData.id) {
+        //         alert('Failed to create order. Please try again.');
+        //         return;
+        //     }
 
-            // Step 2: Open Razorpay Checkout
-            const options = {
-                description: 'Wallet Recharge',
-                currency: 'INR',
-                key: 'rzp_test_vjQqkVyI66lvzk',
-                amount: amountInPaise,
-                name: 'TantraTalk',
-                order_id: orderData.order_id, // Received from backend
-                prefill: { email: 'user@example.com', contact: '9876543210', name: 'User Name' },
-                theme: { color: colors.red },
-            };
+        //     // Step 2: Open Razorpay Checkout
+        //     const options = {
+        //         description: 'Wallet Recharge',
+        //         currency: 'INR',
+        //         key: 'rzp_test_vjQqkVyI66lvzk',
+        //         amount: amountInPaise,
+        //         name: 'TantraTalk',
+        //         order_id: orderData.order_id, // Received from backend
+        //         prefill: { email: 'user@example.com', contact: '9876543210', name: 'User Name' },
+        //         theme: { color: colors.red },
+        //     };
 
-            RazorpayCheckout.open(options)
-                .then(async (data) => {
-                    formik.setFieldValue('amount', '');
+        //     RazorpayCheckout.open(options)
+        //         .then(async (data) => {
+        //             formik.setFieldValue('amount', '');
 
-                    const verifyResponse = await fetch('http://192.168.1.12:5000/apiV1/backend/verify-payment', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            razorpay_order_id: data.razorpay_order_id,
-                            razorpay_payment_id: data.razorpay_payment_id,
-                            razorpay_signature: data.razorpay_signature,
-                        }),
-                    });
+        //             const verifyResponse = await fetch('http://192.168.1.12:5000/apiV1/backend/verify-payment', {
+        //                 method: 'POST',
+        //                 headers: { 'Content-Type': 'application/json' },
+        //                 body: JSON.stringify({
+        //                     razorpay_order_id: data.razorpay_order_id,
+        //                     razorpay_payment_id: data.razorpay_payment_id,
+        //                     razorpay_signature: data.razorpay_signature,
+        //                 }),
+        //             });
 
-                    const verifyData = await verifyResponse.json();
-                    if (verifyData.success) {
-                        alert('Payment verified successfully! Wallet recharged.');
-                        fetchWalletBalance(); // Update balance after successful payment
-                    } else {
-                        alert('Payment verification failed.');
-                    }
-                })
-                .catch((error) => {
-                    console.log('Payment Failed:', error);
-                    alert('Payment failed. Please try again.');
-                });
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Something went wrong. Please try again.');
-        }
+        //             const verifyData = await verifyResponse.json();
+        //             if (verifyData.success) {
+        //                 alert('Payment verified successfully! Wallet recharged.');
+        //                 fetchWalletBalance(); // Update balance after successful payment
+        //             } else {
+        //                 alert('Payment verification failed.');
+        //             }
+        //         })
+        //         .catch((error) => {
+        //             console.log('Payment Failed:', error);
+        //             alert('Payment failed. Please try again.');
+        //         });
+        // } catch (error) {
+        //     console.error('Error:', error);
+        //     alert('Something went wrong. Please try again.');
+        // }
     };
 
     return (

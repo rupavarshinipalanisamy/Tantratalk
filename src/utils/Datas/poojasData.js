@@ -4,19 +4,19 @@ export const PoojasData = [
     {
         id: 1,
         name: "Pooja's",
-        img:Images.careerRemedy,
+        img:Images.poojaImg,
         // navigation:ScreenName.
     },
     {
         id: 2,
         name: "Yagnas",
-        img: Images.moneyRemedy
+        img: Images.yagnaImg
         // navigation:ScreenName.
     },
-    {
-        id: 3,
-        name: "Panjapatchi",
-        img: Images.health1Remedy
-        // navigation:ScreenName.
-    },
+    // {
+    //     id: 3,
+    //     name: "Panjapatchi",
+    //     img: Images.panjapatchiImg
+    //     // navigation:ScreenName.
+    // },
 ]

@@ -305,5 +305,17 @@ export const styles = StyleSheet.create({
         marginTop: 10,
         // marginLeft: 10,
         backgroundColor: colors.red
-    }
+    },
+    roundButton: {
+        width:45,
+        height:45,
+        borderRadius:8,
+        backgroundColor:colors.grey4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        right: 10,
+        marginTop:"40%"
+        // top: '40%',
+      },
 });

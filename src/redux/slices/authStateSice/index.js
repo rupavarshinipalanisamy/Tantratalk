@@ -13,8 +13,10 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.isLoggedIn = true;
-      state.userToken = action.payload.token; // Save token after login
+      state.userToken = action.payload.token;
+      console.log("After Login Dispatch:", state.isLoggedIn); // Should be true
     },
+
     logout: (state) => {
       state.isLoggedIn = false;
       state.userToken = null; // Remove token after logout

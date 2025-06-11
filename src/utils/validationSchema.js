@@ -7,6 +7,13 @@ export const FullNameSchema = Yup.object().shape({
     .required('Full Name is required'),
 });
 
+
+export const PhonenumSchema = Yup.object().shape({
+  phonenum: Yup.string()
+    .matches(/^\+?[1-9]\d{1,14}$/, 'Phone number is not valid')  // Validates international phone numbers
+    .required('Phone number is required'),
+});
+
 // Schema for Gender Selection Screen
 export const GenderSchema = Yup.object().shape({
   gender: Yup.string().required("Gender is required"),

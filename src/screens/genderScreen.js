@@ -12,7 +12,7 @@ import { GenderSchema } from "../utils/validationSchema";
 
 const Gender = ({ navigation, route }) => {
 
-    const { name } = route.params || {};
+    const { name,phonenum} = route.params || {};
     const formik = useFormik({
         initialValues: {
             gender: "",
@@ -22,12 +22,8 @@ const Gender = ({ navigation, route }) => {
     });
 
     const handleNavigation = (values) => {
-        console.log("navigate");
-
-        navigation.navigate(ScreenName.birthScreen, { name, gender: formik.values.gender });
-    };
-    const handleNext = () => {
-        formik.handleSubmit(); // Ensures validation happens first
+        console.log(formik.values.gender,"navigatezzzs");
+        navigation.navigate(ScreenName.birthScreen, { name,phonenum, gender: formik.values.gender });
     };
     return (
         <View style={commonstyles.container}>
@@ -81,7 +77,7 @@ const Gender = ({ navigation, route }) => {
                     </View>
 
                     <View style={{ width: "100%", marginTop: 50 }}>
-                        <Button title="NEXT" onPress={handleNext} fullWidth={true} />
+                        <Button title="NEXT" onPress={formik.handleSubmit} fullWidth={true} />
 
                     </View>
                 </View>

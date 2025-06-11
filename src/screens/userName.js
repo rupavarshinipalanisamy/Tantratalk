@@ -20,7 +20,7 @@ const UserName = ({ navigation }) => {
     });
 
     const handleNavigation = (values) => {
-        navigation.navigate(ScreenName.genderScreen, { name:formik.values.fullname});
+        navigation.navigate(ScreenName.phonenum, { name:formik.values.fullname});
     };
     const handleNext = () => {
         formik.handleSubmit(); // Ensures validation happens first

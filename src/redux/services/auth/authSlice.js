@@ -1,29 +1,33 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { config } from '../../../utils/config';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
-    baseQuery: fetchBaseQuery({ baseUrl:"http://192.168.1.7:5000/api" }),
+    baseQuery: fetchBaseQuery({ baseUrl: config.AUTH_URL }),
     endpoints: (builder) => ({
         register: builder.mutation({
             query: (userData) => ({
-                url: '/auth/register',
+                url: '/register',
                 method: 'POST',
                 body: userData,
                 headers: {
-                    'Content-Type':'application/json',
+                    'Content-Type': 'application/json',
                 },
             }),
         }),
         login: builder.mutation({
             query: (credentials) => ({
-                url: '/auth/login',
+                url: '/login',
                 method: 'POST',
-                body: credentials,
+                body: credentials,  // credentials is the payload sent to the server
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             }),
         }),
         getUser: builder.query({
             query: () => ({
-                url: '/auth/register',
+                url: '/register',
                 method: 'GET',
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             }),

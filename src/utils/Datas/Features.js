@@ -30,8 +30,8 @@ export const FeaturesData=[
     },
     {
         id:4,
-        title1:"Free",
-        title2:"Chat",
+        title1:"Panja",
+        title2:"patchi",
         img:Images.chaticon,
         navigation:ScreenName.chat,
         width:35
@@ -40,8 +40,10 @@ export const FeaturesData=[
     {
         id:5,
         title1:"Match",
-        title2:"Making",
-        // img:
-        // navigation:ScreenName.
-    }
+        title2:"making",
+        img:Images.freeKundli,
+        navigation:ScreenName.bookPooja,
+        width:30
+
+    },
 ]
