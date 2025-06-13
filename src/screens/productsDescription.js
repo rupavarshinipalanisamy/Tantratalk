@@ -37,8 +37,9 @@ const ProductDescription = ({ route, navigation }) => {
     const { showSnackbar } = useSnackbar();
     const addtoCart = async () => {
         console.log("addedtocart");
+        const userId = await getUserId();
         const payload = {
-            userId: "64f1a68f9c0df0d4b18d2f32",
+            userId: userId,
             productId: productId,
             quantity: 1
         }

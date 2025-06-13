@@ -13,13 +13,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../commonComponents/loader';
 import { login } from "../redux/slices/authStateSice/index";
+import { getUserId } from "../utils/helper";
 
 
 const LoginScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
     const formik = useFormik({
-        initialValues: {   
+        initialValues: {
             contact: '',
             password: ''
         },
@@ -44,16 +45,24 @@ const LoginScreen = ({ navigation }) => {
             password: formik.values.password,
         }
         console.log(payload, "payloadss");
-         try {
+        setLoading(true)
+        try {
             const response = await loginApi(JSON.stringify(payload)).unwrap();
             console.log('Login Success:', response);
             const userToken = response.token;
+            const userId = response.user._id;
             console.log(userToken, response, "responsess");
             await AsyncStorage.setItem('userToken', userToken);
+            await AsyncStorage.setItem('userId', userId);
             dispatch(login({ token: userToken }));
             navigation.navigate(ScreenName.homeScreen);
         } catch (error) {
+            setLoading(false)
+
             console.error('Login Failed:', error);
+        } finally {
+            setLoading(false)
+
         }
     };
     return (
