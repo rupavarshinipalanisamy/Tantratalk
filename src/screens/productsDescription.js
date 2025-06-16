@@ -9,6 +9,7 @@ import { config } from "../utils/config";
 import { ScreenName } from "../utils/screenName";
 import { useAddCartMutation, useUpdateCartMutation } from "../redux/services/api/backendapi";
 import { useSnackbar } from "../commonComponents/Snackbar";
+import { getUserId } from "../utils/helper";
 
 const ProductDescription = ({ route, navigation }) => {
     const { productId } = route.params;
@@ -38,6 +39,9 @@ const ProductDescription = ({ route, navigation }) => {
     const addtoCart = async () => {
         console.log("addedtocart");
         const userId = await getUserId();
+        console.log('====================================');
+        console.log(userId);
+        console.log('====================================');
         const payload = {
             userId: userId,
             productId: productId,

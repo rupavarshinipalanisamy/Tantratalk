@@ -21,6 +21,7 @@ import { useAddAddressMutation, useGetCartItemQuery, useGetUserAddressQuery, use
 import { useFormik } from "formik";
 import AppIcon from "../commonComponents/Icons/Icons";
 import RazorpayCheckout from 'react-native-razorpay';
+import { getUserId } from "../utils/helper";
 
 
 const CartScreen = ({ navigation }) => {
@@ -30,7 +31,15 @@ const CartScreen = ({ navigation }) => {
     const [AddressChooseModal, setAddressChooseModal] = useState(false);
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const [selectedAddress, setSelectedAddress] = useState(null);
+    const [userId, setUserId] = useState(null);
 
+    useEffect(() => {
+        const fetchUserId = async () => {
+            const id = await getUserId();
+            setUserId(id);
+        };
+        fetchUserId();
+    }, []);
 
 
     const formik = useFormik({
@@ -57,11 +66,6 @@ const CartScreen = ({ navigation }) => {
     const [initiatePayment] = usePaymentInitiateMutation();
     const [paymentVerify] = usePaymentVerifyMutation();
 
-
-
-    const userId = '64f1a68f9c0df0d4b18d2f32';
-
-
     const {
         data,
         refetch,
@@ -86,7 +90,7 @@ const CartScreen = ({ navigation }) => {
         isLoading: addressisLoading,
         isFetching: addressisfecting,
         status: addressStatus
-    } = useGetUserAddressQuery("64f1a68f9c0df0d4b18d2f32");
+    } = useGetUserAddressQuery(userId);
     console.log(addressData?.addresses, "addressDatas");
 
 
@@ -107,7 +111,7 @@ const CartScreen = ({ navigation }) => {
 
         console.log("addedtocart");
         const payload = {
-            userId: "64f1a68f9c0df0d4b18d2f32",
+            userId: userId,
             productId: productId,
             change: qnty
         }
@@ -136,7 +140,7 @@ const CartScreen = ({ navigation }) => {
         console.log(addressId, "addressId");
         console.log("addedtocart");
         const payload = {
-            userId: "64f1a68f9c0df0d4b18d2f32",
+            userId: userId,
             selectedAddressId: addressId
         }
         try {
@@ -149,8 +153,8 @@ const CartScreen = ({ navigation }) => {
         }
     }
     const proceedPayment = async () => {
+        const userId = await getUserId();
         try {
-            const userId = "64f1a68f9c0df0d4b18d2f32"; // replace with actual userId variable
             const shippingAddress = selectedAddress?.formattedAddress;
             const paymentMethod = "Razorpay";
             const items = data?.items;
@@ -211,7 +215,7 @@ const CartScreen = ({ navigation }) => {
                         razorpay_payment_id: paymentData.razorpay_payment_id,
                         razorpay_signature: paymentData.razorpay_signature,
                     })
-                    console.log(verifyRes, "verifyResss");
+                    console.log(verifyRes, "pamentsignature");
 
                     if (verifyRes.data.success) {
                         alert("Payment Verified and Order Confirmed!");
@@ -250,7 +254,7 @@ const CartScreen = ({ navigation }) => {
     );
     const handleSaveaddress = async (values) => {
         const payload = {
-            userId: "64f1a68f9c0df0d4b18d2f32",
+            userId: userId,
             name: values.name,
             phone: values.phone,
             city: values.city,
@@ -533,7 +537,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.lightgrey,
     },
     disabledButton: {
-        backgroundColor: '#ccc', 
+        backgroundColor: '#ccc',
     },
     cartItem: {
         padding: 15,
