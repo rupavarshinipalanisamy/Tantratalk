@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { CommonHeader } from '../commonComponents/components';
 import { commonstyles } from '../commonComponents/commonStyles';
@@ -6,8 +6,33 @@ import { colors } from '../utils/colors';
 import { Images } from '../utils/images';
 import AppIcon from '../commonComponents/Icons/Icons';
 import { ScreenName } from '../utils/screenName';
+import { formatDate, getUserId } from '../utils/helper';
+import { useGetUserQuery } from '../redux/services/auth/authSlice';
 
 const ProfileScreen = ({ navigation }) => {
+    const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        const fetchUserId = async () => {
+            const id = await getUserId();
+            setUserId(id);
+        };
+        fetchUserId();
+    }, []);
+    const {
+        data: profileData,
+        refetch: profileRefetch,
+        status: profilestatus
+    } = useGetUserQuery(userId);
+
+    useEffect(() => {
+        profileRefetch()
+    }, [profileData])
+
+    const handleEdit = () => {
+        navigation.navigate(ScreenName.editProfile, {profileData: profileData,profileRefetch:profileRefetch});
+    };
+
     return (
         <View style={commonstyles.screencontainer}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -18,8 +43,8 @@ const ProfileScreen = ({ navigation }) => {
                             <View style={styles.roundContainer}>
                                 <Image source={Images.userimg} style={styles.profileImage} />
                             </View>
-                            <Text style={styles.name}>John Doe</Text>
-                            <Text style={styles.info}>johndoe@example.com</Text>
+                            <Text style={styles.name}>{profileData?.user?.name}</Text>
+                            <Text style={styles.info}>{profileData?.user?.contact}</Text>
 
                             <View style={styles.smallCard}>
                                 <View style={{
@@ -29,7 +54,7 @@ const ProfileScreen = ({ navigation }) => {
                                 }}>
                                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 12 }}>
                                         <Text style={{ fontSize: 16, fontWeight: "500", color: colors.black }}>Personal Info</Text>
-                                        <TouchableOpacity onPress={() => navigation.navigate(ScreenName.editProfile)}>
+                                        <TouchableOpacity onPress={handleEdit}>
 
                                             <AppIcon name="edit" size={25} color={colors.red} library="MaterialIcons" />
                                         </TouchableOpacity>
@@ -41,7 +66,7 @@ const ProfileScreen = ({ navigation }) => {
                                     <AppIcon name="id-card-outline" size={25} color={colors.red} library="Ionicons" />
                                     <View style={styles.textContainer}>
                                         <Text style={styles.title}>Name</Text>
-                                        <Text style={styles.details}>John Doe</Text>
+                                        <Text style={styles.details}>{profileData?.user?.name}</Text>
                                     </View>
                                 </View>
 
@@ -50,7 +75,7 @@ const ProfileScreen = ({ navigation }) => {
                                     <AppIcon name="calendar-month-outline" size={25} color={colors.red} library="MaterialCommunityIcons" />
                                     <View style={styles.textContainer}>
                                         <Text style={styles.title}>Date of Birth</Text>
-                                        <Text style={styles.details}>08/01/2002</Text>
+                                        <Text style={styles.details}>{formatDate(profileData?.user?.dateOfBirth)}</Text>
                                     </View>
                                 </View>
 
@@ -59,7 +84,7 @@ const ProfileScreen = ({ navigation }) => {
                                     <AppIcon name="clock-outline" size={25} color={colors.red} library="MaterialCommunityIcons" />
                                     <View style={styles.textContainer}>
                                         <Text style={styles.title}>Time of Birth</Text>
-                                        <Text style={styles.details}>1:00 PM</Text>
+                                        <Text style={styles.details}>{profileData?.user?.birthTime}</Text>
                                     </View>
                                 </View>
 
@@ -68,7 +93,7 @@ const ProfileScreen = ({ navigation }) => {
                                     <AppIcon name="map-marker-outline" size={25} color={colors.red} library="MaterialCommunityIcons" />
                                     <View style={styles.textContainer}>
                                         <Text style={styles.title}>Place of Birth</Text>
-                                        <Text style={styles.details}>Namakkal</Text>
+                                        <Text style={styles.details}>{profileData?.user?.location}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -179,7 +204,7 @@ const styles = StyleSheet.create({
         color: colors.black1,
     },
     cardheadertxt: {
-        marginLeft: 10, 
+        marginLeft: 10,
         color: colors.black
     }
 });

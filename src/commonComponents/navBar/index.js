@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { navbarOpenState } from "../../redux/slices/sideNavBar";
@@ -10,15 +10,39 @@ import { useNavigation } from "@react-navigation/native";
 import AppIcon from "../Icons/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { logout } from "../../redux/slices/authStateSice";
+import { useGetUserQuery } from "../../redux/services/auth/authSlice";
+
 
 const CustomDrawerContent = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const storedUserId = await AsyncStorage.getItem('userId');
+      setUserId(storedUserId);
+    };
+
+    fetchUserId();
+  }, []);
+
+  const {
+    data: profileData,
+    refetch: profileRefetch,
+    status: profilestatus
+  } = useGetUserQuery(userId);
+
+  useEffect(() => {
+    profileRefetch()
+    console.log(profileData, "datassss");
+
+  }, [profileData])
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem("userToken");
     dispatch(logout());
-    dispatch(navbarOpenState(false)); 
+    dispatch(navbarOpenState(false));
     // Optionally navigate to login screen after logout
     navigation.navigate(ScreenName.login);
   };
@@ -36,13 +60,13 @@ const CustomDrawerContent = () => {
         onPress={() => {
           navigation.navigate(ScreenName.profile);
           // Close drawer after navigation
-          dispatch(navbarOpenState(false)); 
+          dispatch(navbarOpenState(false));
         }}
       >
         <Image source={Images.userimg} style={styles.profileImage} />
         <View style={styles.profileTextContainer}>
-          <Text style={styles.profileText}>User Name</Text>
-          <Text style={styles.profileText}>varsh12@gmail.com</Text>
+          <Text style={styles.profileText}>{profileData?.user?.name}</Text>
+          <Text style={styles.profileText}>{profileData?.user?.contact}</Text>
         </View>
       </TouchableOpacity>
 
@@ -55,11 +79,11 @@ const CustomDrawerContent = () => {
             onPress={() => {
               if (item.id === 5) {
                 handleLogout();
-              
+
               } else {
                 navigation.navigate(item.navigation);
                 // Close the drawer after navigation
-                dispatch(navbarOpenState(false)); 
+                dispatch(navbarOpenState(false));
               }
             }}
           >

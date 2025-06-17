@@ -26,13 +26,27 @@ export const authApi = createApi({
             }),
         }),
         getUser: builder.query({
-            query: () => ({
-                url: '/register',
+            query: (userId) => ({
+                url: `/user/${userId}`,
                 method: 'GET',
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             }),
         }),
+        updateUser: builder.mutation({
+            query: ({ userId, userData, token }) => ({
+                url: `/updateuser/${userId}`,
+                method: 'PUT',
+                body: userData,
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+        }),
+
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetUserQuery } = authApi;
+export const { useLoginMutation, useRegisterMutation, useGetUserQuery,useUpdateUserMutation} = authApi;

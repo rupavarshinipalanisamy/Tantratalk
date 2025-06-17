@@ -44,7 +44,6 @@ const BirthTimeScreen = ({ navigation, route }) => {
                     {/* Birth Time Picker */}
                     <CommonTimePicker 
                         onTimeChange={(time) => {
-                            // Format the birthtime as a string like '03:13 AM'
                             const formattedTime = `${time.hour}:${time.minute} ${time.meridian}`;
                             console.log("Updated Birth Time:", formattedTime);  // Log formatted time
                             formik.setFieldValue("birthtime", formattedTime);   // Update the form state with formatted time
