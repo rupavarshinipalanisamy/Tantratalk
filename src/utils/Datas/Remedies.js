@@ -3,39 +3,39 @@ import { Images } from "../images";
 export const RemediesData = [
     {
         id: 1,
-        name: "Career",
+        name: "career",
         img:Images.careerRemedy,
         // navigation:ScreenName.
     },
     {
         id: 2,
-        name: "Money",
+        name: "money",
         img: Images.moneyRemedy
         // navigation:ScreenName.
     },
     {
         id: 3,
-        name: "Health",
+        name: "health",
         img: Images.health1Remedy
         // navigation:ScreenName.
     },
   
     {
         id: 4,
-        name: "Education",
+        name: "education",
         img:Images.educatRemedy
         // navigation:ScreenName.
     },
 
     {
         id: 5,
-        name: "Relationship",
+        name: "relationship",
         img:Images.marriage1Remedy,
         // navigation:ScreenName.
     },
     {
         id:6,
-        name: "Family",
+        name: "family",
         img:Images.famRemedy
         // navigation:ScreenName.
     }

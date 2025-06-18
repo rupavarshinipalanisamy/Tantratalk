@@ -22,6 +22,7 @@ import { useFormik } from "formik";
 import AppIcon from "../commonComponents/Icons/Icons";
 import RazorpayCheckout from 'react-native-razorpay';
 import { getUserId } from "../utils/helper";
+import { useTranslation } from "react-i18next";
 
 
 const CartScreen = ({ navigation }) => {
@@ -32,6 +33,7 @@ const CartScreen = ({ navigation }) => {
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [userId, setUserId] = useState(null);
+    const { t } = useTranslation()
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -282,7 +284,7 @@ const CartScreen = ({ navigation }) => {
             <CommonHeader name="Cart" showBackButton={true} />
             <View style={styles.addressContainer}>
                 <View>
-                    <Text style={styles.addressLabel}>Delivery to:</Text>
+                    <Text style={styles.addressLabel}>{t("deliveryto")}</Text>
                     {selectedAddress ? (
                         <Text style={styles.addressText}>
                             {selectedAddress.formattedAddress.length > 20
@@ -290,7 +292,7 @@ const CartScreen = ({ navigation }) => {
                                 : selectedAddress.formattedAddress}
                         </Text>
                     ) : (
-                        <Text style={styles.addressText}>No address set</Text>
+                        <Text style={styles.addressText}>{t("noaddressset")}</Text>
                     )}
                 </View>
                 <TouchableOpacity
@@ -302,7 +304,7 @@ const CartScreen = ({ navigation }) => {
                         }
                     }}
                 >
-                    <Text style={styles.editAddressText}>{addressData?.addresses.length > 0 ? 'Choose Address' : 'Add Address'}</Text>
+                    <Text style={styles.editAddressText}>{addressData?.addresses.length > 0 ? t('chooseaddress') : t('addaddress')}</Text>
                 </TouchableOpacity>
             </View>
             <View>
@@ -312,7 +314,7 @@ const CartScreen = ({ navigation }) => {
                     renderItem={renderItem}
                     ListEmptyComponent={() => (
                         <View style={{ padding: 20, alignItems: 'center' }}>
-                            <Text>No items were added in cart!</Text>
+                            <Text>{t("noitemswereaddedincart")}</Text>
                         </View>
                     )}
                 />
@@ -321,18 +323,18 @@ const CartScreen = ({ navigation }) => {
             {data?.items?.length > 0 && (
                 <View>
                     <View style={styles.cartItem}>
-                        <Text style={[styles.label, { marginBottom: 5 }]}>Price Details</Text>
+                        <Text style={[styles.label, { marginBottom: 5 }]}>{t("pricedetails")}</Text>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 5 }}>
-                            <Text style={styles.totaltext}>Subtotal:</Text>
+                            <Text style={styles.totaltext}>{t("subtotal")}:</Text>
                             <Text style={[styles.totalamount, { fontWeight: "400" }]}>{data?.subtotal}</Text>
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 5 }}>
-                            <Text style={styles.totaltext}>delivery fee:</Text>
+                            <Text style={styles.totaltext}>{t("deliveryfee")}:</Text>
                             <Text style={[styles.totalamount, { fontWeight: "400" }]}>{data?.deliveryCharge}</Text>
                         </View>
                         <View style={{ borderWidth: 0.3, borderColor: colors.grey4, marginTop: 5, marginBottom: 5 }}></View>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 5 }}>
-                            <Text style={styles.totaltext}>Total Amount:</Text>
+                            <Text style={styles.totaltext}>{t("totalamount")}:</Text>
                             <Text style={[styles.totalamount, { fontWeight: "600" }]}>{data?.totalAmount}</Text>
                         </View>
                     </View>
@@ -345,7 +347,7 @@ const CartScreen = ({ navigation }) => {
                     onPress={() => proceedPayment()}
                     disabled={data?.items?.length === 0}  // disables button when no items
                 >
-                    <Text style={styles.checkoutText}>Proceed to Payment</Text>
+                    <Text style={styles.checkoutText}>{t("proceedtopayment")}</Text>
                 </TouchableOpacity>
 
             </View>
@@ -371,7 +373,7 @@ const CartScreen = ({ navigation }) => {
 
                                 />
                             </TouchableOpacity>
-                            <Text style={{ fontSize: 20, marginBottom: 5 }}>Choose a Delivery Address</Text>
+                            <Text style={{ fontSize: 20, marginBottom: 5 }}>{t("chooseadeliveryaddress")}</Text>
 
                             {addressData?.addresses?.map((item) => (
                                 <TouchableOpacity
@@ -422,7 +424,7 @@ const CartScreen = ({ navigation }) => {
                                 keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
                             >
 
-                                <Text style={styles.modalTitle}>Enter Delivery Address</Text>
+                                <Text style={styles.modalTitle}>{t("enterdeliveryaddress")}</Text>
                                 <ScrollView
                                     style={{ flex: 1 }}
                                     contentContainerStyle={styles.scrollContent}
@@ -432,7 +434,7 @@ const CartScreen = ({ navigation }) => {
                                     <View>
                                         <LineTextInput
                                             isLabel={true}
-                                            label="Name"
+                                            label={t("name")}
                                             onBlur={formik.handleBlur('name')}
                                             value={formik.values.name}
                                             onChange={(value) => formik.setFieldValue('name', value)}
@@ -442,7 +444,7 @@ const CartScreen = ({ navigation }) => {
                                     <View style={{ marginTop: 25 }}>
                                         <LineTextInput
                                             isLabel={true}
-                                            label="Phone Number"
+                                            label={t("phonenumber")}
                                             onBlur={formik.handleBlur('phone')}
                                             value={formik.values.phone}
                                             onChange={(value) => formik.setFieldValue('phone', value)}
@@ -452,7 +454,7 @@ const CartScreen = ({ navigation }) => {
                                     <View style={{ marginTop: 25 }}>
                                         <LineTextInput
                                             isLabel={true}
-                                            label="City"
+                                            label={t("city")}
                                             onBlur={formik.handleBlur('city')}
                                             value={formik.values.city}
                                             onChange={(value) => formik.setFieldValue('city', value)}
@@ -461,7 +463,7 @@ const CartScreen = ({ navigation }) => {
                                     <View style={{ marginTop: 25 }}>
                                         <LineTextInput
                                             isLabel={true}
-                                            label="State"
+                                            label={t("state")}
                                             onBlur={formik.handleBlur('state')}
                                             value={formik.values.state}
                                             onChange={(value) => formik.setFieldValue('state', value)}
@@ -470,7 +472,7 @@ const CartScreen = ({ navigation }) => {
                                     <View style={{ marginTop: 25 }}>
                                         <LineTextInput
                                             isLabel={true}
-                                            label="Pincode"
+                                            label={t("pincode")}
                                             onBlur={formik.handleBlur('pincode')}
                                             value={formik.values.pincode}
                                             onChange={(value) => formik.setFieldValue('pincode', value)}
@@ -478,7 +480,7 @@ const CartScreen = ({ navigation }) => {
                                     </View>
                                     <View style={{ marginTop: 25 }}>
                                         <LineTextInput
-                                            label="Street/Area/Locality"
+                                            label={t("street/area/locality")}
                                             isLabel={true}
                                             onBlur={formik.handleBlur('street')}
                                             value={formik.values.street}
@@ -487,7 +489,7 @@ const CartScreen = ({ navigation }) => {
                                     </View>
                                     <View style={{ marginTop: 25 }}>
                                         <LineTextInput
-                                            label="Flat no/Building Name"
+                                            label={t("flatno/buildingname")}
                                             isLabel={true}
                                             onBlur={formik.handleBlur('buildingname')}
                                             value={formik.values.buildingname}
@@ -496,7 +498,7 @@ const CartScreen = ({ navigation }) => {
                                     </View>
                                     <View style={{ marginTop: 25, marginBottom: 15 }}>
                                         <LineTextInput
-                                            label="Landmark(optional)"
+                                            label={t("landmark(optional)")}
                                             isLabel={true}
                                             onBlur={formik.handleBlur('landmark')}
                                             value={formik.values.landmark}
@@ -507,7 +509,7 @@ const CartScreen = ({ navigation }) => {
 
                                 <View style={styles.modalButtons}>
                                     <TouchableOpacity onPress={() => setModalVisible(false)}>
-                                        <Text style={styles.cancelButton}>Cancel</Text>
+                                        <Text style={styles.cancelButton}>{t("cancel")}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -515,7 +517,7 @@ const CartScreen = ({ navigation }) => {
                                             formik.handleSubmit()
                                         }}
                                     >
-                                        <Text style={styles.saveButton}>Save</Text>
+                                        <Text style={styles.saveButton}>{t("save")}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </KeyboardAvoidingView>

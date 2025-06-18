@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.lightgrey,
     },
     headertxt: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: "700",
         marginLeft: 20,
         color: colors.black
@@ -276,10 +276,11 @@ export const styles = StyleSheet.create({
     },
     bookText: {
         color: "#FFFFFF", // White text
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: "bold",
         textAlign: "center",
-        marginLeft: 5
+        marginLeft: 5,
+        width:"60%"
     },
     tipsartCard: {
         backgroundColor: colors.white,
@@ -294,10 +295,11 @@ export const styles = StyleSheet.create({
     },
     tipsartCardtxt: {
         color: colors.black, // White text
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: "bold",
         textAlign: "center",
-        marginLeft: 5
+        marginLeft: 5,
+        width:"60%"
     },
     line: {
         flex: 1,

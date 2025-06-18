@@ -8,11 +8,13 @@ import { useFormik } from 'formik';
 import { Button } from '../commonComponents/Button';
 import RazorpayCheckout from 'react-native-razorpay';
 import { config } from '../utils/config';
+import { useTranslation } from 'react-i18next';
 
 const walletAmounts = [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000];
 
 const WalletScreen = () => {
     const [walletBalance, setWalletBalance] = useState(0);
+    const {t}=useTranslation()
 
     // useEffect(() => {
     //     fetchWalletBalance();
@@ -119,7 +121,7 @@ const WalletScreen = () => {
                 {/* Recharge Section */}
                 <InputField
                     isLabel={true}
-                    label="Enter Amount"
+                    label={t("enteramount")}
                     fullWidth={true}
                     borderColor="#00b1f3"
                     type="numeric"
@@ -128,7 +130,7 @@ const WalletScreen = () => {
                 />
                 <Text style={styles.minAmount}>* Minimum wallet amount is ₹100</Text>
                 {/* Choose Amount */}
-                <Text style={styles.orChooseAmount}>Or Choose Amount</Text>
+                <Text style={styles.orChooseAmount}>{t("orchooseamount")}</Text>
                 <FlatList
                     data={walletAmounts}
                     numColumns={3}
@@ -140,12 +142,12 @@ const WalletScreen = () => {
                         >
                             <Text style={styles.amountText}>₹ {item}</Text>
                             <View style={styles.choosePlanButton}>
-                                <Text style={styles.choosePlanText}>Choose Plan</Text>
+                                <Text style={styles.choosePlanText}>{t("chooseplan")}</Text>
                             </View>
                         </TouchableOpacity>
                     )}
                 />
-                <Button title="Recharge Now" onPress={() => formik.handleSubmit()} fullWidth={true} style={{ marginTop: 50 }} />
+                <Button title={t("rechargenow")} onPress={() => formik.handleSubmit()} fullWidth={true} style={{ marginTop: 50 }} />
             </View>
         </View>
     );

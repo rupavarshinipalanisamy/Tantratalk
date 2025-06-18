@@ -98,12 +98,12 @@ const ProfileScreen = ({ navigation }) => {
                                 </View>
                             </View>
                             <View style={styles.smallCard}>
-                                <View style={[{ flexDirection: "row", alignItems: "center" }]}>
+                                <TouchableOpacity style={[{ flexDirection: "row", alignItems: "center" }]} onPress={()=>navigation.navigate(ScreenName.languages)}>
 
                                     <AppIcon name="id-card-outline" size={25} color={colors.red} library="Ionicons" />
                                     <Text style={styles.cardheadertxt}>Languages</Text>
 
-                                </View>
+                                </TouchableOpacity>
 
                             </View>
                             <View style={styles.smallCard}>

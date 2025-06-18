@@ -4,49 +4,49 @@ import { ScreenName } from "../screenName";
 export const DailyHoroData=[
     {
         id:1,
-        title1:"Aries " ,
+        title1:"aries" ,
         img:Images.aries,
     },
     {
         id:2,
-        title1:"Taurus ",
+        title1:"taurus",
         img:Images.taurus,
 
     },
     {
         id:3,
-        title1:"Gemini",
+        title1:"gemini",
         img:Images.gemini,
 
     },
     {
         id:4,
-        title1:"Cancer",
+        title1:"cancer",
         img:Images.cancer,
 
     },
     {
         id:5,
-        title1:"Leo",
+        title1:"leo",
         img:Images.leo,
 
     },
     {
         id:6,
-        title1:"Virgo",
+        title1:"virgo",
         img:Images.virgo,
 
     },
     {
         id:7,
-        title1:"Libra",
+        title1:"libra",
         title2:"Making",
         img:Images.libra,
 
     }, 
     {
         id:8,
-        title1:"Scorpio",
+        title1:"scorpio",
         img:Images.libra,
 
         // img:
@@ -54,7 +54,7 @@ export const DailyHoroData=[
     },
     {
         id:9,
-        title1:"Sagittarius",
+        title1:"sagittarius",
         img:Images.saggitaurus,
 
         // img:
@@ -62,7 +62,7 @@ export const DailyHoroData=[
     },
     {
         id:10,
-        title1:"Capricorn",
+        title1:"capricorn",
         img:Images.capricorn,
 
         // img:
@@ -70,14 +70,14 @@ export const DailyHoroData=[
     },
     {
         id:11,
-        title1:"Aquarius",
+        title1:"aquarius",
         img:Images.aquarius,
         // img:
         // navigation:ScreenName.
     },
     {
         id:12,
-        title1:"Pisces",
+        title1:"pisces",
         img:Images.pisces,
 
         // img:

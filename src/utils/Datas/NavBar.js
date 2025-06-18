@@ -4,7 +4,7 @@ import { ScreenName } from "../screenName";
 export const NavBarData=[
     {
         id:1,
-        name:"Home",
+        name:"home",
         navigation:ScreenName.homeScreen,
         img:Images.home
     },

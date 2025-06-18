@@ -11,9 +11,12 @@ import AppIcon from "../Icons/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { logout } from "../../redux/slices/authStateSice";
 import { useGetUserQuery } from "../../redux/services/auth/authSlice";
+import { useTranslation } from "react-i18next";
 
 
 const CustomDrawerContent = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [userId, setUserId] = useState(null);
@@ -98,7 +101,7 @@ const CustomDrawerContent = () => {
               ) : (
                 <Image source={item.img} style={styles.navIcon} />
               )}
-              <Text style={styles.navText}>{item.name}</Text>
+              <Text style={styles.navText}>{t(item.name)}</Text>
             </View>
             <View style={styles.separator} />
           </TouchableOpacity>

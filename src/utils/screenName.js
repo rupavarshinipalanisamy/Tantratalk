@@ -30,7 +30,10 @@ export const ScreenName={
     phonenum:"phonenum",
     matchmaking:"matchmaking",
     cartScreen:"cartScreen",
-    addressScreen:"addressScreen"
+    addressScreen:"addressScreen",
+    languages:"languages",
+    Panjapatchi:"Panjapatchi"
+
 
 
 

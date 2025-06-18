@@ -4,16 +4,16 @@ import { ScreenName } from "../screenName";
 export const FeaturesData=[
     {
         id:1,
-        title1:"Daily",
-        title2:"Horoscope",
+        title1:"daily",
+        title2:"horoscope",
         img:Images.dailyhoro,
         navigation:ScreenName.DailyHoro,
         width:30
     },
     {
         id:2,
-        title1:"Free",
-        title2:"Kundli",
+        title1:"free",
+        title2:"kundli",
         img:Images.freeKundli,
         navigation:ScreenName.freeKundli,
         width:30
@@ -21,8 +21,8 @@ export const FeaturesData=[
     },
     {
         id:3,
-        title1:"Matching",
-        title2:"Kundli",
+        title1:"matching",
+        title2:"kundli",
         img:Images.kundalimatching,
         navigation:ScreenName.matchingKundliForm,
         width:31
@@ -30,16 +30,16 @@ export const FeaturesData=[
     },
     {
         id:4,
-        title1:"Panja",
+        title1:"panja",
         title2:"patchi",
         img:Images.chaticon,
-        navigation:ScreenName.chat,
+        navigation:ScreenName.Panjapatchi,
         width:35
 
     },
     {
         id:5,
-        title1:"Match",
+        title1:"match",
         title2:"making",
         img:Images.freeKundli,
         navigation:ScreenName.bookPooja,

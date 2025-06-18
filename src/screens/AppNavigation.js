@@ -39,6 +39,8 @@ import { Images } from '../utils/images';
 import CustomDrawerContent from '../commonComponents/navBar';
 import CartScreen from './cartScreen';
 import AddressScreen from './AddAddress';
+import Languages from './languages';
+import Panjapatchi from './panjapatchi';
 
 const Stack = createStackNavigator();
 
@@ -88,6 +90,10 @@ export const AppNavigation = ({ isLoggedIn }) => {
                                 <Stack.Screen name={ScreenName.productDescription} component={ProductDescription} />
                                 <Stack.Screen name={ScreenName.cartScreen} component={CartScreen} />
                                 <Stack.Screen name={ScreenName.addressScreen} component={AddressScreen} />
+                                <Stack.Screen name={ScreenName.languages} component={Languages} />
+                                <Stack.Screen name={ScreenName.Panjapatchi} component={Panjapatchi} />
+
+
                             </>
                         ) : (
                             <>

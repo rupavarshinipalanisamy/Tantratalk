@@ -5,6 +5,7 @@ import { colors } from "../utils/colors";
 import CircularProgressBar from "../commonComponents/circularProgressBar.js";
 import { Images } from "../utils/images.js";
 import HeartProgressBar from "../commonComponents/heartProgress/index.js";
+import { useTranslation } from "react-i18next";
 
 const { width } = Dimensions.get("window");
 const curveHeight = width / 6; // Reduced depth of the U shape
@@ -15,18 +16,20 @@ const dayarr = [
 ];
 
 const types = [
-    { id: 1, type: "Love", color: "red" },
-    { id: 2, type: "Compatibility", color: "purple" },
-    { id: 2, type: "Friendship", color: "orange" },
-    { id: 3, type: "Health", color: "green" },
-    { id: 3, type: "Dominance", color: "brown" },
-    { id: 3, type: "Physical Compatibility", color: "teal" },
-    { id: 3, type: "Temperament", color: "yellow" },
-    { id: 3, type: "Destiny", color: "pink" },
+    { id: 1, type: "love", color: "red" },
+    { id: 2, type: "compatibility", color: "purple" },
+    { id: 2, type: "friendship", color: "orange" },
+    { id: 3, type: "health", color: "green" },
+    { id: 3, type: "dominance", color: "brown" },
+    { id: 3, type: "physicalcompatibility", color: "teal" },
+    { id: 3, type: "temperament", color: "yellow" },
+    { id: 3, type: "destiny", color: "pink" },
 ];
 
 
 const CompatabilityScore = () => {
+    const { t } = useTranslation();
+
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
             <View style={styles.screenContainer}>
@@ -67,36 +70,36 @@ const CompatabilityScore = () => {
                     ))}
                 </ScrollView>
                 <View style={styles.whitecard}>
-                    <Text style={[styles.carddaystxt, { color: "red", marginBottom: 5 }]}>Love --Bhakoot Koot</Text>
-                    <Text style={{color:colors.black}}> It represents emotional bonding, harmony, and overall compatibility between partners. Bhakoot is considered a significant factor as it governs the couple’s prosperity, financial stability, and mutual well-being.</Text>
+                    <Text style={[styles.carddaystxt, { color: "red", marginBottom: 5 }]}>{t("love")} --Bhakoot Koot</Text>
+                    <Text style={{ color: colors.black }}> It represents emotional bonding, harmony, and overall compatibility between partners. Bhakoot is considered a significant factor as it governs the couple’s prosperity, financial stability, and mutual well-being.</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
-                    <Text style={[styles.carddaystxt, { color: "purple", marginBottom: 5 }]}>Compatibility --Varna Koot</Text>
-                    <Text style={{color:colors.black}}>Varna Koot in matchmaking checks the mental and emotional compatibility between partners. It classifies people into four groups based on their nature. A good Varna match ensures mutual understanding and a balanced relationship.</Text>
+                    <Text style={[styles.carddaystxt, { color: "purple", marginBottom: 5 }]}>{t("compatibility")} --Varna Koot</Text>
+                    <Text style={{ color: colors.black }}>Varna Koot in matchmaking checks the mental and emotional compatibility between partners. It classifies people into four groups based on their nature. A good Varna match ensures mutual understanding and a balanced relationship.</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
-                    <Text style={[styles.carddaystxt, { color: "orange", marginBottom: 5 }]}>Friendship --Tara Koot</Text>
-                    <Text style={{color:colors.black}}>Graha Maitri Koot measures the intellectual and emotional compatibility between partners based on their ruling planets. A strong match indicates mutual understanding, effective communication, and a harmonious relationship.</Text>
+                    <Text style={[styles.carddaystxt, { color: "orange", marginBottom: 5 }]}>{t("friendship")} --Tara Koot</Text>
+                    <Text style={{ color: colors.black }}>Graha Maitri Koot measures the intellectual and emotional compatibility between partners based on their ruling planets. A strong match indicates mutual understanding, effective communication, and a harmonious relationship.</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
-                    <Text style={[styles.carddaystxt, { color: "green", marginBottom: 5 }]}>Health --Nadi Koot</Text>
-                    <Text style={{color:colors.black}}>Naadi Koot in matchmaking assesses genetic compatibility and health factors between partners. It helps prevent potential conflicts related to health and offspring. A match in the same Naadi is generally avoided for better marital harmony.</Text>
+                    <Text style={[styles.carddaystxt, { color: "green", marginBottom: 5 }]}>{t("health")} --Nadi Koot</Text>
+                    <Text style={{ color: colors.black }}>Naadi Koot in matchmaking assesses genetic compatibility and health factors between partners. It helps prevent potential conflicts related to health and offspring. A match in the same Naadi is generally avoided for better marital harmony.</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
-                    <Text style={[styles.carddaystxt, { color: "brown", marginBottom: 5 }]}>Dominance --Vasya Koot</Text>
-                    <Text style={{color:colors.black}}>Vasya Koot determines mutual attraction and control between partners. It ensures harmony and balance in a relationship. Higher compatibility leads to a stronger bond..</Text>
+                    <Text style={[styles.carddaystxt, { color: "brown", marginBottom: 5 }]}>{t("dominance")} --Vasya Koot</Text>
+                    <Text style={{ color: colors.black }}>Vasya Koot determines mutual attraction and control between partners. It ensures harmony and balance in a relationship. Higher compatibility leads to a stronger bond..</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
-                    <Text style={[styles.carddaystxt, { color: "teal", marginBottom: 5 }]}>Physical compatibility --Yoni Koot</Text>
-                    <Text style={{color:colors.black}}>Yoni Koot represents physical and emotional compatibility between partners. It is based on animal symbolism, influencing intimacy and understanding. A higher score ensures better harmony in marriage.</Text>
+                    <Text style={[styles.carddaystxt, { color: "teal", marginBottom: 5 }]}>{t("physicalcompatibility")} --Yoni Koot</Text>
+                    <Text style={{ color: colors.black }}>Yoni Koot represents physical and emotional compatibility between partners. It is based on animal symbolism, influencing intimacy and understanding. A higher score ensures better harmony in marriage.</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
-                    <Text style={[styles.carddaystxt, { color: "#E4C16F", marginBottom: 5 }]}>Temperament --Gana Koot</Text>
-                    <Text style={{color:colors.black}}>Gana Koot determines the temperament and nature compatibility between partners. It classifies individuals into Deva (gentle), Manushya (balanced), and Rakshasa (aggressive) categories. A good match ensures harmony and fewer conflicts in marriage.</Text>
+                    <Text style={[styles.carddaystxt, { color: "#E4C16F", marginBottom: 5 }]}>{t("temperament")} --Gana Koot</Text>
+                    <Text style={{ color: colors.black }}>Gana Koot determines the temperament and nature compatibility between partners. It classifies individuals into Deva (gentle), Manushya (balanced), and Rakshasa (aggressive) categories. A good match ensures harmony and fewer conflicts in marriage.</Text>
                 </View>
                 <View style={[styles.whitecard, { marginTop: 10 }]}>
-                    <Text style={[styles.carddaystxt, { color: "pink", marginBottom: 5 }]}>Destiny --Tara Koot</Text>
-                    <Text style={{color:colors.black}}> Tara Koot in matchmaking analyzes the health, well-being, and longevity of partners. It assesses compatibility based on birth stars (Tara) to ensure a harmonious and prosperous relationship. A high Tara Koot score indicates stability and good fortune.</Text>
+                    <Text style={[styles.carddaystxt, { color: "pink", marginBottom: 5 }]}>{t("destiny")} --Tara Koot</Text>
+                    <Text style={{ color: colors.black }}> Tara Koot in matchmaking analyzes the health, well-being, and longevity of partners. It assesses compatibility based on birth stars (Tara) to ensure a harmonious and prosperous relationship. A high Tara Koot score indicates stability and good fortune.</Text>
                 </View>
             </View>
         </ScrollView>
