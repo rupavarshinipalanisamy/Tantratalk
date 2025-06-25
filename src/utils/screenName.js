@@ -17,6 +17,7 @@ export const ScreenName={
     DailyHoro:"DailyHoro",
     birthtime:"birthtime",
     birthPlace:"birthPlace",
+    profileupload:"profileupload",
     horoScope:"horoScope",
     freeKundli:"freeKundli",
     freeKudliDetails:"freeKudliDetails",
@@ -35,7 +36,4 @@ export const ScreenName={
     Panjapatchi:"Panjapatchi",
     remediesall:"remediesall",
     remediesdescription:"remediesdescription"
-
-
-
 }

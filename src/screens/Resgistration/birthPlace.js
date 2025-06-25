@@ -25,7 +25,7 @@ const BirthPlaceScreen = ({ navigation, route }) => {
         console.log('====================================');
         console.log(values.birthplace);
         console.log('====================================');
-        navigation.navigate(ScreenName.password, { name, phonenum,gender, birthdate, birthtime, birthplace: formik.values.birthplace });
+        navigation.navigate(ScreenName.profileupload, { name, phonenum,gender, birthdate, birthtime, birthplace: formik.values.birthplace });
     };
     useEffect(() => {
         console.log(name, gender, birthdate, birthtime,"detailsss");
@@ -59,7 +59,7 @@ const BirthPlaceScreen = ({ navigation, route }) => {
                         </View>
                         {/* <InputField isLabel={true} label="City" borderColor="#00b1f3" /> */}
                         <View style={{ marginTop: 50 }}>
-                            <Button title="SUBMIT" onPress={formik.handleSubmit} fullWidth={true} />
+                            <Button title="NEXT" onPress={formik.handleSubmit} fullWidth={true} />
                         </View>
                     </View>
                 </View>

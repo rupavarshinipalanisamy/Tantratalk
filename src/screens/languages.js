@@ -21,10 +21,14 @@ const Languages = ({ navigation }) => {
     };
 
 
-    const languages = [
-        { label: 'English', value: 'en' },
-        { label: 'தமிழ் (Tamil)', value: 'ta' }
-    ];
+const languages = [
+    { label: 'English', value: 'en' },
+    { label: 'தமிழ் (Tamil)', value: 'ta' },
+    { label: 'മലയാളം (Malayalam)', value: 'ml' },
+    { label: 'తెలుగు (Telugu)', value: 'te' },
+    { label: 'ಕನ್ನಡ (Kannada)', value: 'kn' },
+];
+
 
     return (
         <View style={styles.container}>

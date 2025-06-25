@@ -90,4 +90,8 @@ export const Images = {
     xaplha:require("../../assets/Images/alphabets/x.png"),
     yaplha:require("../../assets/Images/alphabets/y.png"),
     zaplha:require("../../assets/Images/alphabets/z.png"),
+    avatarfemale:require("../../assets/Images/avatarFemale.jpeg"),
+    avatarmale:require("../../assets/Images/avatarMale.jpeg"),
+
+
 };

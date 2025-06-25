@@ -43,6 +43,7 @@ import Languages from './languages';
 import Panjapatchi from './panjapatchi';
 import RemediesAll from './remediesAll';
 import RemediesDescription from './remediesDescription';
+import ProfileUpload from './Resgistration/profileUpload';
 
 const Stack = createStackNavigator();
 
@@ -96,10 +97,6 @@ export const AppNavigation = ({ isLoggedIn }) => {
                                 <Stack.Screen name={ScreenName.Panjapatchi} component={Panjapatchi} />
                                 <Stack.Screen name={ScreenName.remediesall} component={RemediesAll} />
                                 <Stack.Screen name={ScreenName.remediesdescription} component={RemediesDescription} />
-                                
-
-
-
                             </>
                         ) : (
                             <>
@@ -111,6 +108,8 @@ export const AppNavigation = ({ isLoggedIn }) => {
                                 <Stack.Screen name={ScreenName.birthtime} component={BirthTimeScreen} />
                                 <Stack.Screen name={ScreenName.birthPlace} component={BirthPlaceScreen} />
                                 <Stack.Screen name={ScreenName.password} component={Password} />
+                                <Stack.Screen name={ScreenName.profileupload} component={ProfileUpload} />
+
                             </>
                         )
                     }
