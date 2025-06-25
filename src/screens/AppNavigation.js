@@ -26,14 +26,14 @@ import CompatabilityScore from '../screens/compatabilityScore';
 import Wallet from '../screens/wallet';
 import ChatScreen from '../screens/chatScreen';
 import ProductDescription from '../screens/productsDescription';
-import Password from '../screens/password';
-import Phonenum from '../screens/phonenumber';
+import Password from './Resgistration/password';
+import Phonenum from './Resgistration/phonenumber';
 import LoginScreen from '../screens/loginScreen';
-import UserName from '../screens/userName';
-import Gender from '../screens/genderScreen';
-import BirthDate from '../screens/birthScreen';
-import BirthTimeScreen from '../screens/birthTimeScreen';
-import BirthPlaceScreen from '../screens/birthPlace';
+import UserName from './Resgistration/userName';
+import Gender from './Resgistration/genderScreen';
+import BirthDate from './Resgistration/birthScreen';
+import BirthTimeScreen from './Resgistration/birthTimeScreen';
+import BirthPlaceScreen from './Resgistration/birthPlace';
 import { colors } from '../utils/colors';
 import { Images } from '../utils/images';
 import CustomDrawerContent from '../commonComponents/navBar';
@@ -41,6 +41,8 @@ import CartScreen from './cartScreen';
 import AddressScreen from './AddAddress';
 import Languages from './languages';
 import Panjapatchi from './panjapatchi';
+import RemediesAll from './remediesAll';
+import RemediesDescription from './remediesDescription';
 
 const Stack = createStackNavigator();
 
@@ -92,6 +94,10 @@ export const AppNavigation = ({ isLoggedIn }) => {
                                 <Stack.Screen name={ScreenName.addressScreen} component={AddressScreen} />
                                 <Stack.Screen name={ScreenName.languages} component={Languages} />
                                 <Stack.Screen name={ScreenName.Panjapatchi} component={Panjapatchi} />
+                                <Stack.Screen name={ScreenName.remediesall} component={RemediesAll} />
+                                <Stack.Screen name={ScreenName.remediesdescription} component={RemediesDescription} />
+                                
+
 
 
                             </>

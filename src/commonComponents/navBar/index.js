@@ -42,12 +42,23 @@ const CustomDrawerContent = () => {
 
   }, [profileData])
 
+  // const handleLogout = async () => {
+  //   await AsyncStorage.removeItem("userToken");
+  //   dispatch(logout());
+  //   dispatch(navbarOpenState(false));
+  //   // Optionally navigate to login screen after logout
+  //   navigation.navigate(ScreenName.login);
+  // };
+
   const handleLogout = async () => {
-    await AsyncStorage.removeItem("userToken");
-    dispatch(logout());
-    dispatch(navbarOpenState(false));
-    // Optionally navigate to login screen after logout
-    navigation.navigate(ScreenName.login);
+    try {
+      await AsyncStorage.removeItem('userToken');
+      await AsyncStorage.removeItem('userId');
+      dispatch(navbarOpenState(false));
+      dispatch(logout());
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (

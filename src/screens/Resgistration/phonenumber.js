@@ -1,13 +1,13 @@
 import { View, Text, ImageBackground } from 'react-native';
 import React from 'react';
-import { commonstyles } from '../commonComponents/commonStyles';
-import { Images } from '../utils/images';
-import { InputField } from '../commonComponents/inputField';
-import { Button } from '../commonComponents/Button';
-import AnimatedImage from '../commonComponents/AnimatedImage';
-import { ScreenName } from '../utils/screenName';
+import { commonstyles } from '../../commonComponents/commonStyles';
+import { Images } from '../../utils/images';
+import { InputField } from '../../commonComponents/inputField';
+import { Button } from '../../commonComponents/Button';
+import AnimatedImage from '../../commonComponents/AnimatedImage';
+import { ScreenName } from '../../utils/screenName';
 import { useFormik } from 'formik';
-import { PhonenumSchema } from '../utils/validationSchema';
+import { PhonenumSchema } from '../../utils/validationSchema';
 
 const Phonenum = ({ navigation, route }) => {
   const { name } = route.params || {};

@@ -1,18 +1,18 @@
 import { View, Text, ImageBackground, Animated, Easing } from 'react-native';
 import React, { useEffect, useRef } from 'react';
-import { commonstyles } from '../commonComponents/commonStyles';
-import { Images } from '../utils/images';
-import { InputField } from '../commonComponents/inputField';
-import { Button } from '../commonComponents/Button';
-import AnimatedImage from '../commonComponents/AnimatedImage';
-import { ScreenName } from '../utils/screenName';   
+import { commonstyles } from '../../commonComponents/commonStyles';
+import { Images } from '../../utils/images';
+import { InputField } from '../../commonComponents/inputField';
+import { Button } from '../../commonComponents/Button';
+import AnimatedImage from '../../commonComponents/AnimatedImage';
+import { ScreenName } from '../../utils/screenName';   
 import { useFormik } from 'formik';
-import { FullNameSchema, password } from '../utils/validationSchema';
-import { useLoginMutation, useRegisterMutation } from '../redux/services/auth/authSlice';
+import { FullNameSchema, password } from '../../utils/validationSchema';
+import { useLoginMutation, useRegisterMutation } from '../../redux/services/auth/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Phonenum from './phonenumber';
 import { useDispatch } from 'react-redux';
-import { login } from '../redux/slices/authStateSice';
+import { login } from '../../redux/slices/authStateSice';
 
 const Password = ({ navigation, route }) => {
     const { name, phonenum, gender, birthdate, birthtime, birthplace } = route.params || {};

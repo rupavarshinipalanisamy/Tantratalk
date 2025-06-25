@@ -1,14 +1,14 @@
 import { View, Text, ImageBackground } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { commonstyles } from '../commonComponents/commonStyles'
-import { Images } from '../utils/images'
-import { InputField } from '../commonComponents/inputField'
-import { Button } from '../commonComponents/Button'
-import AnimatedImage from '../commonComponents/AnimatedImage'
-import Navigation from '../navigation/navigation'
-import { ScreenName } from '../utils/screenName'
+import { commonstyles } from '../../commonComponents/commonStyles'
+import { Images } from '../../utils/images'
+import { InputField } from '../../commonComponents/inputField'
+import { Button } from '../../commonComponents/Button'
+import AnimatedImage from '../../commonComponents/AnimatedImage'
+import Navigation from '../../navigation/navigation'
+import { ScreenName } from '../../utils/screenName'
 import { useFormik } from 'formik';
-import { birthplace } from '../utils/validationSchema'
+import { birthplace } from '../../utils/validationSchema'
 
 
 const BirthPlaceScreen = ({ navigation, route }) => {

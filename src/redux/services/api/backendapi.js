@@ -72,9 +72,14 @@ export const backendApi = createApi({
                 body: data,
             }),
         }),
-
-
-    }), 
+        selectRewards: builder.mutation({
+            query: (data) => ({
+                url: '/Rewardofthismonth',
+                method: 'GET',
+                body: data,
+            }),
+        }),
+    }),
 });
 
 export const {

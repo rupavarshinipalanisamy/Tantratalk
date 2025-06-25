@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../commonComponents/loader';
 import { login } from "../redux/slices/authStateSice/index";
 import { getUserId } from "../utils/helper";
+import { useSnackbar } from '../commonComponents/Snackbar';
 
 
 const LoginScreen = ({ navigation }) => {
@@ -32,11 +33,12 @@ const LoginScreen = ({ navigation }) => {
 
     const [loginApi] = useLoginMutation();
     const { isLoggedIn } = useSelector((state) => state.auth);
-
+    const { showSnackbar } = useSnackbar();
 
     useEffect(() => {
-        console.log(isLoggedIn, "useEffectstate");
-
+        if (isLoggedIn) {
+            navigation.navigate(ScreenName.homeScreen);
+        }
     }, [isLoggedIn]);
 
     const handleLogin = async () => {
@@ -48,18 +50,23 @@ const LoginScreen = ({ navigation }) => {
         setLoading(true)
         try {
             const response = await loginApi(JSON.stringify(payload)).unwrap();
-            console.log('Login Success:', response);
             const userToken = response.token;
             const userId = response.user._id;
-            console.log(userToken, response, "responsess");
             await AsyncStorage.setItem('userToken', userToken);
             await AsyncStorage.setItem('userId', userId);
+            showSnackbar({
+                text: "Login success !",
+                status: 'success',
+                time: 2000,
+            });
             dispatch(login({ token: userToken }));
-            navigation.navigate(ScreenName.homeScreen);
         } catch (error) {
-            setLoading(false)
-
-            console.error('Login Failed:', error);
+            const message = error?.data?.error || error?.message || 'Login failed';
+            showSnackbar({
+                text: message,
+                status: 'error',
+                time: 2000,
+            });
         } finally {
             setLoading(false)
 

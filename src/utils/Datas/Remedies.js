@@ -1,6 +1,6 @@
 import { Images } from "../images";
 
-export const RemediesData = [
+export const RemediesDataAll = [
     {
         id: 1,
         name: "career",
@@ -39,4 +39,18 @@ export const RemediesData = [
         img:Images.famRemedy
         // navigation:ScreenName.
     }
+]
+export const RemediesData = [
+    {
+        id: 1,
+        name: "career",
+        img:Images.careerRemedy,
+        // navigation:ScreenName.
+    },
+    {
+        id: 2,
+        name: "money",
+        img: Images.moneyRemedy
+        // navigation:ScreenName.
+    },
 ]

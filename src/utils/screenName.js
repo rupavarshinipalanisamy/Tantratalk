@@ -32,8 +32,9 @@ export const ScreenName={
     cartScreen:"cartScreen",
     addressScreen:"addressScreen",
     languages:"languages",
-    Panjapatchi:"Panjapatchi"
-
+    Panjapatchi:"Panjapatchi",
+    remediesall:"remediesall",
+    remediesdescription:"remediesdescription"
 
 
 

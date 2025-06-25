@@ -201,8 +201,15 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "bold",
     },
-    bottomTab:
-        { backgroundColor: colors.white, flexDirection: "row", justifyContent: "space-between", padding: 15, alignItems: "center", borderTopWidth: 1, borderColor: colors.grey3 }
+    bottomTab:{ 
+        backgroundColor: colors.white, 
+        flexDirection: "row", 
+        justifyContent: "space-between", 
+        padding: 15, 
+        alignItems: "center", 
+        borderTopWidth: 1, 
+        borderColor: colors.grey3
+     }
 
 });
 

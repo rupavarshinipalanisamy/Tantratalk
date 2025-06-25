@@ -48,19 +48,27 @@ const PopupModal = ({ visible, onClose }) => {
   const is5thAfter6PM = date === 5 && (hours > 18 || (hours === 18 && minutes >= 0));
   const isBetween5th6PMandNext4th = (date > 5 || is5thAfter6PM || date < 4);
 
-  const showAnimation = is4th;
-  const showWinner = !is4th && isBetween5th6PMandNext4th;
+  const showAnimation = !is4th && isBetween5th6PMandNext4th;
+  const showWinner =  is4th;
   const showMessage = !showAnimation && !showWinner;
 
   const winnerKey = `winner_${now.getMonth()}_${now.getFullYear()}`;
+  // useEffect(() => {
+  //   fetchWinnerFromAPI(); 
+  // }, []);
 
   const fetchWinnerFromAPI = async () => {
     try {
       setLoadingWinner(true);
       // Replace this URL with your actual winner API endpoint
-      const response = await fetch('https://yourapi.com/get-winner');
+      console.log("Calling winner API...");
+
+      const response = await fetch('http://192.168.1.8:5000/apiV1/backend/admin/Rewardofthismonth');
       const data = await response.json();
-      const winner = data?.winner || 'abc12'; // fallback dummy
+      console.log('====================================');
+      console.log(data, "rewardcodess");
+      console.log('====================================');
+      const winner = data?.rewardCode || 'abc12'; // fallback dummy
       await AsyncStorage.setItem(winnerKey, winner);
       setWinnerCode(winner);
     } catch (error) {
@@ -70,22 +78,12 @@ const PopupModal = ({ visible, onClose }) => {
     }
   };
 
-  const loadWinner = async () => {
-    try {
-      const storedWinner = await AsyncStorage.getItem(winnerKey);
-      if (storedWinner) {
-        setWinnerCode(storedWinner);
-      } else {
-        await fetchWinnerFromAPI();
-      }
-    } catch (err) {
-      console.error('Error loading winner from AsyncStorage:', err);
-    }
-  };
-
   useEffect(() => {
+    console.log(visible, showWinner, "visible,showWinner");
     if (visible && showWinner) {
-      loadWinner();
+      // loadWinner();
+      fetchWinnerFromAPI();
+
     }
   }, [visible, showWinner]);
 
@@ -125,6 +123,10 @@ const PopupModal = ({ visible, onClose }) => {
               outputRange: [0, -scrollHeight],
             }),
           }],
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent:"center"
+
         }}
       >
         {[...characters, ...characters].map((char, index) => (
@@ -157,22 +159,39 @@ const PopupModal = ({ visible, onClose }) => {
                 {loadingWinner ? (
                   <ActivityIndicator size="large" color="#fff" />
                 ) : (
-                  winnerCode
-                    .toLowerCase()
-                    .split('')
-                    .map((char, idx) => {
+
+                  <View style={styles.reelRowStatic}>
+                    {winnerCode.toLowerCase().split('').map((char, idx) => {
                       const img = numberImages[char];
-                      if (!img) return null; // Skip if no image for this char
+                      if (!img) return null;
                       return (
-                        <View style={styles.reelFrame} key={idx}>
-                          <Image
-                            source={img}
-                            style={styles.reelImage}
-                            resizeMode="contain"
-                          />
+                        <View style={styles.reelFrameStatic} key={idx}>
+                          <View style={styles.imageWrapperStatic}>
+                            <Image source={img} style={styles.reelImageStatic} resizeMode="contain" />
+                          </View>
                         </View>
                       );
-                    })
+                    })}
+                  </View>
+
+                  // winnerCode
+                  //   .toLowerCase()
+                  //   .split('')
+                  //   .map((char, idx) => {
+                  //     const img = numberImages[char];
+                  //     if (!img) return null; // Skip if no image for this char
+                  //     return (
+                  //       <View style={styles.reelFrame} key={idx}>
+                  //         <View style={styles.imageWrapper}>
+                  //           <Image
+                  //             source={img}
+                  //             style={styles.reelImage}
+                  //             resizeMode="contain"
+                  //           />
+                  //         </View>
+                  //       </View>
+                  //     );
+                  //   })
                 )}
               </View>
             )}
@@ -227,4 +246,37 @@ const styles = StyleSheet.create({
     height: itemHeight,
     width: 40,
   },
+
+
+  reelRowStatic: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+
+  reelFrameStatic: {
+    height: itemHeight,
+    width: 50, // match your spinner slot width
+    overflow: 'hidden',
+    marginHorizontal: 4,
+    borderRadius: 12,
+    marginTop: 20,
+    // backgroundColor: 'white', // ensures clean slot look
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  imageWrapperStatic: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  reelImageStatic: {
+    height: 50,     // this is the size of your letter images
+    width: 50,
+  },
+
 });

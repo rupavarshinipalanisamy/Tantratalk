@@ -13,6 +13,4 @@ export const colors={
     grey5:"#c0c0c0",
     grey6:"#AAAAAA"
   
-
-
 }

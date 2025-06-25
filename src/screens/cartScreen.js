@@ -93,7 +93,7 @@ const CartScreen = ({ navigation }) => {
         isFetching: addressisfecting,
         status: addressStatus
     } = useGetUserAddressQuery(userId);
-    console.log(addressData?.addresses, "addressDatas");
+    console.log(userId, addressData?.addresses, "addressDatas");
 
 
     useEffect(() => {
@@ -154,6 +154,8 @@ const CartScreen = ({ navigation }) => {
             console.error('Failed to add item', error);
         }
     }
+
+    // const { showSnackbar } = useSnackbar();
     const proceedPayment = async () => {
         const userId = await getUserId();
         try {
@@ -360,6 +362,15 @@ const CartScreen = ({ navigation }) => {
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.modalOverlay}>
                         <View style={styles.modalContainer}>
+                            <TouchableOpacity style={{ alignItems: "flex-end" }}
+                                onPress={() => {
+                                    setAddressChooseModal(false);
+                                    setModalVisible(true)
+                                }}
+                            >
+                                <Text style={{ fontSize: 14, marginBottom: 5 }}>{t("add address")}</Text>
+
+                            </TouchableOpacity>
                             <TouchableOpacity style={{ alignItems: "flex-end", marginBottom: 2 }}
                                 onPress={() => {
                                     setAddressChooseModal(false);

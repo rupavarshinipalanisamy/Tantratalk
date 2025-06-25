@@ -1,12 +1,12 @@
 import { View, Text, ImageBackground, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import { commonstyles } from '../commonComponents/commonStyles';
-import { Images } from '../utils/images';
-import { Button } from '../commonComponents/Button';
-import AnimatedImage from '../commonComponents/AnimatedImage';
-import { ScreenName } from '../utils/screenName';
+import { commonstyles } from '../../commonComponents/commonStyles';
+import { Images } from '../../utils/images';
+import { Button } from '../../commonComponents/Button';
+import AnimatedImage from '../../commonComponents/AnimatedImage';
+import { ScreenName } from '../../utils/screenName';
 import { useFormik } from 'formik';
-import CommonTimePicker from '../commonComponents/TimePicker';
+import CommonTimePicker from '../../commonComponents/TimePicker';
 
 const BirthTimeScreen = ({ navigation, route }) => {
     const [isModalVisible, setModalVisible] = useState(true);

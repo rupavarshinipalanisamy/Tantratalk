@@ -1,14 +1,14 @@
 import { View, Text, ImageBackground, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import { commonstyles } from '../commonComponents/commonStyles'
-import { Images } from '../utils/images'
-import { InputField } from '../commonComponents/inputField'
-import { Button } from '../commonComponents/Button'
-import AnimatedImage from '../commonComponents/AnimatedImage'
-import Navigation from '../navigation/navigation'
-import { ScreenName } from '../utils/screenName'
+import { commonstyles } from '../../commonComponents/commonStyles'
+import { Images } from '../../utils/images'
+import { InputField } from '../../commonComponents/inputField'
+import { Button } from '../../commonComponents/Button'
+import AnimatedImage from '../../commonComponents/AnimatedImage'
+import Navigation from '../../navigation/navigation'
+import { ScreenName } from '../../utils/screenName'
 import { useFormik } from 'formik'
-import CommonDatePicker from '../commonComponents/DatePicker'
+import CommonDatePicker from '../../commonComponents/DatePicker'
 
 const BirthDate = ({ navigation,route }) => {
     const { name,phonenum, gender} = route.params || {};

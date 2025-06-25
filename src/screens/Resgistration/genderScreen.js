@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
-import AppIcon from "../commonComponents/Icons/Icons";
-import { colors } from "../utils/colors";
-import { commonstyles } from "../commonComponents/commonStyles";
-import { Images } from "../utils/images";
-import { Button } from "../commonComponents/Button";
-import AnimatedImage from "../commonComponents/AnimatedImage";
-import { ScreenName } from "../utils/screenName";
+import AppIcon from "../../commonComponents/Icons/Icons";
+import { colors } from "../../utils/colors";
+import { commonstyles } from "../../commonComponents/commonStyles";
+import { Images } from "../../utils/images";
+import { Button } from "../../commonComponents/Button";
+import AnimatedImage from "../../commonComponents/AnimatedImage";
+import { ScreenName } from "../../utils/screenName";
 import { useFormik } from 'formik';
-import { GenderSchema } from "../utils/validationSchema";
+import { GenderSchema } from "../../utils/validationSchema";
 
 const Gender = ({ navigation, route }) => {
 

@@ -303,7 +303,7 @@ const HomeScreen = ({ navigation }) => {
                 <View style={{ marginTop: 10 }}>
                     <View style={styles.headerConatiner}>
                         <Text style={styles.headertxt}>{t("remedies")}</Text>
-                        <TouchableOpacity style={{ marginRight: 15 }}>
+                        <TouchableOpacity style={{ marginRight: 15 }} onPress={()=>navigation.navigate(ScreenName.remediesall)}>
                             <Text style={styles.viewalltxt}>{t("viewall")}</Text>
 
                         </TouchableOpacity>
