@@ -44,6 +44,10 @@ import Panjapatchi from './panjapatchi';
 import RemediesAll from './remediesAll';
 import RemediesDescription from './remediesDescription';
 import ProfileUpload from './Resgistration/profileUpload';
+import TipsListScreen from './tipsListScreen';
+import TipsAll from './tipsAll';
+import TipsDetailScreen from './tipsDetailScreen';
+import TantraBooks from './tantraBooks';
 
 const Stack = createStackNavigator();
 
@@ -97,6 +101,12 @@ export const AppNavigation = ({ isLoggedIn }) => {
                                 <Stack.Screen name={ScreenName.Panjapatchi} component={Panjapatchi} />
                                 <Stack.Screen name={ScreenName.remediesall} component={RemediesAll} />
                                 <Stack.Screen name={ScreenName.remediesdescription} component={RemediesDescription} />
+                                <Stack.Screen name={ScreenName.tipslistscreen} component={TipsListScreen} />
+                                <Stack.Screen name={ScreenName.tipsall} component={TipsAll} />
+                                <Stack.Screen name={ScreenName.tipsdetailscreen} component={TipsDetailScreen} />
+                                <Stack.Screen name={ScreenName.tantrabooks} component={TantraBooks} />
+
+
                             </>
                         ) : (
                             <>

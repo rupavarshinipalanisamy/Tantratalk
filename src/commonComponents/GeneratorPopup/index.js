@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Images } from '../../utils/images';
+import { config } from '../../utils/config';
 
 const { height } = Dimensions.get('window');
 
@@ -48,8 +49,8 @@ const PopupModal = ({ visible, onClose }) => {
   const is5thAfter6PM = date === 5 && (hours > 18 || (hours === 18 && minutes >= 0));
   const isBetween5th6PMandNext4th = (date > 5 || is5thAfter6PM || date < 4);
 
-  const showAnimation = !is4th && isBetween5th6PMandNext4th;
-  const showWinner =  is4th;
+  const showAnimation = is4th;
+  const showWinner =  !is4th && isBetween5th6PMandNext4th;
   const showMessage = !showAnimation && !showWinner;
 
   const winnerKey = `winner_${now.getMonth()}_${now.getFullYear()}`;
@@ -63,7 +64,7 @@ const PopupModal = ({ visible, onClose }) => {
       // Replace this URL with your actual winner API endpoint
       console.log("Calling winner API...");
 
-      const response = await fetch('http://192.168.1.8:5000/apiV1/backend/admin/Rewardofthismonth');
+      const response = await fetch(`${config.BACKEND_BASE_URL}/admin/Rewardofthismonth`);
       const data = await response.json();
       console.log('====================================');
       console.log(data, "rewardcodess");

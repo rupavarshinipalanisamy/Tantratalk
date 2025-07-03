@@ -92,6 +92,10 @@ export const Images = {
     zaplha:require("../../assets/Images/alphabets/z.png"),
     avatarfemale:require("../../assets/Images/avatarFemale.jpeg"),
     avatarmale:require("../../assets/Images/avatarMale.jpeg"),
+    planet:require("../../assets/Images/planet.png"),
+    book1:require("../../assets/Images/book1.jpg"),
+    
+
 
 
 };

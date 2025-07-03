@@ -11,7 +11,6 @@ export const DailyHoroData=[
         id:2,
         title1:"taurus",
         img:Images.taurus,
-
     },
     {
         id:3,

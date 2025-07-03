@@ -4,24 +4,41 @@ import Svg, { Path } from "react-native-svg";
 import { colors } from "../utils/colors";
 import CircularProgressBar from "../commonComponents/circularProgressBar.js";
 import { useTranslation } from "react-i18next";
+import { useAdvancedailyhoroscopeQuery } from "../redux/services/api/backendapi.js";
 
 const { width } = Dimensions.get("window");
 const curveHeight = width / 6; // Reduced depth of the U shape
-const dayarr = [
-    { id: 1, day: "today" },
-    { id: 2, day: "yesterday" },
-    { id: 3, day: "tomorrow" }
-];
-const types = [
-    { id: 1, type: "love", color: "red" },
-    { id: 2, type: "career", color: "blue" },
-    { id: 3, type: "health", color: "green" }
-];
 
 const HoroScope = ({ route }) => {
     const { item } = route.params || {};
-        const { t } = useTranslation();
-    
+    const { t } = useTranslation();
+    const [predictions, setPredictions] = useState([]);
+    const [scores, setScores] = useState([])
+
+    const {
+        data,
+        refetch,
+        isError,
+        error,
+        isLoading,
+        isFetching,
+        status
+    } = useAdvancedailyhoroscopeQuery({ sign: item?.title1 });
+
+    const DailyhoroData = data?.data?.data?.daily_predictions?.[0]?.predictions
+    useEffect(() => {
+        if (DailyhoroData) {
+            setPredictions(DailyhoroData);
+            setScores(data?.scores);
+        }
+    }, [data]);
+    {console.log(typeof(scores),"scoresss");}
+    console.log(Array.isArray(scores)); // ✅ true
+
+    const lovePrediction = predictions?.find(p => p.type === "Love");
+    const careerPrediction = predictions?.find(p => p.type === "Career");
+    const healthPrediction = predictions?.find(p => p.type === "Health");
+
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
@@ -43,15 +60,13 @@ const HoroScope = ({ route }) => {
                 <View style={styles.card}>
                     <Text style={styles.daytext}>{t("today")}</Text>
                     <Text style={styles.predictiontxt}>
-                        We’ve trained a model called ChatGPT which interacts in a conversational way.
-                        The dialogue format makes it possible for ChatGPT to answer follow-up questions,
-                        admit its mistakes, challenge incorrect premises, and reject inappropriate requests.
+                        {predictions?.[0]?.prediction}
                     </Text>
                 </View>
 
                 {/* Horizontal Days List */}
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.dayContainer}>
-                    {dayarr.map((item, index) => (
+                    {/* {dayarr.map((item, index) => (
                         <View key={index} style={[styles.dayCard, {
                             height: 70,
                             width: 120
@@ -59,43 +74,66 @@ const HoroScope = ({ route }) => {
                             <Text style={styles.todaytxt}>{t(item.day)}</Text>
                             <Text style={styles.datetxt}>2 october</Text>
                         </View>
-                    ))}
+                    ))} */}
                 </ScrollView>
                 <Text style={styles.sectionTitle}>{t("morehoroscopefor")} {t(item.title1)}</Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.dayContainer}>
-                    {types.map((item, index) => (
+                    {scores.map((item, index) => (
                         <View key={index} style={[styles.dayCard, {
                             height: 120,
                             width: 110,
                             alignItems: "center",
                             justifyContent: "center"
                         }]}>
-                            <CircularProgressBar progress={"70"} size={45} color={item.color} />
+                            <CircularProgressBar progress={item?.score} size={45} color={item.color} />
                             <Text style={[styles.daystxt, { color: item.color }]}>{t(item.type)}</Text>
                             {/* <Text style={styles.datetxt}>2 october</Text> */}
                         </View>
                     ))}
                 </ScrollView>
-                <View style={styles.whitecard}>
-                <Text style={[styles.daystxt, { color:"red",marginBottom:5 }]}>{t("love")}</Text>
-                    <Text> We’ve trained a model called ChatGPT which interacts in a conversational way.
-                        The dialogue format makes it possible for ChatGPT to answer follow-up questions,
-                        admit its mistakes, challenge incorrect premises, and reject inappropriate requests.</Text>
+                <View>
+                    {/* <Text style={[styles.daystxt, { color: "red", marginBottom: 5 }]}>{t("love")}</Text> */}
+                    {lovePrediction && (
+                        <View style={styles.whitecard}>
+                            <Text style={[styles.daystxt, { color: "red", marginBottom: 5 }]}>
+                                {t("love")}
+                            </Text>
+                            <Text>{lovePrediction.prediction}</Text>
+                            {/* <Text>{lovePrediction.seek}</Text> */}
+                            <Text>{lovePrediction.challenge}</Text>
+                            <Text>{lovePrediction.insight}</Text>
+                        </View>
+                    )}
+
                 </View>
-                <View style={[styles.whitecard,{marginTop:10}]}>
-                <Text style={[styles.daystxt, { color:"blue",marginBottom:5 }]}>{t("career")}</Text>
-                    <Text> We’ve trained a model called ChatGPT which interacts in a conversational way.
-                        The dialogue format makes it possible for ChatGPT to answer follow-up questions,
-                        admit its mistakes, challenge incorrect premises, and reject inappropriate requests.</Text>
+                <View >
+                    {careerPrediction && (
+                        <View style={[styles.whitecard, { marginTop: 10 }]}>
+                            <Text style={[styles.daystxt, { color: "blue", marginBottom: 5 }]}>
+                                {t("career")}
+                            </Text>
+                            <Text>{careerPrediction.prediction}</Text>
+                            {/* <Text>Seek: {careerPrediction.seek}</Text> */}
+                            <Text>{careerPrediction.challenge}</Text>
+                            <Text>{careerPrediction.insight}</Text>
+                        </View>
+                    )}
                 </View>
-                <View style={[styles.whitecard,{marginTop:10}]}>
-                <Text style={[styles.daystxt, { color:"green",marginBottom:5 }]}>{t("health")}</Text>
-                    <Text> We’ve trained a model called ChatGPT which interacts in a conversational way.
-                        The dialogue format makes it possible for ChatGPT to answer follow-up questions,
-                        admit its mistakes, challenge incorrect premises, and reject inappropriate requests.</Text>
+                <View>
+                    {healthPrediction && (
+                        <View style={[styles.whitecard, { marginTop: 10 }]}>
+                            <Text style={[styles.daystxt, { color: "green", marginBottom: 5 }]}>
+                                {t("health")}
+                            </Text>
+                            <Text>{healthPrediction.prediction}</Text>
+                            {/* <Text>Seek: {healthPrediction.seek}</Text> */}
+                            <Text>Challenge: {healthPrediction.challenge}</Text>
+                            <Text>Insight: {healthPrediction.insight}</Text>
+                        </View>
+                    )}
                 </View>
             </View>
-        </ScrollView>
+        </ScrollView >
     );
 };
 
@@ -104,7 +142,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.lightgrey,
         alignItems: "center",
-        marginBottom:10
+        marginBottom: 10
     },
     imageWrapper: {
         width: "100%",

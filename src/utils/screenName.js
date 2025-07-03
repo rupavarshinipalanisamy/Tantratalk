@@ -35,5 +35,9 @@ export const ScreenName={
     languages:"languages",
     Panjapatchi:"Panjapatchi",
     remediesall:"remediesall",
-    remediesdescription:"remediesdescription"
+    remediesdescription:"remediesdescription",
+    tipslistscreen:"tipslistscreen",
+    tipsall:"tipsall",
+    tipsdetailscreen:"tipsdetailscreen",
+    tantrabooks:"tantrabooks"
 }

@@ -79,6 +79,21 @@ export const backendApi = createApi({
                 body: data,
             }),
         }),
+        selectRewards: builder.mutation({
+            query: (data) => ({
+                url: '/Rewardofthismonth',
+                method: 'GET',
+                body: data,
+            }),
+        }),
+        //prokerala api
+        advancedailyhoroscope: builder.query({
+            query: ({ sign }) => ({
+                url: `/advancedailyhoroscope?sign=${sign}`,
+                method: 'GET',
+            }),
+        }),
+
     }),
 });
 
@@ -90,5 +105,6 @@ export const {
     useGetCartItemQuery,
     useGetUserAddressQuery,
     usePaymentInitiateMutation,
-    usePaymentVerifyMutation
+    usePaymentVerifyMutation,
+    useAdvancedailyhoroscopeQuery
 } = backendApi;

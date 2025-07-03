@@ -7,12 +7,24 @@ import { Images } from '../utils/images';
 import { InputField } from '../commonComponents/inputField';
 import CustomDatePicker from '../commonComponents/commonDatePicker';
 import { ScreenName } from '../utils/screenName';
+import { useFormik } from 'formik';
 
 const FreeKundli = ({ navigation }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const handleSubmit = () => {
         navigation.navigate(ScreenName.freeKudliDetails)
     };
+
+    const formik = useFormik({
+        initialValues: {
+            contact: '',
+            password: ''
+        },
+        // validationSchema: password,
+        onSubmit: async (values) => {
+            await handleSubmit(values);
+        },
+    });
     return (
         <View style={commonstyles.screencontainer}>
             <CommonHeader name="Free Kundli" />

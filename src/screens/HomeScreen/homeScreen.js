@@ -191,7 +191,7 @@ const BookSlot = ({ navigation }) => {
                 <View style={{ marginTop: 20, paddingLeft: 10 }}>
                     <Text style={{ color: "white", fontSize: 18, fontWeight: "bold", color: colors.red }}>1 on 1</Text>
                     <Text style={{ color: "white", fontSize: 18, fontWeight: "bold", color: colors.red }}>sessions</Text>
-                    <Text style={{ color: "white", fontSize: 10, marginTop: 8,width:180}}>
+                    <Text style={{ color: "white", fontSize: 10, marginTop: 8, width: 180 }}>
                         {t("talkwithourexpertto")} {t("clarifyyourastrologers")} {t("doubt")}
                     </Text>
                 </View>
@@ -203,7 +203,7 @@ const BookSlot = ({ navigation }) => {
         </View>
     );
 };
-const Books = () => {
+const Books = ({navigation}) => {
     const { t } = useTranslation();
 
     return (
@@ -212,20 +212,19 @@ const Books = () => {
             paddingHorizontal: 16,
         }}>
             <View style={styles.row}>
-                <View style={styles.bookCard}>
+                <TouchableOpacity style={styles.bookCard} onPress={()=>navigation.navigate(ScreenName.tantrabooks)}>
                     <Image source={Images.tantraBooks} style={{ height: 50, width: 50, borderRadius: 50 }} />
                     <Text style={styles.bookText}>{t('tantrabooks')}</Text>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.bookCard}>
                     <Image source={Images.onlineclasses} style={{ height: 50, width: 50, borderRadius: 50 }} />
-
                     <Text style={styles.bookText}>{t('onlineclasses')}</Text>
                 </View>
             </View>
         </ScrollView>
     );
 };
-const TipsandArticles = () => {
+const TipsandArticles = ({navigation}) => {
     const { t } = useTranslation();
 
     return (
@@ -234,10 +233,14 @@ const TipsandArticles = () => {
             paddingHorizontal: 16,
         }}>
             <View style={styles.row}>
-                <View style={styles.tipsartCard}>
+                <TouchableOpacity
+                    style={styles.tipsartCard}
+                    onPress={() => navigation.navigate(ScreenName.tipsall)}
+                >
+
                     <Image source={Images.tantraBooks} style={{ height: 50, width: 50, borderRadius: 50 }} />
                     <Text style={styles.tipsartCardtxt}>{t('tantratips')}</Text>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.tipsartCard}>
                     <Image source={Images.onlineclasses} style={{ height: 50, width: 50, borderRadius: 50 }} />
 
@@ -298,12 +301,12 @@ const HomeScreen = ({ navigation }) => {
 
                 <View style={{ marginTop: 10 }}>
                     <Text style={styles.headertxt}>{t("books")}</Text>
-                    <Books />
+                    <Books navigation={navigation} />
                 </View>
                 <View style={{ marginTop: 10 }}>
                     <View style={styles.headerConatiner}>
                         <Text style={styles.headertxt}>{t("remedies")}</Text>
-                        <TouchableOpacity style={{ marginRight: 15 }} onPress={()=>navigation.navigate(ScreenName.remediesall)}>
+                        <TouchableOpacity style={{ marginRight: 15 }} onPress={() => navigation.navigate(ScreenName.remediesall)}>
                             <Text style={styles.viewalltxt}>{t("viewall")}</Text>
 
                         </TouchableOpacity>
@@ -316,7 +319,7 @@ const HomeScreen = ({ navigation }) => {
                         <Text style={[styles.headertxt, { textAlign: "center" }]}>{t("tipsandarticles")}</Text>
                         <View style={[styles.line, { marginRight: 5 }]} />
                     </View>
-                    <TipsandArticles />
+                    <TipsandArticles navigation={navigation} />
                 </View>
             </ScrollView>
             <PopupModal visible={modalVisible} onClose={() => setModalVisible(false)} />
