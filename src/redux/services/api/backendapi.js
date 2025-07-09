@@ -93,7 +93,13 @@ export const backendApi = createApi({
                 method: 'GET',
             }),
         }),
-
+        //common api
+        searchCities: builder.query({
+            query: (query) => ({
+                url: `/searchCity?query=${query}`,
+                method: 'GET',
+            }),
+        }),
     }),
 });
 
@@ -106,5 +112,6 @@ export const {
     useGetUserAddressQuery,
     usePaymentInitiateMutation,
     usePaymentVerifyMutation,
-    useAdvancedailyhoroscopeQuery
+    useAdvancedailyhoroscopeQuery,
+    useLazySearchCitiesQuery
 } = backendApi;
