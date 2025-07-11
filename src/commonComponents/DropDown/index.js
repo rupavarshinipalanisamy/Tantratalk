@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, FlatList, StyleSheet } from 'react-native';
-import { styles } from './styles'; // reuse the same style file as InputField
-import { Ionicons } from '@expo/vector-icons'; // Optional for dropdown arrow icon
+import { styles } from '../inputField/styles'; 
 
 export const DropdownField = ({
   label = '',
@@ -44,7 +43,7 @@ export const DropdownField = ({
         <Text style={{ color: value ? 'black' : '#afafaf' }}>
           {value || placeholder}
         </Text>
-        <Ionicons name="chevron-down" size={20} color="#555" />
+        {/* <Ionicons name="chevron-down" size={20} color="#555" /> */}
       </TouchableOpacity>
 
       <Modal

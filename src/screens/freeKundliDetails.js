@@ -5,13 +5,16 @@ import { colors } from "../utils/colors";
 import { CommonHeader } from "../commonComponents/components";
 import BasicDetails from "./BasicDetails";
 
-const FreeKudliDetails = () => {
+const FreeKudliDetails = ({ route }) => {
     const [selectedTab, setSelectedTab] = useState("Basic"); // Default to "Basic" tab
-
+    const { kundliData } = route.params;
+    console.log('====================================');
+    console.log(kundliData);
+    console.log('====================================');
     const renderContent = () => {
         switch (selectedTab) {
             case "Basic":
-                return <BasicDetails/>;
+                return <BasicDetails kundliData={kundliData} />;
             case "Charts":
                 return <Text style={styles.contentText}>Charts Content</Text>;
             case "Report":
@@ -24,7 +27,7 @@ const FreeKudliDetails = () => {
     return (
         <View style={commonstyles.screencontainer}>
             <CommonHeader name="Free Kundli" />
-            
+
             {/* Tab Buttons */}
             <View style={styles.tabContainer}>
                 {["Basic", "Charts", "Report"].map((tab) => (
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     activeTab: {
-        backgroundColor:"rgba(189, 44, 60, 0.9)",
+        backgroundColor: "rgba(189, 44, 60, 0.9)",
     },
     tabText: {
         fontSize: 16,

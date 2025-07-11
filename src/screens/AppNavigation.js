@@ -105,8 +105,6 @@ export const AppNavigation = ({ isLoggedIn }) => {
                                 <Stack.Screen name={ScreenName.tipsall} component={TipsAll} />
                                 <Stack.Screen name={ScreenName.tipsdetailscreen} component={TipsDetailScreen} />
                                 <Stack.Screen name={ScreenName.tantrabooks} component={TantraBooks} />
-
-
                             </>
                         ) : (
                             <>

@@ -93,10 +93,24 @@ export const backendApi = createApi({
                 method: 'GET',
             }),
         }),
+        kundli: builder.query({
+            query: ({ coordinates, datetime, la }) => ({
+                url: `/kundli?coordinates=${coordinates}&datetime=${encodeURIComponent(datetime)}&la=${la}`,
+                method: 'GET',
+            }),
+        }),
+
         //common api
         searchCities: builder.query({
             query: (query) => ({
                 url: `/searchCity?query=${query}`,
+                method: 'GET',
+            }),
+        }),
+
+        getCoordinates: builder.query({
+            query: ({cityname}) => ({
+                url: `/getCoordinates?city=${cityname}`,
                 method: 'GET',
             }),
         }),
@@ -113,5 +127,7 @@ export const {
     usePaymentInitiateMutation,
     usePaymentVerifyMutation,
     useAdvancedailyhoroscopeQuery,
-    useLazySearchCitiesQuery
+    useLazySearchCitiesQuery,
+    useKundliQuery,
+    useLazyGetCoordinatesQuery
 } = backendApi;

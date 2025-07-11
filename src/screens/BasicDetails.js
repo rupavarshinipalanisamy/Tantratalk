@@ -12,17 +12,6 @@ const basicDetails = [
     { label: "Latitude", value: "11.12" },
     { label: "Longitude", value: "77.35" },
 ];
-
-const nakshatraDetails = [
-    { label: "Nakshatra", value: "Swati" },
-    { label: "Nakshatra Pada", value: "4" },
-    { label: "Nakshatra Lord", value: "Rahu" },
-    { label: "Chandra Rasi", value: "Tula" },
-    { label: "Chandra Rasi Lord", value: "Venus(Shukra)" },
-    { label: "Soorya Rasi", value: "Meena" },
-    { label: "Soorya Rasi Lord", value: "Jupiter(Guru)" },
-    { label: "Zodiac", value: "libra" },
-];
 const AdditionalDetails = [
     { label: "Deity", value: "Vayu, Pawan (North)" },
     { label: "Ganam", value: "Deva" },
@@ -33,7 +22,90 @@ const AdditionalDetails = [
     { label: "EnemyYoni", value: "Horse" },
     { label: "Planet", value: "Rahu" },
 ];
-const BasicDetails = () => {
+const BasicDetails = ({ kundliData }) => {
+    console.log(kundliData, "InBAsicdetails");
+    const nakshatraDetails = kundliData?.data
+        ? [
+            {
+                label: "Nakshatra",
+                value: kundliData.data.nakshatra?.name || "-",
+            },
+            {
+                label: "Nakshatra Pada",
+                value: kundliData.data.nakshatra?.pada?.toString() || "-",
+            },
+            {
+                label: "Nakshatra Lord",
+                value: kundliData.data.nakshatra?.lord?.name || "-",
+            },
+            {
+                label: "Chandra Rasi",
+                value: kundliData.data.chandra_rasi?.name || "-",
+            },
+            {
+                label: "Chandra Rasi Lord",
+                value:
+                    kundliData.data.chandra_rasi?.lord?.name +
+                    (kundliData.data.chandra_rasi?.lord?.vedic_name
+                        ? ` (${kundliData.data.chandra_rasi.lord.vedic_name})`
+                        : "") || "-",
+            },
+            {
+                label: "Soorya Rasi",
+                value: kundliData.data.soorya_rasi?.name || "-",
+            },
+            {
+                label: "Soorya Rasi Lord",
+                value:
+                    kundliData.data.soorya_rasi?.lord?.name +
+                    (kundliData.data.soorya_rasi?.lord?.vedic_name
+                        ? ` (${kundliData.data.soorya_rasi.lord.vedic_name})`
+                        : "") || "-",
+            },
+            {
+                label: "Zodiac",
+                value: kundliData.data.zodiac?.name || "-",
+            },
+        ]
+        : [];
+
+    const AdditionalDetails = kundliData?.data?.additional_info
+        ? [
+            {
+                label: "Deity",
+                value: kundliData.data.additional_info.deity || "-",
+            },
+            {
+                label: "Ganam",
+                value: kundliData.data.additional_info.ganam || "-",
+            },
+            {
+                label: "Symbol",
+                value: kundliData.data.additional_info.symbol || "-",
+            },
+            {
+                label: "Animal Sign",
+                value: kundliData.data.additional_info.animal_sign || "-",
+            },
+            {
+                label: "Nadi",
+                value: kundliData.data.additional_info.nadi || "-",
+            },
+            {
+                label: "Color",
+                value: kundliData.data.additional_info.color || "-",
+            },
+            {
+                label: "Enemy Yoni",
+                value: kundliData.data.additional_info.enemy_yoni || "-",
+            },
+            {
+                label: "Planet",
+                value: kundliData.data.additional_info.planet || "-",
+            },
+        ]
+        : [];
+
     return (
         <View style={commonstyles.screencontainer}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -60,7 +132,7 @@ const BasicDetails = () => {
                         </ImageBackground>
                     </View>
                 </View>
-                
+
                 {/* Nakshatra Details Section */}
                 <View style={{ marginTop: 10 }}>
                     <Text style={styles.title}>Nakshatra Details</Text>
@@ -141,7 +213,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     label: {
-        width:"50%",
+        width: "50%",
         fontSize: 16,
         fontWeight: "600",
         color: colors.white,
@@ -159,8 +231,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         // elevation: , 
         marginTop: 10,
-        borderWidth:1,
-        borderColor:colors.red
+        borderWidth: 1,
+        borderColor: colors.red
     },
     evenRow: {
         backgroundColor: "#fff",
@@ -170,7 +242,7 @@ const styles = StyleSheet.create({
     },
     nakshatraLabel: {
         // flex: 1,
-        width:"50%",
+        width: "50%",
         fontSize: 16,
         fontWeight: "600",
         color: "#333",
